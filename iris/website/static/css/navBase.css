@@ -1,7 +1,7 @@
 /* Side nav menu */
 .sideNav {
     height: 100%;
-    width: 0; /* Changes with JavaScript */
+    width: 320px; /* Changes with JavaScript */
     position: fixed;
     z-index: 1; /* Stay on top */
     top: 0;
@@ -10,6 +10,50 @@
     overflow-x: hidden; /* Disable horizontal scroll */
     padding-top: 60px;
     transition: 0.5s; /* Adds transition effect */
+}
+
+/* IRIS logo position */
+.irisLogo {
+    height: 36px;
+    width: auto;
+    position: absolute;
+    top: 0;
+    left: 25px;
+    margin-right: 50px;
+    padding-top: 5%;
+}
+
+/* User profile container */
+.userProfile {
+    background-color: blue;
+    height: 200px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* center horizontally */
+    justify-content: center; /* centers vertically */
+    gap: 10px; /* Adds space between items */
+}
+
+/* User prfile image */
+.userProfileImg {
+    height: 100px;
+    width: 100px; 
+    object-fit: cover; /* Ensures the image cover the box */;
+    background-color: yellow;
+    border-radius: 50%;
+    border: 3px solid white
+}
+
+/* User name box */
+.username {
+    background-color: white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    text-align: center;
+    color:#000000;
+    font-size: 20px;
+    width: 80%;
 }
 
 /* Nav links */
@@ -32,7 +76,7 @@
 .navItem {
     display: flex;
     align-items: center;
-    gap: 10px; 
+    gap: 10px; /* Space between icon and text */
 }
 
 /* Icon sizing */
@@ -61,4 +105,5 @@ span {
     transition: margin-left .5s;
     padding: 20px;
     color: blue;
+    margin-left:  320px;
 }
