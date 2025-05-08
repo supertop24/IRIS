@@ -1,0 +1,52 @@
+.psHeading{
+
+    color:red;
+
+}
+
+.psLogo{
+    align-content: center;
+    display:flex;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+.selectPortalFlex{
+
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 60px;
+    
+}
+
+.selectPortalItem{
+
+    margin:50px;
+   
+    height: 424px;
+    width: 320px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+}
+
+.selectPortalItemText {
+
+    text-align: center;
+    margin-top: 220px;
+    font-size: 27px;
+    
+}
+
+/* .selectPortalItemIconContainer{
+
+    height: 100px;
+    width: 100px;
+    margin: 200px;
+    background-color: black;
+
+    
+} */
