@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/navBase.css') }}">
+        <script src="{{ url_for('static', filename='javascript/navBase.js') }}"></script>
+
+        <!--Title that children can override-->
+        <title>{%block title %}Nav Base{% endblock %}</title>
+
+    </head>
+
+    <body>
+        <!--Side navigation bar-->
+        <div id="mySideNav" class="sideNav">
+
+            <!--IRIS logo-->
+            <img class="irisLogo" src="{{url_for('static', filename='images/portalLogo.png')}}">
+
+            <!--Close button-->
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+            
+
+            <!--User profile-->
+            <div class="userProfile">
+                <img class="userProfileImg" src="static/images/icons/dashboard.png" alt="User profile pitcure">
+                <div class="userName">User Name</div>
+            </div>
+
+
+            <!--Nav Items-->
+            <a href="#" class="navItem"><img class="navIcon" src="static/images/icons/dashboard.png" alt="Dashboard icon">
+                <span>Dashboard</span>
+            </a>
+            <a href="#" class="navItem"><img class="navIcon" src="static/images/icons/attendance.png" alt="Attendance icon">
+                <span>Attendance</span>
+            </a>
+            <a href="#" class="navItem"><img class="navIcon" src="static/images/icons/students.png" alt="Students icon">
+                <span>Students</span>
+            </a>
+            <a href="#" class="navItem"><img class="navIcon" src="static/images/icons/pastoral.png" alt="Pastoral icon">
+                <span>Pastoral</span>
+            </a>
+            <a href="#" class="navItem"><img class="navIcon" src="static/images/icons/markbooks.png" alt="Markbooks icon">
+                <span>Markbooks</span>
+            </a>
+            <a href="#" class="navItem"><img class="navIcon" src="static/images/icons/reports.png" alt="Reports icon">
+                <span>Reports</span>
+            </a>
+            <a href="#" class="navItem"><img class="navIcon" src="static/images/icons/communication.png" alt="Communication Center icon">
+                <span>Communication Center</span>
+            </a>
+            <a href="#" class="navItem"><img class="navIcon" src="static/images/icons/notices.png" alt="Notices icon">
+                <span>Notices</span>
+            </a>
+        </div>
+
+        <!--Page content that children will override-->
+        <div id="container">
+        {% block content %} 
+        <p>blah blah</p>
+        <p>blah blah</p>
+        <p>blah blah</p>
+        {% endblock %}
+        <!--Open sidenav on click-->
+        <span onclick="openNav()">&#9776; open</span>
+        </div>
+
+    </body>
+</html>
