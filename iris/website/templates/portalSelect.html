@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/portalSelect.css') }}">
 
     </head>
     
@@ -13,8 +13,48 @@
             <img src="{{url_for('static', filename='images/portalLogo.png')}}" align="middle" />
         </div>
 
-        <div class="psHeading">
-            <h1>portalSelect</h1>
+        <div class="selectPortalFlex">
+
+            <div class="selectPortalItem" style="background-color:#A8D8EA;" >
+
+                <div class="selectPortalItemIconContainer">
+                   <!--  <img src="{{url_for('static', filename='images/icons/portalSelectFiller.png')}}" align="middle" /> -->
+                </div>
+
+                <div class="selectPortalItemText">
+                    <h2> Student<br>Portal </h2>
+                </div>
+                
+            </div>
+
+            <div class="selectPortalItem"  style="background-color:#988EB1;" > 
+                <a href="/teacherPortal">
+
+                <div class="selectPortalItemIconContainer">
+                    <!--  <img src="{{url_for('static', filename='images/icons/portalSelectFiller.png')}}" align="middle" /> -->
+                </div>
+
+                <div class="selectPortalItemText">
+                    <h2> Teacher<br>Portal </h2>
+                </div>
+                
+                </a>
+            </div>
+
+            <div class="selectPortalItem"  style="background-color:#83A180;">
+
+                <div class="selectPortalItemIconContainer">
+                    <!--  <img src="{{url_for('static', filename='images/icons/portalSelectFiller.png')}}" align="middle" /> -->
+
+                </div>
+
+                <div class="selectPortalItemText">
+                    <h2> Admin<br>Portal </h2>
+                </div>
+
+            </div>
+
+
         </div>
 
     </body>
