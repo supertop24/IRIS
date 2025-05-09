@@ -15,3 +15,7 @@ def navBase():
 @views.route('/teacherPortal')
 def teacherPortal():
     return render_template('teacherPortal.html')
+
+@views.route('/teacherLogin')
+def teacherLogin():
+    return render_template('teacherLogin.html')
