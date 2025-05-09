@@ -107,6 +107,34 @@ span {
     cursor: pointer;
 }
 
+/* Size of closed nav */
+.sideNav.collapsed {
+    width: 78px;
+}
+
+/* Adujsting padding of nav items when nav is clsoed */
+.sideNav.collapsed .navItem {
+    padding: 8px 10px;
+    justify-content: center;
+}
+
+/* Centering icons when nav closed */
+.sideNav.collapsed .navIcon {
+    margin: 0 auto;
+}
+
+/* Shows close and open button when nav shrunk */
+.sideNav .collapsed .closebtn {
+    right: 15px;
+}
+
+/* Ensures icons have a consistent width */
+.navIcon {
+    height: 50px;
+    width: 58px;
+    min-width: 58px; /* Makes sure icons don't skrink */
+}
+
 /* Pushing page content to the right when nav opened */
 #container {
     transition: margin-left .5s;
