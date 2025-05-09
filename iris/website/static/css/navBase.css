@@ -14,7 +14,7 @@
 
 /* IRIS logo position */
 .irisLogo {
-    height: 36px;
+    height: 55px;
     width: auto;
     position: absolute;
     top: 0;
@@ -23,9 +23,19 @@
     padding-top: 5%;
 }
 
+ 
+/* Close button postion and style */
+.sideNav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    height: 40px;
+    width: auto;
+    margin-left: 50px;
+}
+
 /* User profile container */
 .userProfile {
-    background-color: blue;
     height: 200px;
     width: 100%;
     display: flex;
@@ -33,32 +43,38 @@
     align-items: center; /* center horizontally */
     justify-content: center; /* centers vertically */
     gap: 10px; /* Adds space between items */
+    position: relative;
 }
 
 /* User prfile image */
 .userProfileImg {
-    height: 100px;
-    width: 100px; 
+    height: 80px;
+    width: 80px; 
     object-fit: cover; /* Ensures the image cover the box */;
-    background-color: yellow;
-    border-radius: 50%;
-    border: 3px solid white
+    border-radius: 20%;
+    position: relative;
+    z-index: 2; /* Places the image above the username box */
+    margin-bottom: -50px; /* Makes the image overlap the username box */
 }
-
+ 
 /* User name box */
-.username {
-    background-color: white;
-    padding: 10px 20px;
+.userName {
+    background-color: #ffffff;
+    padding-top: 55px;
+    padding-bottom: 30px;
     border-radius: 20px;
     text-align: center;
     color:#000000;
-    font-size: 20px;
-    width: 80%;
+    font-size: 25px;
+    width: 87%;
+    box-sizing: border-box;
+    position: relative;
+    z-index: 1;
 }
 
 /* Nav links */
 .sideNav a {
-    padding: 8px 8px 8px 32px;
+    padding: 8px 8px 8px 20px;
     text-decoration: none;
     font-size: 25px;
     color: #000000;
@@ -82,7 +98,7 @@
 /* Icon sizing */
 .navIcon {
     height: 50px;
-    width: auto;
+    width: 58px;
 }
 
 /* Nav item text */
@@ -91,19 +107,9 @@ span {
     cursor: pointer;
 }
 
-/* Close button postion and style */
-.sideNav .closebtn {
-    position: absolute;
-    top: 0;
-    right: 25px;
-    font-size: 36px;
-    margin-left: 50px;
-}
-
 /* Pushing page content to the right when nav opened */
 #container {
     transition: margin-left .5s;
     padding: 20px;
-    color: blue;
     margin-left:  320px;
 }
