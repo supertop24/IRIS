@@ -1,35 +1,28 @@
-/* Changing side nav's width and the container's left margin when nav is open */
+/* Toggle nav state */
 function openNav() {
-    document.getElementById("mySideNav").style.width = "320px";
-    document.getElementById("container").style.marginLeft = "320px";
+    const sideNav = document.getElementById("mySideNav");
+    const container = document.getElementById("container");
 
+    // Removes collapsed class to restore styling
+    sideNav.classList.remove("collapsed");
+    container.classList.remove("navCollapsed");
 
-    /* Shows links when nav is open */
-    const navText = document.querySelectorAll(".navItem span");
-    navText.forEach(text => text.style.display = "block");
-
-    // Show elements that should be visible in open state
-    document.querySelector(".userProfile").style.display = "flex";
-    document.querySelector(".irisLogo").style.display = "block";
-
-    // Remove collapsed class
-    document.getElementById("mySideNav").classList.remove("collapsed");
+    // Resetting any inline styles the might interfere
+    sideNav.style.width = "";
+    container.style.marginLeft = "";
 }
 
 /* Changing side nav's width and the container's left margin when nav is closed */
 function closeNav() {
-    document.getElementById("mySideNav").style.width = "78px";
-    document.getElementById("container").style.marginLeft = "78px";
+   const sideNav = document.getElementById("mySideNav");
+    const container = document.getElementById("container");
 
 
-    /* Hides links when nav is closed */
-    const navTexts = document.querySelectorAll(".navItem span");
-    navTexts.forEach(text => text.style.display = "none");
+    // Adds collapsed class
+    sideNav.classList.add("collapsed");
+    container.classList.add("navCollapsed");
 
-    // Hide elements that should be hidden in collapsed state
-    document.querySelector(".userProfile").style.display = "none";
-    document.querySelector(".irisLogo").style.display = "none";
-    
-    // Add collapsed class
-    document.getElementById("mySideNav").classList.add("collapsed");
+    // Resetting any inline styles that might interfere
+    sideNav.style.width = "";
+    container.style.marginLeft = "";
 }
