@@ -11,3 +11,15 @@ def portalSelect():
 @views.route('/navBase')
 def navBase():
     return render_template("navBase.html")
+
+@views.route('/teacherPortal')
+def teacherPortal():
+    return render_template('teacherPortal.html')
+
+@views.route('/teacherLogin')
+def teacherLogin():
+    return render_template('teacherLogin.html')
+
+@views.route('/studentProfile/nameandID')
+def studentProfile():
+    return render_template('studentProfileName.html')

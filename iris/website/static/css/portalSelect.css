@@ -1,3 +1,4 @@
+
 .psHeading{
 
     color:red;
@@ -8,7 +9,7 @@
     align-content: center;
     display:flex;
     justify-content: center;
-    margin-top: 50px;
+    margin-top: 30px;
 }
 
 .selectPortalFlex{
