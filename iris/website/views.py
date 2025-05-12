@@ -10,7 +10,7 @@ views = Blueprint('views', '__name__')
 #For now, just comment out ^ if you want to see the navBase
 @views.route('/')
 def navBase():
-    return render_template("portalSelect.html")
+    return render_template("navBase.html")
 
 @views.route('/teacherPortal')
 def teacherPortal():
@@ -19,3 +19,7 @@ def teacherPortal():
 @views.route('/teacherLogin')
 def teacherLogin():
     return render_template('teacherLogin.html')
+
+@views.route('/studentProfile/nameandID')
+def studentProfile():
+    return render_template('studentProfileName.html')
