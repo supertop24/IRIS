@@ -1,11 +1,28 @@
-/* Changing side nav's width and the container's left margin when nav is open */
+/* Toggle nav state */
 function openNav() {
-    document.getElementById("mySideNav").style.width = "320px";
-    document.getElementById("container").style.marginLeft = "320px";
+    const sideNav = document.getElementById("mySideNav");
+    const container = document.getElementById("container");
+
+    // Removes collapsed class to restore styling
+    sideNav.classList.remove("collapsed");
+    container.classList.remove("navCollapsed");
+
+    // Resetting any inline styles the might interfere
+    sideNav.style.width = "";
+    container.style.marginLeft = "";
 }
 
 /* Changing side nav's width and the container's left margin when nav is closed */
 function closeNav() {
-    document.getElementById("mySideNav").style.width = "0";
-    document.getElementById("container").style.marginLeft = "0";
+   const sideNav = document.getElementById("mySideNav");
+    const container = document.getElementById("container");
+
+
+    // Adds collapsed class
+    sideNav.classList.add("collapsed");
+    container.classList.add("navCollapsed");
+
+    // Resetting any inline styles that might interfere
+    sideNav.style.width = "";
+    container.style.marginLeft = "";
 }

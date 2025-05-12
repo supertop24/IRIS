@@ -1,4 +1,4 @@
-/* Side nav menu */
+/* Side nav menu - open state */
 .sideNav {
     height: 100%;
     width: 320px; /* Changes with JavaScript */
@@ -14,7 +14,8 @@
 
 /* IRIS logo position */
 .irisLogo {
-    height: 36px;
+    display: block;
+    height: 55px;
     width: auto;
     position: absolute;
     top: 0;
@@ -23,42 +24,72 @@
     padding-top: 5%;
 }
 
+ 
+/* Close button postion and style */
+.sideNav .closeBtn {
+    position: absolute;
+    top: 0px;
+    right: 25px;
+    height: 40px;
+    width: auto;
+    margin-left: 50px;
+}
+
+/* CLose button position when nav closed */
+.sideNav.collapsed .closeBtn {
+    right: 15px;
+}
+
 /* User profile container */
 .userProfile {
-    background-color: blue;
     height: 200px;
     width: 100%;
     display: flex;
-    flex-direction: column;
+    flex-direction: column; /* Stack content vertically */
     align-items: center; /* center horizontally */
     justify-content: center; /* centers vertically */
     gap: 10px; /* Adds space between items */
+    position: relative;
 }
 
 /* User prfile image */
 .userProfileImg {
-    height: 100px;
-    width: 100px; 
+    height: 80px;
+    width: 80px; 
     object-fit: cover; /* Ensures the image cover the box */;
-    background-color: yellow;
-    border-radius: 50%;
-    border: 3px solid white
+    border-radius: 20%;
+    position: relative;
+    z-index: 2; /* Places the image above the username box */
+    margin-bottom: -50px; /* Makes the image overlap the username box */
 }
-
-/* User name box */
-.username {
-    background-color: white;
-    padding: 10px 20px;
+ 
+/* Username box */
+.userName {
+    display: flex;
+    flex-direction: column; /* Stack content vertically */
+    align-items: center; /* Center horizontally */
+    justify-content: center; /* Center vertically */
+    background-color: #ffffff;
+    padding-top: 55px;
+    padding-bottom: 30px;
     border-radius: 20px;
     text-align: center;
     color:#000000;
-    font-size: 20px;
-    width: 80%;
+    font-size: 25px;
+    width: 87%;
+    box-sizing: border-box;
+    position: relative;
+    z-index: 1;
+}
+
+/* Hides username box when nav is closed */
+.sideNav.collapsed .userName {
+    display: none;
 }
 
 /* Nav links */
 .sideNav a {
-    padding: 8px 8px 8px 32px;
+    padding: 8px 8px 8px 20px;
     text-decoration: none;
     font-size: 25px;
     color: #000000;
@@ -77,33 +108,56 @@
     display: flex;
     align-items: center;
     gap: 10px; /* Space between icon and text */
+    justify-content: flex-start;
 }
 
-/* Icon sizing */
+/* Icon sizing - ensuring they are consistent*/
 .navIcon {
     height: 50px;
-    width: auto;
+    width: 58px;
+    min-width: 58px; /* Makes sure icons don't skrink */
+}
+
+/* Centering icons when nav is closed */
+.sideNav.collapsed .navItem {
+    padding: 8px 10px;
+    justify-content: center;
 }
 
 /* Nav item text */
-span {
+.navItem span {
     font-size: 20px;
     cursor: pointer;
 }
 
-/* Close button postion and style */
-.sideNav .closebtn {
-    position: absolute;
-    top: 0;
-    right: 25px;
-    font-size: 36px;
-    margin-left: 50px;
+/* Size of closed nav */
+.sideNav.collapsed {
+    width: 78px;
+}
+
+/* Adujsting padding of nav items when nav is closed */
+.sideNav.collapsed .navItem {
+    justify-content: center; /* centers icons */
+}
+
+/* Adujsting padding of nav items when nav is closed */
+.sideNav.collapsed .navItem span {
+    display: none; /* Hides text when nav is closed */
+}
+
+/* Centering icons when nav closed */
+.sideNav.collapsed .navIcon {
+    margin: 0 auto;
 }
 
 /* Pushing page content to the right when nav opened */
 #container {
     transition: margin-left .5s;
     padding: 20px;
-    color: blue;
     margin-left:  320px;
+}
+
+/* Contaitner when nav is closed */
+#container.navCollapsed {
+    margin-left: 78px;
 }
