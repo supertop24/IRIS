@@ -1,7 +1,15 @@
+/* Container for the page */
+.container {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
 /* Side nav menu - open state */
 .sideNav {
     height: 100%;
-    width: 320px; /* Changes with JavaScript */
+    width: 16%; 
     position: fixed;
     z-index: 1; /* Stay on top */
     top: 0;
@@ -10,6 +18,11 @@
     overflow-x: hidden; /* Disable horizontal scroll */
     padding-top: 60px;
     transition: 0.5s; /* Adds transition effect */
+}
+
+/* Size of closed nav */
+.sideNav.collapsed {
+    width: 4%;
 }
 
 /* IRIS logo position */
@@ -24,6 +37,10 @@
     padding-top: 5%;
 }
 
+/*Hiding logo when nav is closed */
+.sideNav.collapsed .irisLogo {
+    display: none;
+}
  
 /* Close button postion and style */
 .sideNav .closeBtn {
@@ -37,7 +54,7 @@
 
 /* CLose button position when nav closed */
 .sideNav.collapsed .closeBtn {
-    right: 15px;
+    right: 0;
 }
 
 /* User profile container */
@@ -55,12 +72,18 @@
 /* User prfile image */
 .userProfileImg {
     height: 80px;
-    width: 80px; 
+    width: auto; 
     object-fit: cover; /* Ensures the image cover the box */;
     border-radius: 20%;
     position: relative;
     z-index: 2; /* Places the image above the username box */
     margin-bottom: -50px; /* Makes the image overlap the username box */
+}
+
+/* Decreasing the size of the image to fit collapsed nav */
+.sideNav.collapsed .userProfileImg {
+    height: 60px;
+    width: auto;
 }
  
 /* Username box */
@@ -109,13 +132,7 @@
     align-items: center;
     gap: 10px; /* Space between icon and text */
     justify-content: flex-start;
-}
-
-/* Icon sizing - ensuring they are consistent*/
-.navIcon {
-    height: 50px;
-    width: 58px;
-    min-width: 58px; /* Makes sure icons don't skrink */
+    height: 60px; /* Consistent height for nav items */
 }
 
 /* Centering icons when nav is closed */
@@ -128,16 +145,8 @@
 .navItem span {
     font-size: 20px;
     cursor: pointer;
-}
-
-/* Size of closed nav */
-.sideNav.collapsed {
-    width: 78px;
-}
-
-/* Adujsting padding of nav items when nav is closed */
-.sideNav.collapsed .navItem {
-    justify-content: center; /* centers icons */
+    vertical-align: middle;
+    line-height: 50px; /* Matches height of navItem */
 }
 
 /* Adujsting padding of nav items when nav is closed */
@@ -145,19 +154,61 @@
     display: none; /* Hides text when nav is closed */
 }
 
+/* Icon sizing - ensuring they are consistent*/
+.navIcon {
+    height: 50px;
+    width: 60px; /* Maintains aspect ratio */
+    min-width: 58px; /* Makes sure icons don't skrink */
+    object-fit: contain; /*Ensure icons maintain aspect ratio */
+    vertical-align: middle;
+}
+
 /* Centering icons when nav closed */
 .sideNav.collapsed .navIcon {
     margin: 0 auto;
 }
 
+
+
 /* Pushing page content to the right when nav opened */
-#container {
-    transition: margin-left .5s;
-    padding: 20px;
-    margin-left:  320px;
+#content {
+    margin-left:  16%; /*Ensure that content isn't hidden by nav bar */
+    height: 100%;
+    width: auto;
+
+    transition: 0.3s; /* Adds transition effect */
 }
 
-/* Contaitner when nav is closed */
-#container.navCollapsed {
-    margin-left: 78px;
+/* content when nav is closed */
+#content.navCollapsed {
+    margin-left: 4%;
+    transition: 0.3s; /* Adds transition effect */
+}
+
+
+
+/* Top navigation bar styling */
+.topNav {
+    background-color: #E2DDEB;
+
+    width: 100%;
+    height: 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.pageName {
+    padding: 20px;
+    width: 50%;
+    height: auto;
+    text-align: center;
+    font-size: 25px;
+}
+
+.searchBar {
+    padding: 20px;
+    width: 50%;
+    height: auto;
+    text-align: center;
 }
