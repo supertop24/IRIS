@@ -5,7 +5,7 @@ views = Blueprint('views', '__name__')
 @views.route('/')
 def portalSelect():
 
-   return render_template("dashboard.html")
+   return render_template("portalSelect.html")
 
 @views.route('/navBase')
 def navBase():
