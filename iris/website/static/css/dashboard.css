@@ -1,0 +1,83 @@
+/* Container style to align content */
+.dashboardContainer {
+    height: 100%;
+    width: auto;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+/* Heading styling of each section */
+.sectionTitle {
+    display: block;
+    font-size: 20px;
+    padding: 20px 10px 20px 10px;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+    background-color: #E2DDEB;
+    margin-bottom: 10px;
+}
+
+.date {
+    height: 5%;
+    width: 100%;
+    background-color: #ffffff;
+    text-align: center;
+    border-style: solid;
+    border-color: #988EB1;
+    border-width: 5px;
+    margin: 10px 0 0 10px;
+}
+
+.calendar {
+    height: 42%;
+    flex: 68%;
+    background-color: ffffff;
+    text-align: center;
+    margin-left: 10px;
+    border-style: solid;
+    border-color: #000000;
+    border-width: 7px;
+    box-sizing: border-box;
+}
+
+.staffAbsences {
+    height: 40%;
+    flex: 28%;
+    flex-direction: column;
+    display: flex;
+    box-sizing: border-box;
+    background-color:ffffff ;
+    text-align: center;
+    padding: 0;
+    margin: 0 10px 0 10px;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+}
+
+.announcements {
+    height: 42%;
+    flex: 68%;
+    flex-direction: column;
+    display: flex;
+    box-sizing: border-box;
+    background-color: ffffff;
+    text-align: center;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    margin: 0 0 0 10px;
+}
+
+.birthdays {
+    height: 42%;
+    flex: 28%;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    background-color: ffffff ;
+    text-align: center;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    margin: 0 10px 0 10px;
+}

@@ -4,6 +4,7 @@
     width: 100%;
     margin: 0;
     padding: 0;
+    background-color: #F3F2F2;
 }
 
 /* Side nav menu - open state */
@@ -17,7 +18,6 @@
     background-color: #988EB1;
     overflow-x: hidden; /* Disable horizontal scroll */
     padding-top: 60px;
-    transition: 0.5s; /* Adds transition effect */
 }
 
 /* Size of closed nav */
@@ -175,14 +175,11 @@
     margin-left:  16%; /*Ensure that content isn't hidden by nav bar */
     height: 100%;
     width: auto;
-
-    transition: 0.3s; /* Adds transition effect */
 }
 
 /* content when nav is closed */
 #content.navCollapsed {
     margin-left: 4%;
-    transition: 0.3s; /* Adds transition effect */
 }
 
 
@@ -190,9 +187,8 @@
 /* Top navigation bar styling */
 .topNav {
     background-color: #E2DDEB;
-
     width: 100%;
-    height: 100px;
+    height: 10%;
     display: flex;
     justify-content: space-between;
     align-items: center;
