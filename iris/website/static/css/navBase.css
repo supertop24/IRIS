@@ -43,7 +43,7 @@
 }
  
 /* Close button postion and style */
-.sideNav .closeBtn {
+.sideNav .navToggleBtn {
     position: absolute;
     top: 0px;
     right: 25px;
@@ -53,7 +53,7 @@
 }
 
 /* CLose button position when nav closed */
-.sideNav.collapsed .closeBtn {
+.sideNav.collapsed .navToggleBtn {
     right: 0;
 }
 

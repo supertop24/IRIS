@@ -1,10 +1,10 @@
 from flask import Blueprint, render_template
+from datetime import datetime
 
 views = Blueprint('views', '__name__')
 
 @views.route('/')
 def portalSelect():
-
    return render_template("portalSelect.html")
 
 @views.route('/navBase')
@@ -22,3 +22,8 @@ def teacherLogin():
 @views.route('/studentProfile/nameandID')
 def studentProfile():
     return render_template('studentProfileName.html')
+
+@views.route('/dashboard')
+def dashboard():
+   currentDate = datetime.now().date()
+   return render_template('dashboard.html', currentDate=currentDate)
