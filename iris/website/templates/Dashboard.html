@@ -13,7 +13,9 @@
 {% block content %}
 
 <div class="dashboardContainer">
-    <div class="date">day date month, year</div>
+    <!--Printing the current date-->
+    <div class="date">{{ currentDate.strftime('%A, %d %B, %Y') }}</div>
+    <!--The users calender-->
     <div class="calendar">img</div>
     <div class="staffAbsences">
         <span class="sectionTitle">Staff Absences</span>
