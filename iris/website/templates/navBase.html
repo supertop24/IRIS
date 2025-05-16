@@ -12,60 +12,64 @@
     </head>
 
     <body>
-        <!--Side navigation bar-->
-        <div id="mySideNav" class="sideNav">
+        <div class="container">
+            <!--Side navigation bar-->
+            <div id="mySideNav" class="sideNav">
 
-            <!--IRIS logo-->
-            <img class="irisLogo" src="static/images/icons/whiteIrisLogo.png">
+                <!--IRIS logo-->
+                <img class="irisLogo" src="static/images/icons/whiteIrisLogo.png">
 
-            <!--Close button-->
-            <a href="javascript:void(0)" class="closeBtn" onclick="closeNav()"><img src="static/images/icons/closeNav.png"></a>
-            
+                <!--Side nav's toggle between open and close-->
+                <a href="javascript:void(0)" class="navToggleBtn" onclick="toggleNav()"><img src="static/images/icons/closeNav.png"></a>
 
-            <!--User profile-->
-            <div class="userProfile">
-                <img class="userProfileImg" src="static/images/teachers/janeSmith.png" alt="User profile picture">
-                <div class="userName">User Name</div>
+                <!--User profile-->
+                <div class="userProfile">
+                    <img class="userProfileImg" src="static/images/teachers/janeSmith.png" alt="User profile picture">
+                    <div class="userName">User Name</div>
+                </div>
+
+
+                <!--Nav Items-->
+                <a href="#" class="navItem"><img class="navIcon" src="static/images/icons/dashboard.png" alt="Dashboard icon">
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="navItem"><img class="navIcon" src="static/images/icons/attendance.png" alt="Attendance icon">
+                    <span>Attendance</span>
+                </a>
+                <a href="#" class="navItem"><img class="navIcon" src="static/images/icons/students.png" alt="Students icon">
+                    <span>Students</span>
+                </a>
+                <a href="#" class="navItem"><img class="navIcon" src="static/images/icons/pastoral.png" alt="Pastoral icon">
+                    <span>Pastoral</span>
+                </a>
+                <a href="#" class="navItem"><img class="navIcon" src="static/images/icons/markbooks.png" alt="Markbooks icon">
+                    <span>Markbooks</span>
+                </a>
+                <a href="#" class="navItem"><img class="navIcon" src="static/images/icons/reports.png" alt="Reports icon">
+                    <span>Reports</span>
+                </a>
+                <a href="#" class="navItem"><img class="navIcon" src="static/images/icons/communication.png" alt="Communication Center icon">
+                    <span>Communication Center</span>
+                </a>
+                <a href="#" class="navItem"><img class="navIcon" src="static/images/icons/notices.png" alt="Notices icon">
+                    <span>Notices</span>
+                </a>
             </div>
 
+            <!--Page content that children will override-->
+            <div id="content">
+                <div class="topNav">
+                    <div class="pageName">{%block pageName %}Nav Base{% endblock %}</div>
+                    <div class="searchBar">Search Students</div>
+                </div>
 
-            <!--Nav Items-->
-            <a href="#" class="navItem"><img class="navIcon" src="static/images/icons/dashboard.png" alt="Dashboard icon">
-                <span>Dashboard</span>
-            </a>
-            <a href="#" class="navItem"><img class="navIcon" src="static/images/icons/attendance.png" alt="Attendance icon">
-                <span>Attendance</span>
-            </a>
-            <a href="#" class="navItem"><img class="navIcon" src="static/images/icons/students.png" alt="Students icon">
-                <span>Students</span>
-            </a>
-            <a href="#" class="navItem"><img class="navIcon" src="static/images/icons/pastoral.png" alt="Pastoral icon">
-                <span>Pastoral</span>
-            </a>
-            <a href="#" class="navItem"><img class="navIcon" src="static/images/icons/markbooks.png" alt="Markbooks icon">
-                <span>Markbooks</span>
-            </a>
-            <a href="#" class="navItem"><img class="navIcon" src="static/images/icons/reports.png" alt="Reports icon">
-                <span>Reports</span>
-            </a>
-            <a href="#" class="navItem"><img class="navIcon" src="static/images/icons/communication.png" alt="Communication Center icon">
-                <span>Communication Center</span>
-            </a>
-            <a href="#" class="navItem"><img class="navIcon" src="static/images/icons/notices.png" alt="Notices icon">
-                <span>Notices</span>
-            </a>
+                {% block content %} 
+                <p>blah blah</p>
+                <p>blah blah</p>
+                <p>blah blah</p>
+                {% endblock %}
+            
+            </div>
         </div>
-
-        <!--Page content that children will override-->
-        <div id="container">
-        {% block content %} 
-        <p>blah blah</p>
-        <p>blah blah</p>
-        <p>blah blah</p>
-        {% endblock %}
-        <!--Open sidenav on click-->
-        <span onclick="openNav()">&#9776; open</span>
-        </div>
-
     </body>
 </html>

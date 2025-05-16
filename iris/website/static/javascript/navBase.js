@@ -1,28 +1,29 @@
 /* Toggle nav state */
-function openNav() {
+function toggleNav() {
     const sideNav = document.getElementById("mySideNav");
-    const container = document.getElementById("container");
+    const content = document.getElementById("content");
 
-    // Removes collapsed class to restore styling
-    sideNav.classList.remove("collapsed");
-    container.classList.remove("navCollapsed");
+    if (sideNav.classList.contains("collapsed")) {
+        // Opsens nav and restores styling
+        sideNav.classList.remove("collapsed");
+        content.classList.remove("navCollapsed");
 
-    // Resetting any inline styles the might interfere
-    sideNav.style.width = "";
-    container.style.marginLeft = "";
+        // Resetting any inline styles the might interfere
+        sideNav.style.width = "";
+        content.style.marginLeft = "";
+    }
+    else {
+        //Closes nav
+        sideNav.classList.add("collapsed");
+        content.classList.add("navCollapsed");
+
+        // Resetting any inline styles that might interfere
+        sideNav.style.width = "";
+        content.style.marginLeft = "";
+    }
 }
 
-/* Changing side nav's width and the container's left margin when nav is closed */
+/* Changing side nav's width and the content's left margin when nav is closed */
 function closeNav() {
-   const sideNav = document.getElementById("mySideNav");
-    const container = document.getElementById("container");
-
-
-    // Adds collapsed class
-    sideNav.classList.add("collapsed");
-    container.classList.add("navCollapsed");
-
-    // Resetting any inline styles that might interfere
-    sideNav.style.width = "";
-    container.style.marginLeft = "";
+    
 }
