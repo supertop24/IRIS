@@ -1,10 +1,7 @@
 import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-<<<<<<< HEAD
-=======
 
->>>>>>> 380d5eaed79c54fa9512edb04e14be2db475209e
 
 db = SQLAlchemy()
 def create_app(config_class='website.config.DevelopmentConfig'):
