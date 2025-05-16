@@ -1,10 +1,20 @@
-/* Container for the page */
-.container {
+/* Restting deafaults to ensure full coverage */
+html, body {
+    margin: 0;
+    padding: 0;
     height: 100%;
     width: 100%;
+}
+
+/* Container for the page */
+.container {
+    min-height: 100vh; /*Using viewport height so that it is tailored  to the device */
+    width: 100vw; /*Viewport width */
     margin: 0;
     padding: 0;
     background-color: #F3F2F2;
+    display: flex;
+    flex-direction: column;
 }
 
 /* Side nav menu - open state */
@@ -98,7 +108,7 @@
     border-radius: 20px;
     text-align: center;
     color:#000000;
-    font-size: 25px;
+    font-size: 30px;
     width: 87%;
     box-sizing: border-box;
     position: relative;
@@ -123,7 +133,7 @@
 
 /* Changing colour of links when hovered over */
 .sideNav a:hover {
-    color: red;
+    background-color: #C6C1D4;
 }
 
 /* Positioning the nav items */
@@ -199,7 +209,7 @@
     width: 50%;
     height: auto;
     text-align: center;
-    font-size: 25px;
+    font-size: 40px;
 }
 
 .searchBar {
