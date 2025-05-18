@@ -178,8 +178,6 @@ html, body {
     margin: 0 auto;
 }
 
-
-
 /* Pushing page content to the right when nav opened */
 #content {
     margin-left:  16%; /*Ensure that content isn't hidden by nav bar */
@@ -204,6 +202,7 @@ html, body {
     align-items: center;
 }
 
+/* Page title stlying */
 .pageName {
     padding: 20px;
     width: 50%;
@@ -212,6 +211,7 @@ html, body {
     font-size: 40px;
 }
 
+/* Search bar styling */
 .searchBar {
     padding: 20px;
     width: 50%;

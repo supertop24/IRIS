@@ -7,7 +7,7 @@
     column-gap: 10px;
     padding: 10px;
     box-sizing: border-box;
-
+}
 /* Heading styling of each section */
 .sectionTitle {
     display: block;
@@ -20,6 +20,7 @@
     box-sizing: border-box;
 }
 
+/* Date styling */
 .date {
     width: 100%;
     padding: 10px;
@@ -32,6 +33,7 @@
     font-size: 20px;
 }
 
+/* Calendar box styling */
 .calendar {
     flex: 60%;
     background-color: ffffff;
@@ -43,6 +45,7 @@
     min-height: 380px;
 }
 
+/* Staff absences box styling */
 .staffAbsences {
     flex: 20%;
     flex-direction: column;
@@ -58,6 +61,7 @@
     min-height: 380px;
 }
 
+/* Announcements box styling */
 .announcements {
     flex: 60%;
     flex-direction: column;
@@ -72,6 +76,7 @@
     min-height: 370px;
 }
 
+/*Current birthdays box styling */
 .birthdays {
     flex: 20%;
     display: flex;

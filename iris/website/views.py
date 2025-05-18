@@ -5,8 +5,7 @@ views = Blueprint('views', '__name__')
 
 @views.route('/')
 def portalSelect():
-   currentDate = datetime.now().date()
-   return render_template("dashboard.html", currentDate=currentDate)
+   return render_template("notices.html")
 
 @views.route('/navBase')
 def navBase():
@@ -24,7 +23,11 @@ def teacherLogin():
 def studentProfile():
     return render_template('studentProfileName.html')
 
-#@views.route('/dashboard')
-#def dashboard():
-#   currentDate = datetime.now().date()
-#   return render_template('dashboard.html', currentDate=currentDate)
+@views.route('/dashboard')
+def dashboard():
+   currentDate = datetime.now().date()
+   return render_template('dashboard.html', currentDate=currentDate)
+
+#@views.route('/notices')
+#def notices():
+#    return render_template('notices.html')

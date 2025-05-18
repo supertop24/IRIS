@@ -1,0 +1,61 @@
+/* Container style to align content */
+.noticesContainer {
+    width: auto;
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 15px; /*Creates gap between content */
+    column-gap: 10px;
+    padding: 10px;
+    box-sizing: border-box;
+    margin: 50px 200px 0 200px;
+    background-color: lightblue;
+}
+
+/*Create notice button */
+.createButton, .yourNoticeButton {
+    background-color: #ffffff;
+    color: #000000;
+    border: 4px solid #988EB1;
+    border-radius: 10px;
+    padding: 10px 25px;
+    font-weight: bold;
+    box-sizing: border-box;
+    flex: 50%;
+    margin: 5px;
+}
+
+/* Title styling for each notice */
+.noticeTitle {
+    display: block;
+    font-size: 30px;
+    padding: 8px 0;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+    background-color: #E2DDEB;
+    box-sizing: border-box;
+    flex: 100%;
+    text-align: center;;
+}
+
+/* Notice content wrapper */
+.noticeContent {
+    height: 100%;
+    background-color: #ffffff;
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+}
+
+.noticeBox {
+    flex: 100%;
+    flex-direction: column;
+    box-sizing: border-box;
+    min-height: 100px;
+}
+
+/* Styls notice's text */
+.noticeBox p {
+    margin: 0;
+    padding: 40px 20px;
+}
