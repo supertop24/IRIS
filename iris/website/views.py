@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template
 from datetime import datetime
+from flask_login import current_user
 
 views = Blueprint('views', '__name__')
 
@@ -13,11 +14,7 @@ def navBase():
 
 @views.route('/teacherPortal')
 def teacherPortal():
-    return render_template('teacherPortal.html')
-
-@views.route('/teacherLogin')
-def teacherLogin():
-    return render_template('teacherLogin.html')
+    return render_template('teacherPortal.html', user=current_user)
 
 @views.route('/studentProfile/nameandID')
 def studentProfile():
