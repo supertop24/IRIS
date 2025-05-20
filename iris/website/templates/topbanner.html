@@ -7,14 +7,30 @@
         <script src="{{ url_for('static', filename='javascript/topbanner.js') }}"></script>
 
         <!--Title that children can override-->
-        <title>{%block title %}Nav Base{% endblock %}</title>
+        <title>top banner</title>
     </head>
     <div class="banner">
+        <div class="top-background">
+            test
+        </div>
         <div class="top-banner">
-
+            <div>
+                Name
+            </div>
+            <div>
+                Search
+            </div>
         </div>
         <div class="bottom-banner">
-
+            <button class="button">Profile</button>
+            <button class="button">Pastoral Reports</button>
+            <button class="button">Academic Reports</button>
+            <button class="button">Awards</button>
+            <button class="button">Extracurrilars</button>
+            <button class="button">Timetable & Subjects</button>
+        </div>
+        <div class="profile-picture">
+            <img class="picture" src="static/images/teachers/janeSmith.png" alt="User profile picture">
         </div>
     </div>
 </html>
