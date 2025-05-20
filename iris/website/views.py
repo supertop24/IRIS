@@ -1,12 +1,18 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, request
 from datetime import datetime
 from flask_login import current_user
+from .models import notice
+from . import db
 
 views = Blueprint('views', '__name__')
 
-@views.route('/')
+@views.route('/', methods=['GET', 'POST'])
 def portalSelect():
-   return render_template("topbanner.html")
+   if request.form:
+        notices = notice(title=request.form.get("title"), note=request.form.get("title"))
+        db.session.add(notices)
+        db.session.commit()
+   return render_template("createNotice.html")
 
 @views.route('/navBase')
 def navBase():
@@ -29,6 +35,10 @@ def dashboard():
 def notices():
     return render_template('notices.html')
 
-#@views.route('/createNotices')
+#@views.route('/createNotices', methods=['GET', 'POST'])
 #def createNotices():
+#    if request.form:
+#        notices = notice(title=request.form.get("title"), note=request.form.get("title"))
+#        db.session.add(notices)
+#        db.session.commit()
 #    return render_template('createNotice.html')
