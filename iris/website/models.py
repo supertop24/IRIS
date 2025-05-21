@@ -18,6 +18,7 @@ class user(db.Model, UserMixin):
 class classes(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     year = db.Column(db.Integer, nullable=False)
+    code = db.Column(db.String(), nullable=False)
 
 class student(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -52,7 +53,7 @@ class class_log(db.Model):
     target_id = db.Column(db.Integer, nullable=False)
     value= db.Column(db.Boolean, default=False)
     note=db.Column(db.String(100), nullable=False)
-    created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
+    created_at = db.Column(db.DateTime, default=db.func.current_timestamp()) 
 
 class message_log(db.Model):
     id = db.Column(db.Integer, primary_key=True)

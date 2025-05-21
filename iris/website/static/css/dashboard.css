@@ -42,8 +42,13 @@
     border-color: #000000;
     border-width: 7px;
     box-sizing: border-box;
-    min-height: 380px;
+    min-height: 425px;
+    max-width: 65%;
 }
+/* Changed width of calendar box, to check with Dannielle - not sure if this will look the same 
+   on other screens, as mine are quite wide, but made slightly closer to figma in overall 
+   percentage of screen width. Left bottom boxes at original sizing in case 
+   we need to revert  */
 
 /* Staff absences box styling */
 .staffAbsences {
