@@ -2,6 +2,7 @@ import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
+from flask_migrate import Migrate
 
 db = SQLAlchemy()
 
@@ -11,6 +12,7 @@ def create_app(config_class='config.DevelopmentConfig'):  # Default to Developme
 
     app.config.from_object(config_class)  # Load the configuration
     db.init_app(app)  # Initialize SQLAlchemy
+    migrate = Migrate(app, db)
 
     login_manager = LoginManager()
     login_manager.login_view = 'auth.teacherLogin'
