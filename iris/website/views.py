@@ -27,14 +27,6 @@ def dashboard():
    currentDate = datetime.now().date()
    return render_template('dashboard.html', currentDate=currentDate)
 
-@views.route('assessmentsLanding')
-def assessmentsLanding():
-    currentDate = datetime.now().date()
-    return render_template("assessmentsLanding.html", user=current_user, currentDate=currentDate)
-
-#@views.route('/notices')
-#def notices():
-#    return render_template('notices.html')
 @views.route('/notice')
 def viewNotice():
     allNotices = notice.query.all() #Reading all the notices
@@ -64,3 +56,11 @@ def update():
     notices.notice = newTitle #Updating the notice's title
     db.session.commit() #Committing the changes to the database
     return redirect(url_for('views.viewNotice')) #Takes user back to the notice page
+@views.route('assessmentsLanding')
+def assessmentsLanding():
+    currentDate = datetime.now().date()
+    return render_template("assessmentsLanding.html", user=current_user, currentDate=currentDate)
+
+#@views.route('/notices')
+#def notices():
+#    return render_template('notices.html')
