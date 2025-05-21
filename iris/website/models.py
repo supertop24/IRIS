@@ -18,7 +18,7 @@ class user(db.Model, UserMixin):
 class classes(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     year = db.Column(db.Integer, nullable=False)
-    code = db.Column(db.String(), nullable=False)
+    code = db.Column(db.String(10), nullable=False)
 
 class student(db.Model):
     id = db.Column(db.Integer, primary_key=True)
