@@ -1,4 +1,5 @@
 from . import db
+from datetime import datetime
 from flask_login import UserMixin
 
 class user(db.Model, UserMixin):
@@ -77,10 +78,12 @@ class extracurricular_log(db.Model):
 
 class notice(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    target = db.Column(db.String(1))
-    target_id = db.Column(db.Integer, nullable=False)
-    note = db.Column(db.String(255))
-    created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
+    target = db.Column(db.String(1), nullable=True)
+    target_id = db.Column(db.Integer, nullable=True)
+    title = db.Column(db.String(50))
+    author = db.Column(db.String(50), nullable=True)
+    note = db.Column(db.String(255), nullable=True)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow) #default=db.func.current_timestamp())
 
 class pastoral(db.Model):
     id = db.Column(db.Integer, primary_key=True)

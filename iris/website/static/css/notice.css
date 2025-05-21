@@ -1,5 +1,5 @@
 /* Container style to align content */
-.noticesContainer {
+.noticeContainer {
     width: auto;
     display: flex;
     flex-wrap: wrap;

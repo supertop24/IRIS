@@ -1,0 +1,35 @@
+<!--Linking style sheet-->
+<link rel="stylesheet" href="{{ url_for('static', filename='css/createNotice.css') }}">
+
+<!--Inherits from navBase and overrides blocks-->
+{% extends "navBase.html" %}
+
+<!--Page titles-->
+{% block title %}Notices{% endblock %}
+
+{% block pageName %}Notices{% endblock %}
+
+<!--Page's content-->
+{% block content %}
+
+<div class="createNoticesContainer">
+    <!--Notice box-->
+    <div class="noticeBox">
+        <div class="noticeForm">
+            <!--Form for users to create a new notice-->
+            <form method="POST" action="{{ url_for('views.createNotice') }}">
+                <!--Notice title input-->
+                <input class="inputNoticeTitle" type="text" name="title" placeholder="Enter Title...">
+                <!--Notice content input-->
+                <input class="inputNoticeContent" type="text" name="note" placeholder="...">
+                <div class="buttonContainer">
+                    <input type="submit" class="uploadButton" value="Upload">
+                </div>
+            </form>
+        </div>
+    </div>
+
+    
+</div>
+
+{% endblock %}
