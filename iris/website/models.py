@@ -1,4 +1,5 @@
 from . import db
+from datetime import datetime
 
 class user(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -81,7 +82,7 @@ class notice(db.Model):
     title = db.Column(db.String(50))
     author = db.Column(db.String(50), nullable=True)
     note = db.Column(db.String(255), nullable=True)
-    created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
+    created_at = db.Column(db.DateTime, default=datetime.utcnow) #default=db.func.current_timestamp())
 
 class pastoral(db.Model):
     id = db.Column(db.Integer, primary_key=True)
