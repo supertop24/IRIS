@@ -1,6 +1,8 @@
 from . import db
+from datetime import datetime
+from flask_login import UserMixin
 
-class user(db.Model):
+class user(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
@@ -9,13 +11,14 @@ class user(db.Model):
     gender = db.Column(db.String(1))
     phone_number = db.Column(db.Integer, nullable=False)
     address = db.Column(db.String(255))
-    dob = db.Column(db.DateTime, nullable=False)
+    dob = db.Column(db.DateTime, nullable=True)
     profile = db.Column(db.LargeBinary, nullable=True)
     enrolled_at = db.Column(db.DateTime, default=db.func.current_timestamp())
 
 class classes(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     year = db.Column(db.Integer, nullable=False)
+    code = db.Column(db.String(10), nullable=False)
 
 class student(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -50,7 +53,7 @@ class class_log(db.Model):
     target_id = db.Column(db.Integer, nullable=False)
     value= db.Column(db.Boolean, default=False)
     note=db.Column(db.String(100), nullable=False)
-    created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
+    created_at = db.Column(db.DateTime, default=db.func.current_timestamp()) 
 
 class message_log(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -76,10 +79,12 @@ class extracurricular_log(db.Model):
 
 class notice(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    target = db.Column(db.String(1))
-    target_id = db.Column(db.Integer, nullable=False)
-    note = db.Column(db.String(255))
-    created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
+    target = db.Column(db.String(1), nullable=True)
+    target_id = db.Column(db.Integer, nullable=True)
+    title = db.Column(db.String(50))
+    author = db.Column(db.String(50), nullable=True)
+    note = db.Column(db.String(255), nullable=True)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow) #default=db.func.current_timestamp())
 
 class pastoral(db.Model):
     id = db.Column(db.Integer, primary_key=True)
