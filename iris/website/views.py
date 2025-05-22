@@ -8,7 +8,7 @@ views = Blueprint('views', '__name__')
 
 @views.route('/')
 def portalSelect():
-   return render_template("portalSelect.html")
+   return render_template("topbanner.html")
 
 @views.route('/navBase')
 def navBase():
@@ -76,3 +76,46 @@ def deleteNotice():
 def assessmentsLanding():
     currentDate = datetime.now().date()
     return render_template("assessmentsLanding.html", user=current_user, currentDate=currentDate)
+
+#@views.route('/notices')
+#def notices():
+#    return render_template('notices.html')
+
+@views.route('/test-seed')
+def test_seed():
+    from .models import db, Teacher, Student, Class, TeacherClassAssociation, TeacherRole
+
+    test_class = Class(year=2025, subject='M', code='MATH101')
+
+    teacher = Teacher(
+        role='teacher',
+        name='Jane Doe',
+        email='jane.doe@example.com',
+        password='password123',
+        gender='F',
+        phone_number=123456789,
+        address='123 School Lane'
+    )
+
+    association = TeacherClassAssociation(
+        teacher=teacher,
+        class_=test_class,
+        role=TeacherRole.MAIN
+    )
+
+    student = Student(
+        role='student',
+        name='John Smith',
+        email='john.smith@example.com',
+        password='password123',
+        gender='M',
+        phone_number=987654321,
+        address='456 Learning Road'
+    )
+
+    student.enrolled_classes.append(test_class)
+
+    db.session.add_all([test_class, teacher, student, association])
+    db.session.commit()
+
+    return "Sample data inserted successfully!"
