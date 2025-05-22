@@ -8,17 +8,49 @@
 }
 .top-background
 {
+    display: grid;
     grid-row: 1 ;
     grid-column: span 2;
     background-color: #C5B9DF;
     height: 130px;
+    grid-template-columns: 1fr 6fr;
 }
 .top-banner
 {
-    display: flex;
-    grid-row: 1;
-    grid-column:2;
-    justify-content: center;
+    grid-column: 2;
+    grid-template-columns: 1fr 1fr;
+    display: grid;
+}
+.name
+{
+    grid-column: 1;
+    align-content: center;
+    position: relative;
+    font-size: 40px;
+}
+.search-bar
+{
+    grid-column: 2;
+    align-content: center;
+    justify-self: right;
+    margin-right:  30px; 
+    position: relative;
+    display: inline-block;
+}
+.search-input
+{
+    font-size: 20px;
+    height: 60px;
+    width: 330px;
+    text-align: center;
+    border-color: white;
+    border-radius: 15px;
+}
+.search-icon
+{   
+    position: absolute;
+    right: 25px;
+    top: 45px;
 }
 .bottom-banner
 {
