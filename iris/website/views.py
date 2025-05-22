@@ -48,19 +48,16 @@ def createNotice():
        return redirect(url_for('views.viewNotice')) #Takes user back to the notice page
    return render_template("createNotice.html")
 
-@views.route("/updateNotice", methods=["POST"])
-def update():
-    newTitle = request.form.get("newTitle")
-    oldTitle = request.form.get("oldTitle")
-    notices = notice.query.filter_by(title=oldTitle).first() #Reading the notice to be updated
-    notices.notice = newTitle #Updating the notice's title
-    db.session.commit() #Committing the changes to the database
-    return redirect(url_for('views.viewNotice')) #Takes user back to the notice page
+#@views.route("/updateNotice", methods=["POST"])
+#def update():
+#    newTitle = request.form.get("newTitle")
+#    oldTitle = request.form.get("oldTitle")
+#    notices = notice.query.filter_by(title=oldTitle).first() #Reading the notice to be updated
+#    notices.notice = newTitle #Updating the notice's title
+#    db.session.commit() #Committing the changes to the database
+ #   return redirect(url_for('views.viewNotice')) #Takes user back to the notice page
+
 @views.route('assessmentsLanding')
 def assessmentsLanding():
     currentDate = datetime.now().date()
     return render_template("assessmentsLanding.html", user=current_user, currentDate=currentDate)
-
-#@views.route('/notices')
-#def notices():
-#    return render_template('notices.html')

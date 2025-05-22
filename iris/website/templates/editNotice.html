@@ -16,14 +16,14 @@
     <!--Notice box-->
     <div class="noticeBox">
         <div class="noticeForm">
-            <!--Form for users to create a new notice-->
+            <!--Form for to edit a notice-->
             <form method="POST" action="./updateNotice">
                 <!--Old notice title - hidden input to keep track of the old name-->
-                <input type="hidden" value="{{ notice.title }}" name="oldTitle">
+                <input type="hidden" value="{{ notices.title }}" name="oldTitle">
                 <!--New notice title input-->
                 <input class="inputNoticeTitle" type="text" name="title" placeholder="Enter Title...">
                 <!--Old notice content - hidden input to keep track of the old content-->
-                <input type="hidden" value="{{ notice.note }}" name="oldContent">
+                <input type="hidden" value="{{ notices.note }}" name="oldContent">
                 <!--New notice content input-->
                 <input class="inputNoticeContent" type="text" name="note" placeholder="...">
                 <div class="buttonContainer">
