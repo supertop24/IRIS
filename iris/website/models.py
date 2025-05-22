@@ -1,38 +1,102 @@
 from . import db
 from datetime import datetime
 from flask_login import UserMixin
+import enum
+from sqlalchemy import Enum
 
-class user(db.Model, UserMixin):
+class TeacherRole(enum.Enum):
+    MAIN = "main"
+    SUB = "sub"
+    ASSISTANT = "assistant"
+
+class TeacherClassAssociation(db.Model):
+    __tablename__ = 'teacher_class_association'
+    
+    teacher_id = db.Column(db.Integer, db.ForeignKey('teacher.id'), primary_key=True)
+    class_id = db.Column(db.Integer, db.ForeignKey('class.id'), primary_key=True)
+    role = db.Column(Enum(TeacherRole), nullable=False)
+
+    teacher = db.relationship("Teacher", back_populates="class_associations")
+    class_ = db.relationship("Class", back_populates="teacher_associations")
+
+student_class = db.Table(
+    'student_class',
+    db.Column('student_id', db.Integer, db.ForeignKey('student.id'), primary_key=True),
+    db.Column('class_id', db.Integer, db.ForeignKey('class.id'), primary_key=True)
+)
+
+class User(db.Model, UserMixin):
+    __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
+    role = db.Column(db.String(20), nullable=False)
     name = db.Column(db.String(50), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    school_email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(50))
-    gender = db.Column(db.String(1))
-    phone_number = db.Column(db.Integer, nullable=False)
+    gender = db.Column(db.String(15))
+    phone_number = db.Column(db.Integer, nullable=True)
     address = db.Column(db.String(255))
-    dob = db.Column(db.DateTime, nullable=True)
     profile = db.Column(db.LargeBinary, nullable=True)
     enrolled_at = db.Column(db.DateTime, default=db.func.current_timestamp())
 
-class classes(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+class Student(User):
+    __tablename__ = 'student'
+    id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True, nullable=False)
+    enrolled_classes = db.relationship('Class', secondary=student_class, back_populates='students')
+    dob = db.Column(db.DateTime, nullable=True)
+    personal_email = db.Column(db.String(120), unique=True)
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.role = 'student'
+
+class Teacher(User):
+    __tablename__ = 'teacher'
+    id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True, nullable=False)
+    class_associations = db.relationship("TeacherClassAssociation", back_populates="teacher")
+    classes = db.relationship("Class", secondary='teacher_class_association', viewonly=True)
+    dob = db.Column(db.DateTime, nullable=True)
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.role = 'teacher'
+
+class Class(db.Model):
+    __tablename__ = 'class'    
+    id = db.Column(db.Integer, primary_key=True, nullable=False)
     year = db.Column(db.Integer, nullable=False)
-    code = db.Column(db.String(10), nullable=False)
+    subject = db.Column(db.String(15))     
+    code = db.Column(db.String(15), nullable=False)
 
-class student(db.Model):
+    teacher_associations = db.relationship("TeacherClassAssociation", back_populates="class_")
+    teachers = db.relationship("Teacher", secondary='teacher_class_association', viewonly=True)
+
+    students = db.relationship('Student', secondary=student_class, back_populates='enrolled_classes')
+
+    assessments = db.relationship('Assessment', backref='class_', lazy=True)
+
+#teacher_class = db.Table(
+ #   'teacher_classes',
+  #  db.Column('teacher_id', db.Integer, db.ForeignKey('user.id'), primary_key=True),
+   # db.Column('class_id', db.Integer, db.ForeignKey('classes.id'), primary_key=True)
+#) Shouldn't need this now!
+
+class Assessment(db.Model):
+    __tablename__ = 'assessment'
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, nullable=False)
-    class_id = db.Column(db.Integer, nullable=False)
+    assessment_code = db.Column(db.String(10), nullable=False)
+    due_date = db.Column(db.DateTime, nullable=False)
+    upload_date = db.Column(db.DateTime, default=db.func.current_timestamp())
+    # status = db.Column (enum for options - insert later)
 
-class teacher(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, nullable=False)
-    main_class = db.Column(db.Integer, nullable=False)
-    sub_class = db.Column(db.Integer, nullable=True)
-    subject = db.Column(db.String(1))
+    class_id = db.Column(db.Integer, db.ForeignKey('class.id'), nullable=False)
 
-class caregiver(db.Model):
+    # assessments must be uploaded as files - single pdf, including isntructions and criteria, then separate file just for teachers - including resources and other marking notes
+    # a new class/table for "submissions" needed for tracking. Must contain a relationship to the assessment, the class, the students and the status
+
+
+
+class Caregiver(db.Model):
+    __tablename__ = 'caregiver'
     id = db.Column(db.Integer, primary_key=True)
     student_id = db.Column(db.Integer, nullable=False)
     type = db.Column(db.String(1))

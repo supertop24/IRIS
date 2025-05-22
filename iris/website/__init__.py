@@ -18,11 +18,11 @@ def create_app(config_class='config.DevelopmentConfig'):  # Default to Developme
     login_manager.login_view = 'auth.teacherLogin'
     login_manager.init_app(app)
 
-    from .models import user
+    from .models import User
 
     @login_manager.user_loader
     def load_user(user_id):
-        return user.query.get(int(user_id))
+        return User.query.get(int(user_id))
     
     with app.app_context():
         db.create_all()
