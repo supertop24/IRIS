@@ -1,10 +1,96 @@
 .banner
 {
+    display: grid;
     width: flex;
     height: 200px ;
+    grid-template-columns: 1fr 6fr;
+    grid-template-rows: 1fr 1fr;
+}
+.top-background
+{
+    display: grid;
+    grid-row: 1 ;
+    grid-column: span 2;
+    background-color: #C5B9DF;
+    height: 130px;
+    grid-template-columns: 1fr 6fr;
 }
 .top-banner
 {
-    height: 130px ;
-    background-color: #C5B9DF;
+    grid-column: 2;
+    grid-template-columns: 1fr 1fr;
+    display: grid;
+}
+.name
+{
+    grid-column: 1;
+    align-content: center;
+    position: relative;
+    font-size: 40px;
+}
+.search-bar
+{
+    grid-column: 2;
+    align-content: center;
+    justify-self: right;
+    margin-right:  30px; 
+    position: relative;
+    display: inline-block;
+}
+.search-input
+{
+    font-size: 20px;
+    height: 60px;
+    width: 330px;
+    text-align: center;
+    border-color: white;
+    border-radius: 15px;
+}
+.search-icon
+{   
+    position: absolute;
+    right: 25px;
+    top: 45px;
+}
+.bottom-banner
+{
+    grid-row: 2;
+    grid-column:  2;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    align-items: center;
+}
+.button
+{
+    width: 130px;
+    height: 50px ;
+    margin: 0 20px 0 0 ;
+    border-style: solid;
+    background-color: white;
+    border-color:#988EB1 ;
+    border-width: 5px;
+    border-radius: 20px;
+    color: black;
+    transition: 0.3s ease;
+}
+.button:hover
+{
+    color: white;
+    background-color: #988EB1;
+}
+.profile-picture
+{
+    grid-row: span 2;
+    grid-column: 1;
+    position: relative;
+    display: flex;
+    align-items: end;
+    justify-content: center;
+}
+.picture
+{
+    width: 160px;
+    height: auto;
+    object-fit: contain;
 }
