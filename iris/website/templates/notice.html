@@ -34,6 +34,19 @@
     {% for notices in allNotices %}
     <!--Notice box-->
     <div class="noticeBox">
+        <!--Edit icon that redirects to edit notice page-->
+        <a href="{{ url_for('views.editNotice', id=notices.id) }}" class="editIcon">
+            <img src="{{ url_for('static', filename='images/icons/editPencil.png') }}" alt="Edit icon">
+        </a>
+
+        <!--Delete icon that deletes a notice-->
+        <form method="POST" action="/deleteNotice">
+            <input type="hidden" name="id" value="{{ notices.id }}">
+            <button type="submit" class="deleteIcon">
+                <img src="{{ url_for('static', filename='images/icons/deleteBin.png') }}" alt="Bin icon">
+            </button>
+        </form>
+
         <div class="noticeContent">
             <!--Notice title-->
             <span class="noticeTitle">{{notices.title}}</span>

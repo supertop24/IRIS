@@ -29,9 +29,10 @@ def create_app(config_class='config.DevelopmentConfig'):  # Default to Developme
 
     from .views import views
     from .auth import auth
-
+    from website.function.command import command
     app.register_blueprint(views, url_prefix='/')
     app.register_blueprint(auth, url_prefix='/')
+    app.register_blueprint(command, url_prefix='/')
 
     return app
 
