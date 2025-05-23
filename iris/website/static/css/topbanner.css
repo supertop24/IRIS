@@ -94,3 +94,25 @@
     height: auto;
     object-fit: contain;
 }
+.search-result
+{
+    position: absolute;
+    display: none;
+    list-style-type: none;
+    font-size: 24px;
+    z-index: 1;
+}
+.search-result li
+{
+    border-color:#988EB1 ;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 20px;
+    background-color: white;
+    padding: 10px;
+    margin: 5px;
+    cursor: pointer;
+}
+.search-result li:hover {
+    background-color: #988EB1;
+}
