@@ -8,7 +8,7 @@ views = Blueprint('views', '__name__')
 
 @views.route('/')
 def portalSelect():
-   return render_template("topbanner.html")
+   return render_template("portalSelect.html")
 
 @views.route('/navBase')
 def navBase():
@@ -76,10 +76,6 @@ def deleteNotice():
 def assessmentsLanding():
     currentDate = datetime.now().date()
     return render_template("assessmentsLanding.html", user=current_user, currentDate=currentDate)
-
-#@views.route('/notices')
-#def notices():
-#    return render_template('notices.html')
 
 @views.route('/test-seed')
 def test_seed():
