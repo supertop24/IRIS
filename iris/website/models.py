@@ -60,6 +60,8 @@ class Student(User):
         super().__init__(**kwargs)
         self.role = 'student'
 
+    #need to add get_weekly_schedule method to here and Teacher classes to render into calendar 
+
 class Teacher(User):
     __tablename__ = 'teacher'
     id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True, nullable=False)
