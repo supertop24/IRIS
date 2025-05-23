@@ -24,17 +24,16 @@
 {% endwith %}
 
 <div class="noticeContainer">
-    <!--Create and view user's notices buttons-->
-    <div class="buttonContainer">
-        <a class="createButton" href="{{ url_for('views.createNotice') }}">Create Notice</a>
-        <button class="yourNoticeButton">Your Notices</button>
-    </div>
 
     <!--Loop to display all the notices-->
     {% for notices in allNotices %}
     <!--Notice box-->
     <div class="noticeBox">
-        <!--Edit icon that redirects to edit notice page-->
+
+        <!--Columns for the icons-->
+        <div class="iconColumns">
+            
+            <!--Edit icon that redirects to edit notice page-->
         <a href="{{ url_for('views.editNotice', id=notices.id) }}" class="editIcon">
             <img src="{{ url_for('static', filename='images/icons/editPencil.png') }}" alt="Edit icon">
         </a>
@@ -46,13 +45,25 @@
                 <img src="{{ url_for('static', filename='images/icons/deleteBin.png') }}" alt="Bin icon">
             </button>
         </form>
-
-        <div class="noticeContent">
-            <!--Notice title-->
-            <span class="noticeTitle">{{notices.title}}</span>
-            <!--Notice content-->
-            <p>{{notices.note}}</p>
         </div>
+
+        <!--Main content wrapper used to align the notices and the buttons - excluding the icons-->
+        <div class="noticeMainContentWrapper">
+            <!--This the actual notice-->
+            <div class="noticeContent">
+                <!--Notice title-->
+                <span class="noticeTitle">{{notices.title}}</span>
+                <!--Notice content-->
+                <p>{{notices.note}}</p>
+            </div>
+
+            <!--Create and view user's notices buttons-->
+            <div class="buttonContainer">
+                <a class="createButton" href="{{ url_for('views.createNotice') }}">Create Notice</a>
+                <button class="yourNoticeButton">Your Notices</button>
+            </div>
+        </div>
+        
     </div>
     {% endfor %} <!--End of for loop to display notices-->
 </div>

@@ -7,8 +7,20 @@
     column-gap: 10px;
     padding: 10px;
     box-sizing: border-box;
-    margin: 50px 200px 0 200px;
-    background-color: lightblue;
+    margin: 50px 200px;
+}
+
+.noticeMainContentWrapper {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    align-items: left;
+}
+
+.buttonContainer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
 }
 
 /*Create notice button */
@@ -20,7 +32,7 @@
     padding: 10px 25px;
     font-weight: bold;
     box-sizing: border-box;
-    flex: 50%;
+
     margin: 5px;
 }
 
@@ -39,7 +51,7 @@
 
 /* Notice content wrapper */
 .noticeContent {
-    height: 100%;
+    width: 100%;
     background-color: #ffffff;
     border-bottom-left-radius: 25px;
     border-bottom-right-radius: 25px;
@@ -49,13 +61,29 @@
 
 .noticeBox {
     flex: 100%;
-    flex-direction: column;
+    display: flex;
+    align-items: flex-start;
     box-sizing: border-box;
     min-height: 100px;
+    gap: 10px;
 }
 
 /* Styls notice's text */
 .noticeBox p {
     margin: 0;
     padding: 40px 20px;
+}
+
+/* HIding delte icon button styling */
+.deleteIcon {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.iconColumns {
+    display: flex;
+    flex-direction: column;
+    padding-top: 25px;
+    gap: 10px;
 }

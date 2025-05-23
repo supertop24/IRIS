@@ -17,19 +17,20 @@
     <div class="noticeBox">
         <div class="noticeForm">
             <!--Form for users to create a new notice-->
-            <form method="POST" action="{{ url_for('views.createNotice') }}">
+            <form method="POST" action="{{ url_for('views.createNotice') }}" id="formId">
                 <!--Notice title input-->
                 <input class="inputNoticeTitle" type="text" name="title" placeholder="Enter Title...">
                 <!--Notice content input-->
-                <input class="inputNoticeContent" type="text" name="note" placeholder="...">
-                <div class="buttonContainer">
-                    <input type="submit" class="uploadButton" value="Upload">
-                </div>
+                <textarea class="inputNoticeContent" type="text" name="note" placeholder="Enter your content here..."></textarea>
+
             </form>
         </div>
     </div>
 
-    
+    <!--Upload button-->
+    <div class="buttonContainer">
+        <input type="submit" form="formId" class="uploadButton" value="Upload">
+    </div>
 </div>
 
 {% endblock %}
