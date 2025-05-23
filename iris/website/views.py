@@ -65,7 +65,7 @@ def assessmentsLanding():
 #def notices():
 #    return render_template('notices.html')
 
-@views.route('/test-seed')
+''' @views.route('/test-seed')
 def test_seed():
     from .models import db, Teacher, Student, Class, TeacherClassAssociation, TeacherRole
 
@@ -103,3 +103,5 @@ def test_seed():
     db.session.commit()
 
     return "Sample data inserted successfully!"
+Not need atm - But please leave commented for now, for my reference & other db insertions 
+        '''
