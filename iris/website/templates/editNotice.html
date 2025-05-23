@@ -16,24 +16,17 @@
     <!--Notice box-->
     <div class="noticeBox">
         <div class="noticeForm">
-            <!--Form for users to create a new notice-->
-            <form method="POST" action="./updateNotice">
-                <!--Old notice title - hidden input to keep track of the old name-->
-                <input type="hidden" value="{{ notice.title }}" name="oldTitle">
-                <!--New notice title input-->
-                <input class="inputNoticeTitle" type="text" name="title" placeholder="Enter Title...">
-                <!--Old notice content - hidden input to keep track of the old content-->
-                <input type="hidden" value="{{ notice.note }}" name="oldContent">
-                <!--New notice content input-->
-                <input class="inputNoticeContent" type="text" name="note" placeholder="...">
+            <!--Form to edit a notice-->
+            <form method="POST" action="{{ url_for('views.editNotice', id=notices.id) }}">
+                <input class="inputNoticeTitle" type="text" name="title" value="{{ notices.title }}">
+                <input class="inputNoticeContent" type="text" name="note" value="{{ notices.note }}">
                 <div class="buttonContainer">
+                    <!--Update button-->
                     <input type="submit" class="uploadButton" value="Update">
                 </div>
             </form>
         </div>
     </div>
-
-    
 </div>
 
 {% endblock %}

@@ -2,8 +2,13 @@
 venv/
 
 instance/
+*.db
+
+#Ignore the __paychache__
 __pycache__/
 *.pyc
+
+
 .DS_Store
 .env
 *.sqlite3

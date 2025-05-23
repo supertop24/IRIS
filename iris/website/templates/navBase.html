@@ -17,41 +17,41 @@
             <div id="mySideNav" class="sideNav">
 
                 <!--IRIS logo-->
-                <img class="irisLogo" src="static/images/icons/whiteIrisLogo.png">
+                <img class="irisLogo" src="{{ url_for('static', filename='images/icons/whiteIrisLogo.png') }}" alt="IRIS logo">
 
                 <!--Side nav's toggle between open and close-->
-                <a href="javascript:void(0)" class="navToggleBtn" onclick="toggleNav()"><img src="static/images/icons/closeNav.png"></a>
+                <a href="javascript:void(0)" class="navToggleBtn" onclick="toggleNav()"><img src="{{ url_for('static', filename='images/icons/closeNav.png') }}"></a>
 
                 <!--User profile-->
                 <div class="userProfile">
-                    <img class="userProfileImg" src="static/images/teachers/janeSmith.png" alt="User profile picture">
+                    <img class="userProfileImg" src="{{ url_for('static', filename='images/teachers/janeSmith.png') }}" alt="User profile picture">
                     <div class="userName">User Name</div>
                 </div>
 
 
                 <!--Nav Items-->
-                <a href="/dashboard" class="navItem"><img class="navIcon" src="static/images/icons/dashboard.png" alt="Dashboard icon">
+                <a href="/dashboard" class="navItem"><img class="navIcon" src="{{ url_for('static', filename='images/icons/dashboard.png') }}" alt="Dashboard icon">
                     <span>Dashboard</span>
                 </a>
-                <a href="#" class="navItem"><img class="navIcon" src="static/images/icons/attendance.png" alt="Attendance icon">
+                <a href="#" class="navItem"><img class="navIcon" src="{{ url_for('static', filename='images/icons/attendance.png') }}" alt="Attendance icon">
                     <span>Attendance</span>
                 </a>
-                <a href="#" class="navItem"><img class="navIcon" src="static/images/icons/students.png" alt="Students icon">
+                <a href="#" class="navItem"><img class="navIcon" src="{{ url_for('static', filename='images/icons/students.png') }}" alt="Students icon">
                     <span>Students</span>
                 </a>
-                <a href="#" class="navItem"><img class="navIcon" src="static/images/icons/pastoral.png" alt="Pastoral icon">
+                <a href="#" class="navItem"><img class="navIcon" src="{{ url_for('static', filename='images/icons/pastoral.png') }}" alt="Pastoral icon">
                     <span>Pastoral</span>
                 </a>
-                <a href="/assessmentsLanding" class="navItem"><img class="navIcon" src="static/images/icons/markbooks.png" alt="Markbooks icon">
+                <a href="/assessmentsLanding" class="navItem"><img class="navIcon" src="{{ url_for('static', filename='images/icons/markbooks.png') }}" alt="Markbooks icon">
                     <span>Assessments</span>
                 </a>
-                <a href="#" class="navItem"><img class="navIcon" src="static/images/icons/reports.png" alt="Reports icon">
+                <a href="#" class="navItem"><img class="navIcon" src="{{ url_for('static', filename='images/icons/reports.png') }}" alt="Reports icon">
                     <span>Reports</span>
                 </a>
-                <a href="#" class="navItem"><img class="navIcon" src="static/images/icons/communication.png" alt="Communication Center icon">
+                <a href="#" class="navItem"><img class="navIcon" src="{{ url_for('static', filename='images/icons/communication.png') }}" alt="Communication Center icon">
                     <span>Communication Center</span>
                 </a>
-                <a href="/notice" class="navItem"><img class="navIcon" src="static/images/icons/notices.png" alt="Notices icon">
+                <a href="/notice" class="navItem"><img class="navIcon" src="{{ url_for('static', filename='images/icons/notices.png') }}" alt="Notices icon">
                     <span>Notices</span>
                 </a>
             </div>
