@@ -27,14 +27,8 @@ class StudentClassAssociation(db.Model):
     student_id = db.Column(db.Integer, db.ForeignKey('student.id'), primary_key=True)
     class_id = db.Column(db.Integer, db.ForeignKey('class.id'), primary_key=True)
 
-    student = db.relationship('Student', back_populates='class_associations')
+    student = db.relationship('Student', back_populates='enrolled_classes')
     class_ = db.relationship('Class', back_populates='student_associations')
-
-student_class = db.Table(
-    'student_class',
-    db.Column('student_id', db.Integer, db.ForeignKey('student.id'), primary_key=True),
-    db.Column('class_id', db.Integer, db.ForeignKey('class.id'), primary_key=True)
-)
 
 class User(db.Model, UserMixin):
     __tablename__ = 'user'
@@ -52,7 +46,7 @@ class User(db.Model, UserMixin):
 class Student(User):
     __tablename__ = 'student'
     id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True, nullable=False)
-    enrolled_classes = db.relationship('Class', secondary=student_class, back_populates='students')
+    enrolled_classes = db.relationship('StudentClassAssociation', back_populates='student')
     dob = db.Column(db.DateTime, nullable=True)
     personal_email = db.Column(db.String(120), unique=True)
 
@@ -80,10 +74,11 @@ class Class(db.Model):
     subject = db.Column(db.String(15))     
     code = db.Column(db.String(15), nullable=False)
 
+    # The two teacher relationship lines serve different purposes. The first one calls the "TeacherClassAssociation" model, which holds their role info. If we just want to call teacher objects, we can use the 2nd line which gets the Teacher model directly.  
     teacher_associations = db.relationship("TeacherClassAssociation", back_populates="class_")
     teachers = db.relationship("Teacher", secondary='teacher_class_association', viewonly=True)
 
-    students = db.relationship('Student', secondary=student_class, back_populates='enrolled_classes')
+    student_associations = db.relationship('StudentClassAssociation', back_populates='class_')
 
     assessments = db.relationship('Assessment', backref='class_', lazy=True)
 
@@ -112,7 +107,6 @@ class ClassSession(db.Model):
     date = db.Column(db.Date, nullable=False)
     period = db.Column(db.String(10), nullable=True)
 
-    class_ = db.relationship("Class", backref="sessions")
 
 class Assessment(db.Model):
     __tablename__ = 'assessment'
