@@ -4,6 +4,8 @@ from flask_login import UserMixin
 import enum
 from sqlalchemy import Enum
 
+# The following three tables are used to connect the Student and Teacher classes with the Class class.  
+
 class TeacherRole(enum.Enum):
     MAIN = "main"
     SUB = "sub"
@@ -19,11 +21,14 @@ class TeacherClassAssociation(db.Model):
     teacher = db.relationship("Teacher", back_populates="class_associations")
     class_ = db.relationship("Class", back_populates="teacher_associations")
 
-student_class = db.Table(
-    'student_class',
-    db.Column('student_id', db.Integer, db.ForeignKey('student.id'), primary_key=True),
-    db.Column('class_id', db.Integer, db.ForeignKey('class.id'), primary_key=True)
-)
+class StudentClassAssociation(db.Model):
+    __tablename__ = 'student_class_association'
+    
+    student_id = db.Column(db.Integer, db.ForeignKey('student.id'), primary_key=True)
+    class_id = db.Column(db.Integer, db.ForeignKey('class.id'), primary_key=True)
+
+    student = db.relationship('Student', back_populates='enrolled_classes')
+    class_ = db.relationship('Class', back_populates='student_associations')
 
 class User(db.Model, UserMixin):
     __tablename__ = 'user'
@@ -41,13 +46,15 @@ class User(db.Model, UserMixin):
 class Student(User):
     __tablename__ = 'student'
     id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True, nullable=False)
-    enrolled_classes = db.relationship('Class', secondary=student_class, back_populates='students')
+    enrolled_classes = db.relationship('StudentClassAssociation', back_populates='student')
     dob = db.Column(db.DateTime, nullable=True)
     personal_email = db.Column(db.String(120), unique=True)
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.role = 'student'
+
+    #need to add get_weekly_schedule method to here and Teacher classes to render into calendar 
 
 class Teacher(User):
     __tablename__ = 'teacher'
@@ -67,18 +74,39 @@ class Class(db.Model):
     subject = db.Column(db.String(15))     
     code = db.Column(db.String(15), nullable=False)
 
+    # The two teacher relationship lines serve different purposes. The first one calls the "TeacherClassAssociation" model, which holds their role info. If we just want to call teacher objects, we can use the 2nd line which gets the Teacher model directly.  
     teacher_associations = db.relationship("TeacherClassAssociation", back_populates="class_")
     teachers = db.relationship("Teacher", secondary='teacher_class_association', viewonly=True)
 
-    students = db.relationship('Student', secondary=student_class, back_populates='enrolled_classes')
+    student_associations = db.relationship('StudentClassAssociation', back_populates='class_')
 
     assessments = db.relationship('Assessment', backref='class_', lazy=True)
 
-#teacher_class = db.Table(
- #   'teacher_classes',
-  #  db.Column('teacher_id', db.Integer, db.ForeignKey('user.id'), primary_key=True),
-   # db.Column('class_id', db.Integer, db.ForeignKey('classes.id'), primary_key=True)
-#) Shouldn't need this now!
+    sessions = db.relationship('ClassSession', backref='class_', cascade="all, delete-orphan")
+
+class AttendanceStatus(enum.Enum):
+    Present = "present"
+    AbsentUnjustified = "absentunjustified"
+    AbsentJustified = "absentjustified"
+    Late = "late"
+ 
+class Attendance(db.Model):
+    __tablename__ = 'attendance'  
+    student_id = db.Column(db.Integer, db.ForeignKey('student.id'), primary_key=True)
+    session_id = db.Column(db.Integer, db.ForeignKey('class_session.id'), primary_key=True)
+    status = db.Column(Enum(AttendanceStatus), nullable=False) 
+    note = db.Column(db.String(50), nullable=True)
+
+    student = db.relationship("Student", backref="attendance_records")
+    session = db.relationship("ClassSession", backref="attendance_records")
+
+class ClassSession(db.Model):
+    __tablename__ = 'class_session'   
+    id = db.Column(db.Integer, primary_key=True)
+    class_id = db.Column(db.Integer, db.ForeignKey('class.id'), nullable=False)
+    date = db.Column(db.Date, nullable=False)
+    period = db.Column(db.String(10), nullable=True)
+
 
 class Assessment(db.Model):
     __tablename__ = 'assessment'
@@ -92,8 +120,6 @@ class Assessment(db.Model):
 
     # assessments must be uploaded as files - single pdf, including isntructions and criteria, then separate file just for teachers - including resources and other marking notes
     # a new class/table for "submissions" needed for tracking. Must contain a relationship to the assessment, the class, the students and the status
-
-
 
 class Caregiver(db.Model):
     __tablename__ = 'caregiver'
