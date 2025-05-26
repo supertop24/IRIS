@@ -3,6 +3,7 @@
     width: auto;
     display: flex;
     flex-wrap: wrap;
+    flex-direction: column;
     row-gap: 15px; /*Creates gap between content */
     column-gap: 10px;
     padding: 10px;
@@ -10,16 +11,19 @@
     margin: 50px 200px;
 }
 
-.noticeMainContentWrapper {
+.noticeMainContentWrapper, .noticeContentWrapper {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    align-items: left;
+    width: 100%;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 1200px;
 }
 
 .buttonContainer {
     display: flex;
-    justify-content: flex-end;
+    /*justify-content: flex-end; */
     margin-top: 10px;
 }
 
@@ -32,7 +36,6 @@
     padding: 10px 25px;
     font-weight: bold;
     box-sizing: border-box;
-
     margin: 5px;
 }
 
