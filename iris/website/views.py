@@ -1,7 +1,7 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash
-from datetime import datetime
-from flask_login import current_user
-from .models import notice, Class
+from flask import Blueprint, render_template, request, redirect, url_for, flash, jsonify, abort
+from datetime import datetime, date, timedelta
+from flask_login import current_user, login_required
+from .models import notice, Class, Student, Teacher
 from . import db
 
 views = Blueprint('views', '__name__')
@@ -123,16 +123,28 @@ def test_seed():
 # Not need atm - But please leave commented for now, for my reference & other db insertions 
 '''        
 
-'''
 @views.route('AddClassSession')
 def AddClassSession():
     cls = Class.query.get(1)
     cls.schedule = "Mon 09:00,Wed 11:00"
     db.session.commit()
 
-    from ..utils import schedule_utils
+    from iris.utils.schedule_utils import generate_class_sessions_from_class
 
     sessions = generate_class_sessions_from_class(cls, date(2025, 9, 1), date(2025, 12, 20))
     db.session.add_all(sessions)
     db.session.commit()
-'''
+
+@views.route('/api/schedule/<string:user_type>/<int:user_id>')
+def schedule_api(user_type, user_id):
+    today = date.today()
+
+    if user_type == "student":
+        user = Student.query.get_or_404(user_id)
+    elif user_type == "teacher":
+        user = Teacher.query.get_or_404(user_id)
+    else:
+        abort(400, description="Invalid user type")
+
+    schedule = user.get_weekly_schedule(today)
+    return jsonify(schedule)
