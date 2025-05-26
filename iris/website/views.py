@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from datetime import datetime
 from flask_login import current_user
-from .models import notice
+from .models import notice, Class
 from . import db
 
 views = Blueprint('views', '__name__')
@@ -81,7 +81,8 @@ def assessmentsLanding():
 #def notices():
 #    return render_template('notices.html')
 
-''' @views.route('/test-seed')
+'''
+@views.route('/test-seed')
 def test_seed():
     from .models import db, Teacher, Student, Class, TeacherClassAssociation, TeacherRole
 
@@ -119,5 +120,19 @@ def test_seed():
     db.session.commit()
 
     return "Sample data inserted successfully!"
-Not need atm - But please leave commented for now, for my reference & other db insertions 
-        '''
+# Not need atm - But please leave commented for now, for my reference & other db insertions 
+'''        
+
+'''
+@views.route('AddClassSession')
+def AddClassSession():
+    cls = Class.query.get(1)
+    cls.schedule = "Mon 09:00,Wed 11:00"
+    db.session.commit()
+
+    from ..utils import schedule_utils
+
+    sessions = generate_class_sessions_from_class(cls, date(2025, 9, 1), date(2025, 12, 20))
+    db.session.add_all(sessions)
+    db.session.commit()
+'''

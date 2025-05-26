@@ -82,7 +82,15 @@ class Class(db.Model):
 
     assessments = db.relationship('Assessment', backref='class_', lazy=True)
 
+    schedule = db.Column(db.String, nullable=True)
     sessions = db.relationship('ClassSession', backref='class_', cascade="all, delete-orphan")
+
+class ClassSession(db.Model):
+    __tablename__ = 'class_session'   
+    id = db.Column(db.Integer, primary_key=True)
+    class_id = db.Column(db.Integer, db.ForeignKey('class.id'), nullable=False)
+    date = db.Column(db.Date, nullable=False)
+    period = db.Column(db.String(10), nullable=True)
 
 class AttendanceStatus(enum.Enum):
     Present = "present"
@@ -99,13 +107,6 @@ class Attendance(db.Model):
 
     student = db.relationship("Student", backref="attendance_records")
     session = db.relationship("ClassSession", backref="attendance_records")
-
-class ClassSession(db.Model):
-    __tablename__ = 'class_session'   
-    id = db.Column(db.Integer, primary_key=True)
-    class_id = db.Column(db.Integer, db.ForeignKey('class.id'), nullable=False)
-    date = db.Column(db.Date, nullable=False)
-    period = db.Column(db.String(10), nullable=True)
 
 
 class Assessment(db.Model):

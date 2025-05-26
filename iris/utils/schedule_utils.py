@@ -11,6 +11,36 @@ WEEKDAYS = {
     "Sun": 6,
 }
 
-# def generate_class_sessions(class_id, start_date, end_date, weekly_schedule):
-    # return
-    # write function for generating class sessions that takes the current day/time/period and maps to the ClassSessions class 
+def parse_schedule(schedule):
+    '''
+    Takes a list of strings like ["Mon 09:00", "Wed 11:00"]
+    and returns a list of (weekday_number, hour, minute) tuples.
+    '''
+    parsed = []
+    for entry in schedule:
+        day_str, time_str = entry.strip().split()
+        weekday = WEEKDAYS[day_str]
+        hour, minute = map(int, time_str.split(":"))
+        parsed.append((weekday, hour, minute))
+    return parsed
+
+def generate_class_sessions_from_class(class_, start_date, end_date):
+
+    from website.models import ClassSession  # import here to avoid circular dependency
+
+    if not class_.schedule:
+        raise ValueError("Class.schedule is empty or not set.")
+
+    parsed_schedule = parse_schedule(class_.schedule.split(','))
+    current_date = start_date
+    sessions = []
+
+    while current_date <= end_date:
+        for weekday, hour, minute in parsed_schedule:
+            if current_date.weekday() == weekday:
+                session_datetime = datetime.combine(current_date, datetime.min.time()).replace(
+                    hour=hour, minute=minute)
+                sessions.append(ClassSession(class_id=class_.id, date=session_datetime))
+        current_date += timedelta(days=1)
+
+    return sessions
