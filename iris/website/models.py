@@ -173,7 +173,7 @@ class notice(db.Model):
     target_id = db.Column(db.Integer, nullable=True)
     title = db.Column(db.String(50))
     author = db.Column(db.String(50), nullable=True)
-    note = db.Column(db.String(255), nullable=True)
+    note = db.Column(db.Text, nullable=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow) #default=db.func.current_timestamp())
 
 class pastoral(db.Model):
