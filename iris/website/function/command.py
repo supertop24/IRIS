@@ -13,10 +13,9 @@ def search_student():
         db = get_db()
         cursor = db.cursor()
         cursor.execute("""
-            SELECT user.name, student.id
+            SELECT user.name, user.role
             FROM user
-            JOIN student ON user.id = student.user_id
-            WHERE user.name LIKE ?
+            WHERE user.role = 'student' AND user.name LIKE ?;
         """,
             (search_pattern,),
         )
@@ -24,11 +23,11 @@ def search_student():
 
         user = []
         for row in results:
-            name, id = row
+            name, role = row
             user.append(
                 {
                     "name": name,
-                    "id": id,
+                    "role": role,
                 }
             )
 

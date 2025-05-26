@@ -19,7 +19,7 @@
             <!--Form to edit a notice-->
             <form method="POST" action="{{ url_for('views.editNotice', id=notices.id) }}">
                 <input class="inputNoticeTitle" type="text" name="title" value="{{ notices.title }}">
-                <input class="inputNoticeContent" type="text" name="note" value="{{ notices.note }}">
+                <textarea class="inputNoticeContent" type="text" name="note" value="{{ notices.note }}">
                 <div class="buttonContainer">
                     <!--Update button-->
                     <input type="submit" class="uploadButton" value="Update">
