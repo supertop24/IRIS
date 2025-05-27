@@ -37,6 +37,11 @@
     font-weight: bold;
     box-sizing: border-box;
     margin: 5px;
+    text-decoration: none;
+}
+
+.createButton {
+    margin-left: 50px;
 }
 
 /* Title styling for each notice */
@@ -87,6 +92,6 @@
 .iconColumns {
     display: flex;
     flex-direction: column;
-    padding-top: 25px;
+    padding-top: 30px;
     gap: 10px;
 }
