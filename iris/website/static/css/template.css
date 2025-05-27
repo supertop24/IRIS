@@ -22,8 +22,14 @@
     top: 200px;
     margin-left: 17%;
     width: calc(100% - 17%);
+    height: 100%;
 }
 .content.collapsed {
   margin-left: 5%;
   width: calc(100% - 5%);
+}
+.profile
+{
+    background-color: aqua;
+    display: none;
 }
