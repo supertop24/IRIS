@@ -81,6 +81,11 @@
     color: white;
     background-color: #988EB1;
 }
+.button.active
+{
+    background-color: #988EB1;
+    color: white;
+}
 .profile-picture
 {
     grid-row: span 2;

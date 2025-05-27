@@ -50,3 +50,14 @@ function sidebarCollapse() {
 
 window.addEventListener('sidebarOpen', sidebarOpen);
 window.addEventListener('sidebarCollapse', sidebarCollapse);
+
+function selected(id) {
+  const buttons = document.querySelectorAll('button');
+  buttons.forEach(button => {
+    button.classList.remove('active');
+    if (button.dataset.id === id) {
+      button.classList.add('active');
+    }
+  });
+  window.dispatchEvent(new CustomEvent(id));
+}
