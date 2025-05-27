@@ -35,3 +35,26 @@ window.onload = function() {
     }
   });
 };
+
+function sidebarOpen() {
+    const banner = document.getElementById('banner');
+    if (!banner) {
+        alert('Banner element not found');
+        return;
+    }
+    banner.style.width = 'calc(100% - 16%)';
+    banner.style.marginLeft = '16%';
+}
+
+function sidebarCollapse() {
+    const banner = document.getElementById('banner');
+    if (!banner) {
+        console.warn('Banner element not found');
+        return;
+    }
+    banner.style.width = 'calc(100% - 4%)';
+    banner.style.marginLeft = '4%';
+}
+
+window.addEventListener('sidebarOpen', sidebarOpen);
+window.addEventListener('sidebarCollapse', sidebarCollapse);
