@@ -8,6 +8,7 @@
     justify-content: center;
     gap: 20px; /*Gap between the notice and the bin icon */
     align-items: flex-start;
+    background-color: blue;
 }
 
 /* Title styling for notice */
@@ -50,7 +51,7 @@
 }
 
 .noticeBox {
-    flex: 90%;
+    flex: 100%;
     box-sizing: border-box;
     min-height: 500px;
     border: #988EB1 solid 7px;
