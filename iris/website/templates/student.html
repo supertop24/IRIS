@@ -3,8 +3,8 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/template.css') }}">
-        <script src="{{ url_for('static', filename='javascript/template.js') }}"></script>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/student.css') }}">
+        <script src="{{ url_for('static', filename='javascript/student.js') }}"></script>
         <!--Title that children can override-->
         <title>Academic Reports</title>
     </head>
@@ -17,22 +17,22 @@
                 {% include 'navBase2.html' %}
             </div>
             <div class="content" id="content">
-                <div class="profile" id="profile">
+                <div class="section profile" data-id="profile">
+                    
+                </div>
+                <div class="section pastoral" data-id="pastoral">
 
                 </div>
-                <div class="pastoral" id="pastoral">
+                <div class="section academic" data-id="academic">
 
                 </div>
-                <div class="report" id="report">
+                <div class="section awards" data-id="awards">
 
                 </div>
-                <div class="awards" id="awards">
+                <div class="section extracurrilars" data-id="extracurrilars">
 
                 </div>
-                <div class="extracurrilars" id="extracurrilars">
-
-                </div>
-                <div class="timetable" id="timetable">
+                <div class="section timetable" data-id="timetable">
 
                 </div>
             </div>
