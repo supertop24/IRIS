@@ -1,0 +1,179 @@
+/* Restting deafaults to ensure full coverage */
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+}
+
+/* Container for the page */
+.container {
+    min-height: 100vh; /*Using viewport height so that it is tailored  to the device */
+    width: 100vw; /*Viewport width */
+    margin: 0;
+    padding: 0;
+    background-color: #F3F2F2;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Side nav menu - open state */
+.sideNav {
+    height: 100%;
+    width: 16%; 
+    position: fixed;
+    z-index: 1; /* Stay on top */
+    top: 0;
+    left: 0;
+    background-color: #988EB1;
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 60px;
+}
+
+/* Size of closed nav */
+.sideNav.collapsed {
+    width: 4%;
+}
+
+/* IRIS logo position */
+.irisLogo {
+    display: block;
+    height: 55px;
+    width: auto;
+    position: absolute;
+    top: 0;
+    left: 25px;
+    margin-right: 50px;
+    padding-top: 5%;
+}
+
+/*Hiding logo when nav is closed */
+.sideNav.collapsed .irisLogo {
+    display: none;
+}
+ 
+/* Close button postion and style */
+.sideNav .navToggleBtn {
+    position: absolute;
+    top: 0px;
+    right: 25px;
+    height: 40px;
+    width: auto;
+    margin-left: 50px;
+}
+
+/* CLose button position when nav closed */
+.sideNav.collapsed .navToggleBtn {
+    right: 0;
+}
+
+/* User profile container */
+.userProfile {
+    height: 200px;
+    width: 100%;
+    display: flex;
+    flex-direction: column; /* Stack content vertically */
+    align-items: center; /* center horizontally */
+    justify-content: center; /* centers vertically */
+    gap: 10px; /* Adds space between items */
+    position: relative;
+}
+
+/* User prfile image */
+.userProfileImg {
+    height: 80px;
+    width: auto; 
+    object-fit: cover; /* Ensures the image cover the box */;
+    border-radius: 20%;
+    position: relative;
+    z-index: 2; /* Places the image above the username box */
+    margin-bottom: -50px; /* Makes the image overlap the username box */
+}
+
+/* Decreasing the size of the image to fit collapsed nav */
+.sideNav.collapsed .userProfileImg {
+    height: 60px;
+    width: auto;
+}
+ 
+/* Username box */
+.userName {
+    display: flex;
+    flex-direction: column; /* Stack content vertically */
+    align-items: center; /* Center horizontally */
+    justify-content: center; /* Center vertically */
+    background-color: #ffffff;
+    padding-top: 55px;
+    padding-bottom: 30px;
+    border-radius: 20px;
+    text-align: center;
+    color:#000000;
+    font-size: 30px;
+    width: 87%;
+    box-sizing: border-box;
+    position: relative;
+    z-index: 1;
+}
+
+/* Hides username box when nav is closed */
+.sideNav.collapsed .userName {
+    display: none;
+}
+
+/* Nav links */
+.sideNav a {
+    padding: 8px 8px 8px 20px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #000000;
+    opacity: 85%;
+    display: block;
+    transition: 0.3s; /* Adds transition effect */
+}
+
+/* Changing colour of links when hovered over */
+.sideNav a:hover {
+    background-color: #C6C1D4;
+}
+
+/* Positioning the nav items */
+.navItem {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between icon and text */
+    justify-content: flex-start;
+    height: 60px; /* Consistent height for nav items */
+}
+
+/* Centering icons when nav is closed */
+.sideNav.collapsed .navItem {
+    padding: 8px 10px;
+    justify-content: center;
+}
+
+/* Nav item text */
+.navItem span {
+    font-size: 20px;
+    cursor: pointer;
+    vertical-align: middle;
+    line-height: 50px; /* Matches height of navItem */
+}
+
+/* Adujsting padding of nav items when nav is closed */
+.sideNav.collapsed .navItem span {
+    display: none; /* Hides text when nav is closed */
+}
+
+/* Icon sizing - ensuring they are consistent*/
+.navIcon {
+    height: 50px;
+    width: 60px; /* Maintains aspect ratio */
+    min-width: 58px; /* Makes sure icons don't skrink */
+    object-fit: contain; /*Ensure icons maintain aspect ratio */
+    vertical-align: middle;
+}
+
+/* Centering icons when nav closed */
+.sideNav.collapsed .navIcon {
+    margin: 0 auto;
+}
