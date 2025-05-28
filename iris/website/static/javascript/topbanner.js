@@ -35,3 +35,29 @@ window.onload = function() {
     }
   });
 };
+
+function sidebarOpen() {
+    const banner = document.getElementById('banner');
+    banner.style.width = 'calc(100% - 16%)';
+    banner.style.marginLeft = '16%';
+}
+
+function sidebarCollapse() {
+    const banner = document.getElementById('banner');
+    banner.style.width = 'calc(100% - 4%)';
+    banner.style.marginLeft = '4%';
+}
+
+window.addEventListener('sidebarOpen', sidebarOpen);
+window.addEventListener('sidebarCollapse', sidebarCollapse);
+
+function selected(id) {
+  const buttons = document.querySelectorAll('button');
+  buttons.forEach(button => {
+    button.classList.remove('active');
+    if (button.dataset.id === id) {
+      button.classList.add('active');
+    }
+  });
+  window.dispatchEvent(new CustomEvent(id));
+}

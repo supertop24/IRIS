@@ -9,7 +9,7 @@
         <!--Title that children can override-->
         <title>top banner</title>
     </head>
-    <div class="banner">
+    <div class="banner" id="banner">
         <div class="top-background">
             <div class="top-banner">
                 <div class="name">
@@ -29,12 +29,12 @@
             </div>
         </div>
         <div class="bottom-banner">
-            <button class="button">Profile</button>
-            <button class="button">Pastoral Reports</button>
-            <button class="button">Academic Reports</button>
-            <button class="button">Awards</button>
-            <button class="button">Extracurrilars</button>
-            <button class="button">Timetable & Subjects</button>
+            <button class="button" onclick="selected('profile')" data-id="profile">Profile</button>
+            <button class="button" onclick="selected('pastoral')" data-id="pastoral">Pastoral Reports</button>
+            <button class="button" onclick="selected('academic')" data-id="academic">Academic Reports</button>
+            <button class="button" onclick="selected('awards')" data-id="awards">Awards</button>
+            <button class="button" onclick="selected('extracurrilars')" data-id="extracurrilars">Extracurrilars</button>
+            <button class="button" onclick="selected('timetable')" data-id="timetable">Timetable & Subjects</button>
         </div>
         <div class="profile-picture">
             <img class="picture" src="static/images/teachers/janeSmith.png" alt="User profile picture">

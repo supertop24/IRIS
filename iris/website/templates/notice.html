@@ -57,12 +57,12 @@
 
         <!--Content wrapper used to align the notices and the buttons - excluding the icons-->
         <div class="noticeContentWrapper">
-            <!--This the actual notice-->
+            <!--Viewing the notices-->
             <div class="noticeContent">
                 <!--Notice title-->
                 <span class="noticeTitle">{{notices.title}}</span>
                 <!--Notice content-->
-                <p>{{notices.note}}</p>
+                <p>{{notices.note | replace('\n', '<br>') | safe}}</p> <!--Prints the whitespace/formatting-->
             </div>
         </div>
         

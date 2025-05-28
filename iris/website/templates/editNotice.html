@@ -13,19 +13,33 @@
 {% block content %}
 
 <div class="createNoticesContainer">
-    <!--Notice box-->
-    <div class="noticeBox">
-        <div class="noticeForm">
-            <!--Form to edit a notice-->
-            <form method="POST" action="{{ url_for('views.editNotice', id=notices.id) }}">
-                <input class="inputNoticeTitle" type="text" name="title" value="{{ notices.title }}">
-                <textarea class="inputNoticeContent" type="text" name="note" value="{{ notices.note }}">
-                <div class="buttonContainer">
-                    <!--Update button-->
-                    <input type="submit" class="uploadButton" value="Update">
-                </div>
+
+        <!--Column for the bin icon-->
+        <div class="iconColumn">
+            <!--Delete icon that deletes a notice-->
+            <form method="POST" action="/deleteNotice">
+                <input type="hidden" name="id" value="{{ notices.id }}">
+                <button type="submit" class="deleteIcon">
+                    <img src="{{ url_for('static', filename='images/icons/deleteBin.png') }}" alt="Bin icon">
+                </button>
             </form>
         </div>
+
+    <!--Notice box-->
+    <div class="noticeBox">
+
+        <div class="noticeForm">
+            <!--Form to edit a notice-->
+            <form method="POST" id="formID" action="{{ url_for('views.editNotice', id=notices.id) }}">
+                <input class="inputNoticeTitle" type="text" name="title" value="{{ notices.title }}">
+                <textarea class="inputNoticeContent" name="note">{{ notices.note }}</textarea>
+            </form>
+        </div>
+    </div>
+
+    <!--Update button-->
+    <div class="buttonContainer">
+        <input type="submit" form="formID" class="uploadButton" value="Update">
     </div>
 </div>
 

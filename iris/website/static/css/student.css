@@ -1,0 +1,64 @@
+.container
+{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr; 
+    grid-template-areas:
+    "side topbanner"
+    "side cont";
+}
+.top
+{
+    grid-area: topbanner;
+    width: 100%; 
+}
+.side
+{
+    grid-area: side;
+    width: 100%;
+}
+.content {
+    position: absolute;
+    top: 200px;
+    margin-left: 17%;
+    width: calc(100% - 17%);
+    height: 100%;
+}
+.content.collapsed {
+  margin-left: 5%;
+  width: calc(100% - 5%);
+}
+.section
+{
+    height: 100%;
+    width: 100;
+    display: none;
+}
+.section.active
+{
+    display: block;
+}
+.profile
+{
+    background-color: aqua;
+}
+.pastoral
+{
+    background-color: red;
+}
+.academic
+{
+    background-color: bisque;
+}
+.awards
+{
+    background-color: black;
+}
+.extracurrilars
+{
+    background-color: blue;
+}
+.timetable
+{
+    background-color: brown;
+}

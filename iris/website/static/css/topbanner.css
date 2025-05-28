@@ -1,7 +1,9 @@
 .banner
 {
-    display: grid;
-    width: flex;
+    position: relative;
+    display: grid; 
+    margin-left: 16%;
+    width: calc(100% - 16%); 
     height: 200px ;
     grid-template-columns: 1fr 6fr;
     grid-template-rows: 1fr 1fr;
@@ -78,6 +80,11 @@
 {
     color: white;
     background-color: #988EB1;
+}
+.button.active
+{
+    background-color: #988EB1;
+    color: white;
 }
 .profile-picture
 {
