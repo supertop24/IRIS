@@ -1,5 +1,5 @@
 from . import db
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 from flask_login import UserMixin
 import enum
 from sqlalchemy import Enum
@@ -88,6 +88,17 @@ class Teacher(User):
         super().__init__(**kwargs)
         self.role = 'teacher'
 
+    def get_daily_schedule(self, target_date: date):
+        return (
+            db.session.query(ClassSession)
+            .join(Class)
+            .join(TeacherClassAssociation)
+            .filter(TeacherClassAssociation.teacher_id == self.id)
+            .filter(ClassSession.date == target_date)
+            .order_by(ClassSession.period)
+            .all()
+        )
+
     def get_weekly_schedule(self, start_date=None, end_date=None):
         if not start_date:
             today = datetime.today()
@@ -106,6 +117,8 @@ class Teacher(User):
             .order_by(ClassSession.date)
             .all()
         )
+
+
 
 class Class(db.Model):
     __tablename__ = 'class'    
