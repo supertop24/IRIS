@@ -77,11 +77,6 @@ def assessmentsLanding():
     currentDate = datetime.now().date()
     return render_template("assessmentsLanding.html", user=current_user, currentDate=currentDate)
 
-#@views.route('/notices')
-#def notices():
-#    return render_template('notices.html')
-
-'''
 @views.route('/test-seed')
 def test_seed():
     from .models import db, Teacher, Student, Class, TeacherClassAssociation, TeacherRole

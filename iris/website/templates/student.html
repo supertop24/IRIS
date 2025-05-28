@@ -6,7 +6,7 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='css/student.css') }}">
         <script src="{{ url_for('static', filename='javascript/student.js') }}"></script>
         <!--Title that children can override-->
-        <title>Academic Reports</title>
+        <title>{% block title %}Academic Reports{% endblock %}</title>
     </head>
     <body>
         <div class="container">
@@ -21,7 +21,8 @@
                     
                 </div>
                 <div class="section pastoral" data-id="pastoral">
-
+                    <!--Including pastoral student overview page's content-->
+                    {% include "pastoralStudentReports.html" %}
                 </div>
                 <div class="section academic" data-id="academic">
 
