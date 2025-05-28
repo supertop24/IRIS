@@ -1,5 +1,5 @@
 from . import db
-from datetime import datetime
+from datetime import datetime, timedelta, date
 from flask_login import UserMixin
 import enum
 from sqlalchemy import Enum
@@ -54,6 +54,27 @@ class Student(User):
         super().__init__(**kwargs)
         self.role = 'student'
 
+    # MEthod to get the student's schedule for the week
+    def get_weekly_schedule(self, start_date=None, end_date=None):
+        if not start_date: # if a start date isn't given, then it will get today's date. Then, we're using timedelta to calculate the number of days since Monday, and declaring "end date" (Sunday) as 6 days after that (6 because Monday is indexed at 0).
+            today = datetime.today()
+            start_date = today - timedelta(days=today.weekday())
+            end_date = start_date + timedelta(days=6)
+
+        return (
+            ClassSession.query
+            .join(Class)
+            .join(StudentClassAssociation)
+            .filter(
+                StudentClassAssociation.student_id == self.id,
+                ClassSession.date >= start_date,
+                ClassSession.date <= end_date
+            )
+            .order_by(ClassSession.date)
+            .all()
+            
+        )
+
     #need to add get_weekly_schedule method to here and Teacher classes to render into calendar 
 
 class Teacher(User):
@@ -66,6 +87,38 @@ class Teacher(User):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.role = 'teacher'
+
+    def get_daily_schedule(self, target_date: date):
+        return (
+            db.session.query(ClassSession)
+            .join(Class)
+            .join(TeacherClassAssociation)
+            .filter(TeacherClassAssociation.teacher_id == self.id)
+            .filter(ClassSession.date == target_date)
+            .order_by(ClassSession.period)
+            .all()
+        )
+
+    def get_weekly_schedule(self, start_date=None, end_date=None):
+        if not start_date:
+            today = datetime.today()
+            start_date = today - timedelta(days=today.weekday())
+            end_date = start_date + timedelta(days=6)
+
+        return (
+            ClassSession.query
+            .join(Class)
+            .join(TeacherClassAssociation)
+            .filter(
+                TeacherClassAssociation.teacher_id == self.id,
+                ClassSession.date >= start_date,
+                ClassSession.date <= end_date
+            )
+            .order_by(ClassSession.date)
+            .all()
+        )
+
+
 
 class Class(db.Model):
     __tablename__ = 'class'    
@@ -82,7 +135,15 @@ class Class(db.Model):
 
     assessments = db.relationship('Assessment', backref='class_', lazy=True)
 
+    schedule = db.Column(db.String, nullable=True)
     sessions = db.relationship('ClassSession', backref='class_', cascade="all, delete-orphan")
+
+class ClassSession(db.Model):
+    __tablename__ = 'class_session'   
+    id = db.Column(db.Integer, primary_key=True)
+    class_id = db.Column(db.Integer, db.ForeignKey('class.id'), nullable=False)
+    date = db.Column(db.Date, nullable=False)
+    period = db.Column(db.String(10), nullable=True)
 
 class AttendanceStatus(enum.Enum):
     Present = "present"
@@ -99,13 +160,6 @@ class Attendance(db.Model):
 
     student = db.relationship("Student", backref="attendance_records")
     session = db.relationship("ClassSession", backref="attendance_records")
-
-class ClassSession(db.Model):
-    __tablename__ = 'class_session'   
-    id = db.Column(db.Integer, primary_key=True)
-    class_id = db.Column(db.Integer, db.ForeignKey('class.id'), nullable=False)
-    date = db.Column(db.Date, nullable=False)
-    period = db.Column(db.String(10), nullable=True)
 
 
 class Assessment(db.Model):
