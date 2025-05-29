@@ -117,7 +117,6 @@ def test_seed():
     return "Sample data inserted successfully!"
 # Not need atm - But please leave commented for now, for my reference & other db insertions 
 '''        
-
 @views.route('AddClassSession')
 def AddClassSession():
     cls = Class.query.get(1)
@@ -143,3 +142,4 @@ def schedule_api(user_type, user_id):
 
     schedule = user.get_weekly_schedule(today)
     return jsonify(schedule)
+'''

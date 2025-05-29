@@ -1,0 +1,22 @@
+.academic
+{
+    width: 100%;
+    height: 100%;
+    display: none;
+}
+.academic.active
+{
+    display: block;
+}
+.list
+{
+    background-color: lavender;
+}
+.submit
+{
+    background-color: aquamarine;
+}
+.view
+{
+    background-color: pink;
+}
