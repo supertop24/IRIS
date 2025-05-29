@@ -1,5 +1,5 @@
 from flask import jsonify, Blueprint, request
-from website.db import get_db
+from website.sqlite_helper import get_db
 command = Blueprint('command', __name__)
 
 @command.route('/search', methods=['GET'])

@@ -2,9 +2,10 @@ from . import db
 from datetime import datetime, timedelta, date
 from flask_login import UserMixin
 import enum
+from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Enum
 
-# The following three tables are used to connect the Student and Teacher classes with the Class class.  
+# The following three tables are used to connect the Student and Teacher models with the Class model.  
 
 class TeacherRole(enum.Enum):
     MAIN = "main"

@@ -8,7 +8,7 @@ function loadSchedule(date = null) {
   fetch(`/api/daily-schedule?date=${queryDate}`)
     .then(response => response.json())
     .then(data => {
-      renderCalendar(data); // You’ll implement this function to display the sessions
+      renderCalendar(data); 
     })
     .catch(error => {
       console.error("Error loading schedule:", error);
@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function renderCalendar(data) {
-    const gridItems = document.querySelectorAll('.calendarContentGrid .girdItem')
+    const gridItems = document.querySelectorAll('.calendarContentGrid .gridItem')
     gridItems.forEach(item => item.textContent = '');
 
     data.forEach((session, index) => {
@@ -32,9 +32,9 @@ function renderCalendar(data) {
 
         const baseIndex = row * 6 + colGroup * 3;
 
-        gridItems[baseIndex].textContent = session.time || '';
-        gridItems[baseIndex + 1].textContent = session.preiod || '';
-        gridItems[baseIndex + 2].textContent = session.class_code || '';
+        gridItems[baseIndex].textContent = session.period_label || `Period ${session.period_id}` || '';
+        gridItems[baseIndex + 1].textContent = session.class_code || '';
+        gridItems[baseIndex + 2].textContent = session.subject || '';
     });
 }
 

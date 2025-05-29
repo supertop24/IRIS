@@ -31,26 +31,37 @@ def dashboard():
 @views.route('/api/daily-schedule')
 @login_required
 def api_daily_schedule():
+    print("Logged in user:", current_user.id, current_user.__class__.__name__)
+
     date_str = request.args.get('date')
     if not date_str:
         return jsonify({'error': 'Date is required'}), 400
+    
+    try:
+        selected_date = datetime.strptime(date_str, "%Y-%m-%d").date()
+    except ValueError:
+        return jsonify({'error: invalid date format'}), 400
 
-    selected_date = datetime.strptime(date_str, "%Y-%m-%d").date()
+    print("API request date:", selected_date)
 
     if isinstance(current_user, Student) or isinstance(current_user, Teacher):
         schedule = current_user.get_daily_schedule(selected_date)
     else:
+        print("User is not a Teacher or Student.")
         return jsonify([])
 
-    return jsonify([
-        {
+    serialized = []
+    for s in schedule:
+        serialized.append({
             'class_code': s.class_.code,
             'subject': s.class_.subject,
-            'period': s.period,
-            'time': s.date.strftime('%H:%M') if s.date else None,
-        }
-        for s in schedule
-    ])
+            'period_id': s.period.id if s.period else None,
+            'period_label': s.period.label if hasattr(s.period, 'label') else None,
+            'date': s.date.isoformat()
+        })
+
+    print("Serialized sessions:", serialized)
+    return jsonify(serialized)
 
 @views.route('/notice')
 def viewNotice():
