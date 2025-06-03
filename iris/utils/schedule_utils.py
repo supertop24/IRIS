@@ -26,7 +26,7 @@ def parse_schedule(schedule):
 
 def generate_class_sessions_from_class(class_, start_date, end_date):
 
-    from website.models import ClassSession  # import here to avoid circular dependency
+    from website.models import ClassSession  # importing here to avoid circular dependency
 
     if not class_.schedule:
         raise ValueError("Class.schedule is empty or not set.")

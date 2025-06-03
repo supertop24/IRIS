@@ -2,9 +2,10 @@ from . import db
 from datetime import datetime, timedelta, date
 from flask_login import UserMixin
 import enum
+from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Enum
 
-# The following three tables are used to connect the Student and Teacher classes with the Class class.  
+# The following three tables are used to connect the Student and Teacher models with the Class model.  
 
 class TeacherRole(enum.Enum):
     MAIN = "main"
@@ -93,9 +94,10 @@ class Teacher(User):
             db.session.query(ClassSession)
             .join(Class)
             .join(TeacherClassAssociation)
+            .join(Period, ClassSession.period_id == Period.id)
             .filter(TeacherClassAssociation.teacher_id == self.id)
             .filter(ClassSession.date == target_date)
-            .order_by(ClassSession.period)
+            .order_by(Period.id)
             .all()
         )
 
@@ -117,7 +119,6 @@ class Teacher(User):
             .order_by(ClassSession.date)
             .all()
         )
-
 
 
 class Class(db.Model):
@@ -143,7 +144,17 @@ class ClassSession(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     class_id = db.Column(db.Integer, db.ForeignKey('class.id'), nullable=False)
     date = db.Column(db.Date, nullable=False)
-    period = db.Column(db.String(10), nullable=True)
+    period_id = db.Column(db.Integer, db.ForeignKey('period.id'), nullable=False)
+
+    period = db.relationship('Period')
+
+class Period(db.Model):
+    __tablename__ = 'period'
+    id = db.Column(db.Integer, primary_key=True)
+    code = db.Column(db.String(10), unique=True, nullable=False) 
+    start_time = db.Column(db.Time, nullable=False)
+    end_time = db.Column(db.Time, nullable=False)
+
 
 class AttendanceStatus(enum.Enum):
     Present = "present"

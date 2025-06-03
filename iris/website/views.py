@@ -1,14 +1,14 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash, jsonify, abort
-from datetime import datetime, date, timedelta
+from flask import Blueprint, render_template, request, redirect, url_for, flash, jsonify, request, abort
+from datetime import datetime, date, timedelta, time
 from flask_login import current_user, login_required
-from .models import notice, Class, Student, Teacher
+from .models import notice, Class, Student, Teacher, ClassSession, Period, TeacherClassAssociation, TeacherRole
 from . import db
 
 views = Blueprint('views', '__name__')
 
 @views.route('/')
 def portalSelect():
-   return render_template("student.html")
+   return render_template("portalSelect.html")
 
 @views.route('/navBase')
 def navBase():
@@ -25,7 +25,43 @@ def studentProfile():
 @views.route('/dashboard')
 def dashboard():
    currentDate = datetime.now().date()
-   return render_template('dashboard.html', currentDate=currentDate)
+   return render_template('dashboard.html', user=current_user, currentDate=currentDate)
+
+# Adding API endpoint for getting teacher schedule data here with the dashboard route, since this is where it'll be used
+@views.route('/api/daily-schedule')
+@login_required
+def api_daily_schedule():
+    print("Logged in user:", current_user.id, current_user.__class__.__name__)
+
+    date_str = request.args.get('date')
+    if not date_str:
+        return jsonify({'error': 'Date is required'}), 400
+    
+    try:
+        selected_date = datetime.strptime(date_str, "%Y-%m-%d").date()
+    except ValueError:
+        return jsonify({'error: invalid date format'}), 400
+
+    print("API request date:", selected_date)
+
+    if isinstance(current_user, Student) or isinstance(current_user, Teacher):
+        schedule = current_user.get_daily_schedule(selected_date)
+    else:
+        print("User is not a Teacher or Student.")
+        return jsonify([])
+
+    serialized = []
+    for s in schedule:
+        serialized.append({
+            'class_code': s.class_.code,
+            'subject': s.class_.subject,
+            'period_id': s.period.id if s.period else None,
+            'period_label': s.period.label if hasattr(s.period, 'label') else None,
+            'date': s.date.isoformat()
+        })
+
+    print("Serialized sessions:", serialized)
+    return jsonify(serialized)
 
 @views.route('/notice')
 def viewNotice():
@@ -77,6 +113,69 @@ def assessmentsLanding():
     currentDate = datetime.now().date()
     return render_template("assessmentsLanding.html", user=current_user, currentDate=currentDate)
 
+@views.route('/populate-test-data')
+def populate_test_data():
+    try:
+        # 1. Create a teacher
+        teacher = Teacher(
+            name="John Doe",
+            email="johndoe@example.com",
+            password="password123",
+            gender="Male",
+            phone_number=1234567890,
+            address="123 Example Street"
+        )
+        db.session.add(teacher)
+        db.session.flush()  # So teacher.id is available
+
+        # 2. Create 6 classes
+        subjects = ["Math", "Science", "History", "English", "Geography", "Art"]
+        classes = []
+        for i, subject in enumerate(subjects):
+            cls = Class(year=2025, subject=subject, code=f"{subject[:3].upper()}101")
+            db.session.add(cls)
+            db.session.flush()
+            classes.append(cls)
+
+            # Associate each class with the teacher as MAIN
+            assoc = TeacherClassAssociation(teacher_id=teacher.id, class_id=cls.id, role=TeacherRole.MAIN)
+            db.session.add(assoc)
+
+        # 3. Create 5 periods
+        period_times = [
+            ("P1", time(9, 0), time(9, 50)),
+            ("P2", time(10, 0), time(10, 50)),
+            ("P3", time(11, 0), time(11, 50)),
+            ("P4", time(13, 0), time(13, 50)),
+            ("P5", time(14, 0), time(14, 50))
+        ]
+
+        periods = []
+        for code, start, end in period_times:
+            p = Period(code=code, start_time=start, end_time=end)
+            db.session.add(p)
+            db.session.flush()
+            periods.append(p)
+
+        # 4. Create class sessions for today, assigning each class to one period
+        today = date.today()
+        for i in range(5):  # First 5 classes only
+            session = ClassSession(
+                class_id=classes[i].id,
+                date=today,
+                period_id=periods[i].id
+            )
+            db.session.add(session)
+
+        db.session.commit()
+        return jsonify({"message": "Test data populated successfully."})
+
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
+
+'''
+
 @views.route('/test-seed')
 def test_seed():
     from .models import db, Teacher, Student, Class, TeacherClassAssociation, TeacherRole
@@ -116,7 +215,7 @@ def test_seed():
 
     return "Sample data inserted successfully!"
 # Not need atm - But please leave commented for now, for my reference & other db insertions 
-'''        
+        
 
 @views.route('AddClassSession')
 def AddClassSession():
@@ -143,3 +242,4 @@ def schedule_api(user_type, user_id):
 
     schedule = user.get_weekly_schedule(today)
     return jsonify(schedule)
+    '''
