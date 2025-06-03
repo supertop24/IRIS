@@ -27,7 +27,7 @@
 {
     margin-top: 45px;
     width: 970px;
-    height: 430px;
+    height: 450px;
     background-color:#C5B9DF ;
     display: grid;
     border-radius: 20px;
@@ -87,4 +87,80 @@
 .view
 {
     background-color: pink;
+}
+.list_term
+{
+    align-items: center;
+    justify-content: space-between;
+    display: flex;
+    margin: 0 auto; 
+    width: 930px;
+    height: 50px;
+    border: 5px solid #E2DDEB;
+    border-radius: 13px;
+    font-size: 20px;
+    margin-top: 15px;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+
+}
+.list_term:hover
+{
+    background-color: #E2DDEB;
+}
+.list_term_title,.list_term_date
+{
+    margin:10px;
+}
+.submit
+{
+    justify-content: center;
+}
+.submit_form
+{   
+    margin-top: 20px;
+    width: 1048px;
+    height: 620px;
+    display: grid;
+    background-color: white;
+    border-radius: 20px;
+    grid-template-columns: 1fr;
+    grid-template-rows: 240px 1fr;
+    grid-template-areas: 
+    "submit_form_report"
+    "submit_form_file";
+}
+.submit_form_report
+{
+    border: solid 7px #988EB1;
+    border-radius: 20px 20px 20px 20px;
+}
+.submit_form_file
+{
+    border: solid white;
+    border-radius: 0 0 20px 20px;
+}
+.submit_upload
+{
+    margin-top: -100px;
+    display: flex;
+    justify-content: center;
+}
+.submit_upload_button
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    width: 150px;
+    height: 60px;
+    background-color: #988EB1;
+    border: 1px solid #988EB1;
+    border-radius: 20px;
+    font-size: 24px;
+    color: black;
+}
+.submit_upload_button:hover
+{
+    color: white;
 }
