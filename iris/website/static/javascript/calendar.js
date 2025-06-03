@@ -32,9 +32,15 @@ function renderCalendar(data) {
 
         const baseIndex = row * 6 + colGroup * 3;
 
-        gridItems[baseIndex].textContent = session.period_label || `Period ${session.period_id}` || '';
-        gridItems[baseIndex + 1].textContent = session.class_code || '';
-        gridItems[baseIndex + 2].textContent = session.subject || '';
+
+
+        gridItems[baseIndex].textContent = ''; // gridItems[baseIndex].textContent = session.period_label || `Period ${session.period_id}` || '';
+        gridItems[baseIndex + 1].textContent = session.period_label || `P${session.period_id}` || '';
+        gridItems[baseIndex + 2].textContent = session.class_code || '';
     });
 }
+
+//      gridItems[baseIndex + 1].textContent = session.class_code || '';
+//      gridItems[baseIndex + 2].textContent = session.subject || '';
+
 
