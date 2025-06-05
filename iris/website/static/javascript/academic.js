@@ -76,11 +76,19 @@ function handleFiles(files) {
   const fileList = document.getElementById('file-list');
   if (!fileList) return;
 
-  if (files.length > 0) {
-    file_data = files[0];
-  } else {
+  if (files.length === 0) {
     file_data = null;
+    return;
   }
+
+  // Only allow PDF files
+  const file = files[0];
+  if (file.type !== 'application/pdf') {
+    alert('Only PDF files are allowed.');
+    return;
+  }
+
+  file_data = file;
 
   fileList.innerHTML = ''; // Clear previous files
   [...files].forEach(file => {
@@ -88,10 +96,10 @@ function handleFiles(files) {
     item.textContent = file.name;
     fileList.appendChild(item);
 
-    // Optional: here you could upload files to server
-    // uploadFile(file);
+    // Optional: uploadFile(file);
   });
 }
+
 
 // Optional: example upload function
 /*
