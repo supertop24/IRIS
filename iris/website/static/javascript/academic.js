@@ -28,6 +28,7 @@ window.onload = function() {
   initDragAndDrop();
 };
 
+let file_data= null;
 // === Drag and Drop File Upload logic ===
 function initDragAndDrop() {
   const dropArea = document.getElementById('drop-area');
@@ -74,6 +75,12 @@ function initDragAndDrop() {
 function handleFiles(files) {
   const fileList = document.getElementById('file-list');
   if (!fileList) return;
+
+  if (files.length > 0) {
+    file_data = files[0];
+  } else {
+    file_data = null;
+  }
 
   fileList.innerHTML = ''; // Clear previous files
   [...files].forEach(file => {
