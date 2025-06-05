@@ -134,6 +134,62 @@
 {
     border: solid 7px #988EB1;
     border-radius: 20px 20px 20px 20px;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 75px 1fr;
+    grid-template-areas: 
+    "submit_form_report_header"
+    "submit_form_report_fill";
+}
+.submit_form_report_header
+{
+    display: flex;
+    background-color: #C5B9DF;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    font-family: 'Inter', sans-serif;
+    border-bottom: solid 7px #988EB1;
+    border-radius: 14px 14px 0 0 ;
+}
+.submit_form_report_fill
+{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-content: center;
+    align-items: center;
+    border-collapse: collapse;
+    width: 95%;
+    margin: 0 auto;
+    font-size: 12px;
+    font-family: 'Inter', sans-serif;
+}
+.submit_form_report_fill_odd,.submit_form_report_fill_even 
+{
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    text-align: center;
+    height: 30px;
+}
+.submit_form_report_fill_even 
+{
+    border-left: 3px solid #797979;
+    justify-content: start;
+    padding-left: 20px;
+}
+.submit_form_report_fill_odd
+{
+    justify-content: end;
+    padding-right: 20px;
+}
+.submit_form_report_fill_odd:nth-child(n + 3),.submit_form_report_fill_even:nth-child(n + 4) 
+{
+    border-top: 3px solid #797979;
+}
+.submit_form_selection
+{
+    text-align: center;
 }
 .submit_form_file
 {
@@ -163,4 +219,47 @@
 .submit_upload_button:hover
 {
     color: white;
+}
+#drop-area 
+{
+    border: 3px dashed #ccc;
+    border-radius: 10px;
+    width: 550px;
+    height: 200px;
+    text-align: center;
+    padding: 30px;
+    font-family: Arial, sans-serif;
+    margin: 20px auto;
+    transition: background-color 0.3s ease;
+}
+#drop-area.highlight 
+{
+    background-color: #f0f8ff;
+}
+#file-list 
+{
+    margin: auto auto;
+    font-size: 15px;
+    color: #333;
+}
+.file-name
+{
+    width: 300px;
+    height: 50px;
+    border: solid 5px #988EB1;
+    border-radius: 15px;
+    font-size: 15px;
+    font-family: Arial, sans-serif;
+    margin: 0px auto;
+    display: grid;
+    grid-template-columns: 100px 1fr;
+}
+.file-header
+{
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    border-right: solid 5px #988EB1;
 }

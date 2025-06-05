@@ -35,10 +35,66 @@
 <div class="academic submit" data-id='submit'>
     <div class="submit_form">
         <div class="submit_form_report">
-            <
+            <div class="submit_form_report_header">
+                Upload Report
+            </div>
+            <div  class="submit_form_report_fill">
+                <div class="submit_form_report_fill_odd">
+                    Date
+                </div>
+                <div class="submit_form_report_fill_even">
+                    <input type="text" id="submit_form_date"readonly style="border: none; outline: none;">
+                </div>
+                <div class="submit_form_report_fill_odd">
+                    Term
+                </div>
+                <div class="submit_form_report_fill_even">
+                    <select id="submit_form_term" class="submit_form_selection">
+                        <option value="empty">-- Select Term --</option>
+                        <option value="1">First Term</option>
+                        <option value="2">Second Term</option>
+                        <option value="3">Third Term</option>
+                        <option value="4">Fourth Term</option>
+                    </select><br><br>
+                </div>
+                <div class="submit_form_report_fill_odd">
+                    Year Level
+                </div>
+                <div class="submit_form_report_fill_even">
+                    <select id="submit_form_year" class="submit_form_selection">
+                        <option value="empty">-- Select Year --</option>
+                        <option value="9">Nine</option>
+                        <option value="10">Ten</option>
+                        <option value="11">Eleven</option>
+                        <option value="12">Twelve</option>
+                        <option value="13">Thirteen</option>
+                    </select><br><br>
+                </div>
+                <div class="submit_form_report_fill_odd">
+                    Report Type
+                </div>
+                <div class="submit_form_report_fill_even">
+                    <input type="text" id="submit_form_type"readonly style="border: none; outline: none;">
+                </div>
+                <div class="submit_form_report_fill_odd">
+                    
+                </div>
+                <div class="submit_form_report_fill_even">
+                    
+                </div>
+            </div>
         </div>
         <div class="submit_form_file">
-
+            <div id="drop-area">
+                <h2 style="font-weight: lighter;">Drag files here to upload</h2>
+                <p>or</p>
+                <input type="file" id="fileElem" multiple style="display:none" />
+                <button onclick="document.getElementById('fileElem').click()" style="height: 50px; width: 100px;">Select Files</button>
+            </div>
+            <div class="file-name">
+                <div class="file-header">Select File: </div>
+                <div id="file-list">test</div>
+            </div>
         </div>
     </div>
     <div class="submit_upload">
