@@ -5,14 +5,22 @@
 {% extends "navBase.html" %}
 
 <!--Page titles-->
-{% block title %}assessments landing{% endblock %}
+{% block title %}Assessments{% endblock %}
 
-{% block pageName %}assessments landing{% endblock %}
+{% block pageName %}Assessments{% endblock %}
 
 <!--Page's content-->
 {% block content %}
 
-    <h1>woo?</h1>
-    <p>assessments?</p>
+    <div class="classFlexContainer">
+
+        {% for class in myClasses %}
+
+            <div class="classFlexItem">
+            {{ class.subject }}
+            </div>            
+        {% endfor %}
+
+    </div>
 
 {% endblock %}

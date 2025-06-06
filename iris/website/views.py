@@ -1,10 +1,31 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, jsonify, request, abort
 from datetime import datetime, date, timedelta, time
 from flask_login import current_user, login_required
-from .models import notice, Class, Student, Teacher, ClassSession, Period, TeacherClassAssociation, TeacherRole
+from .models import notice, Class, Student, Teacher, ClassSession, Period, TeacherClassAssociation, TeacherRole, User
 from . import db
 
 views = Blueprint('views', '__name__')
+
+def getMyClasses():
+
+    user = current_user
+    userId = user.id
+
+    myClassFinder = TeacherClassAssociation.query.filter(
+        TeacherClassAssociation.teacher_id == userId
+    ).all()
+
+    myClassesIds = [assoc.class_id for assoc in myClassFinder]
+    
+    myClasses = Class.query.filter(
+        Class.id.in_(myClassesIds)
+    ).all()
+
+    return myClasses
+
+def getCOFromTCA():
+    classObject = TeacherClassAssociation.query.all()
+    return classObject
 
 @views.route('/')
 def portalSelect():
@@ -111,7 +132,8 @@ def deleteNotice():
 @views.route('assessmentsLanding')
 def assessmentsLanding():
     currentDate = datetime.now().date()
-    return render_template("assessmentsLanding.html", user=current_user, currentDate=currentDate)
+    myClasses = getMyClasses()
+    return render_template("assessmentsLanding.html", user=current_user, currentDate=currentDate, myClasses = myClasses)
 
 @views.route('/populate-test-data')
 def populate_test_data():
