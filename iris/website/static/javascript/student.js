@@ -27,10 +27,6 @@ window.addEventListener('pastoral', function() {
   section('pastoral');
 });
 
-window.addEventListener('academic', function() {
-  section('academic');
-});
-
 window.addEventListener('awards', function() {
   section('awards');
 });

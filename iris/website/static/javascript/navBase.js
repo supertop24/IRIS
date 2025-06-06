@@ -22,7 +22,10 @@ function toggleNav() {
         content.style.marginLeft = "";
     }
 }
-
+function studentProfile(id)
+{
+    window.location.href = `/studentProfile/${id}`;
+}
 /* Changing side nav's width and the content's left margin when nav is closed */
 function closeNav() {
     

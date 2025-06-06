@@ -17,12 +17,12 @@
                         Name
                     </span>
                     <span>
-                        <img src="static/images/icons/playbutton.png" alt="playbutton icon">
+                        <img src="{{ url_for('static', filename='images/icons/playbutton.png') }}" alt="playbutton icon">
                     </span>
                 </div>
                 <div class="search-bar">
                     <input class="search-input" type="text" id="search" placeholder="Search Students">
-                    <img class="search-icon" src="static/images/icons/search.png" alt="search icon">
+                    <img class="search-icon" src="{{ url_for('static', filename='images/icons/search.png') }}" alt="search icon">
                     <ul class="search-result" id="search-result">
                     </ul>
                 </div>
@@ -37,7 +37,7 @@
             <button class="button" onclick="selected('timetable')" data-id="timetable">Timetable & Subjects</button>
         </div>
         <div class="profile-picture">
-            <img class="picture" src="static/images/teachers/janeSmith.png" alt="User profile picture">
+            <img class="picture" src="{{ url_for('static', filename='images/teachers/janeSmith.png') }}" alt="User profile picture">
         </div>
     </div>
 </html>

@@ -30,3 +30,7 @@ function toggleNav() {
         content.style.marginLeft = "";
     }
 }
+function studentProfile(id)
+{
+    window.location.href = `/studentProfile/${id}`;
+}
