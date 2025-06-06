@@ -10,6 +10,7 @@
         <title>{% block title %}Academic Reports{% endblock %}</title>
     </head>
     <body>
+        <input type="hidden" id="studentId" value="{{ student_id }}">
         <div class="container">
             <div class="top">
                 {% include 'topbanner.html' %}

@@ -18,9 +18,9 @@ def navBase():
 def teacherPortal():
     return render_template('teacherPortal.html', user=current_user)
 
-@views.route('/studentProfile/nameandID')
-def studentProfile():
-    return render_template('studentProfileName.html')
+@views.route('/studentProfile/<int:student_id>')
+def studentProfile(student_id):
+    return render_template('student.html', student_id=student_id)
 
 @views.route('/dashboard')
 def dashboard():
