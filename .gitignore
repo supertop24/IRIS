@@ -12,3 +12,4 @@ __pycache__/
 .DS_Store
 .env
 *.sqlite3
+iris/instance/database.db

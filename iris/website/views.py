@@ -39,9 +39,9 @@ def navBase():
 def teacherPortal():
     return render_template('teacherPortal.html', user=current_user)
 
-@views.route('/studentProfile/nameandID')
-def studentProfile():
-    return render_template('studentProfileName.html')
+@views.route('/studentProfile/<int:student_id>')
+def studentProfile(student_id):
+    return render_template('student.html', student_id=student_id)
 
 @views.route('/dashboard')
 def dashboard():
@@ -237,8 +237,7 @@ def test_seed():
 
     return "Sample data inserted successfully!"
 # Not need atm - But please leave commented for now, for my reference & other db insertions 
-        
-
+'''        
 @views.route('AddClassSession')
 def AddClassSession():
     cls = Class.query.get(1)
@@ -264,4 +263,4 @@ def schedule_api(user_type, user_id):
 
     schedule = user.get_weekly_schedule(today)
     return jsonify(schedule)
-    '''
+
