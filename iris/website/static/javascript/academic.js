@@ -18,13 +18,15 @@ window.addEventListener('academic', () => {
 
 // On page load, set date and type input values
 window.onload = function() {
+  const btn = document.getElementById('view_button');
+  if (btn) {
+    btn.addEventListener('click', views);
+  }
   const today = new Date().toISOString().split('T')[0];
   const dateInput = document.getElementById("submit_form_date");
   if (dateInput) dateInput.value = today;
-
   const typeInput = document.getElementById("submit_form_type");
   if (typeInput) typeInput.value = "Report";
-
   // Initialize drag & drop event listeners
   initDragAndDrop();
 };
@@ -90,30 +92,67 @@ function handleFiles(files) {
   }
 
   file_data = file;
-
   fileList.innerHTML = ''; // Clear previous files
   [...files].forEach(file => {
     const item = document.createElement('div');
     item.textContent = file.name;
     fileList.appendChild(item);
-
-    // Optional: uploadFile(file);
   });
 }
-
-
-// Optional: example upload function
-/*
-function uploadFile(file) {
-  const url = 'YOUR_UPLOAD_ENDPOINT';
+function upload()
+{
+  const gradeSelect= document.getElementById('submit_form_year').value;
+  const termSelect= document.getElementById('submit_form_term').value;
+  if(termSelect==="empty")
+  {
+    alert("Please select the term!");
+    return;
+  }
+  if(gradeSelect==="empty")
+  {
+    alert("Please select the grade!");
+    return;
+  }
+  if(file_data===null)
+  {
+    alert("Please select the file to upload!")
+    return;
+  }
   const formData = new FormData();
-  formData.append('file', file);
-
-  fetch(url, {
+  formData.append('type', 'Report');
+  formData.append('grade', gradeSelect);
+  formData.append('student_id', document.getElementById('studentId').value);
+  formData.append('teacher_id', 1);
+  formData.append('note', termSelect);
+  formData.append('pdf', file_data);
+  fetch('/uploadReport', {
     method: 'POST',
-    body: formData
+    body: formData,
   })
-  .then(() => alert(`${file.name} uploaded successfully!`))
-  .catch(() => alert(`Error uploading ${file.name}`));
+  .then(response => response.json())
+  .then(data => console.log(data))
+  .catch(error => console.error(error));
+  alert("Report succesfully uploaded!");
+  academic_background('list');
 }
-*/
+
+function views() {
+  id=document.getElementById('viewsId').value;
+  academic_background('view');
+  fetch(`/searchFile?id=${encodeURIComponent(id)}`)
+    .then(response => {
+      if (!response.ok) throw new Error('File not found or server error');
+      return response.blob();
+    })
+    .then(blob => {
+      if (blob.type !== 'application/pdf') {
+        console.error('Returned file is not a PDF');
+      }
+      const url = URL.createObjectURL(blob);
+      document.getElementById('pdfViewer').src = url;
+    })
+    .catch(error => {
+      console.error('Failed to load PDF:', error);
+    });
+}
+

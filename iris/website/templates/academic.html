@@ -21,7 +21,8 @@
                     Date
                 </div>
             </div>
-            <div class="list_term" onclick="academic_background('view')">
+            <div class="list_term" onclick="views()" id="view_button">
+                <input type="hidden" id="viewsId" value="12">
                 <div class="list_term_title">
                     Title
                 </div>
@@ -98,11 +99,11 @@
         </div>
     </div>
     <div class="submit_upload">
-        <div class="submit_upload_button" onclick="">
+        <div class="submit_upload_button" onclick="upload()">
             Upload
         </div>
     </div>
 </div>
 <div class="academic view" data-id='view'>
-
+    <iframe id="pdfViewer" width="600" height="400"></iframe>
 </div>

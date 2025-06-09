@@ -80,14 +80,6 @@
 {
     margin: 10px;
 }
-.submit
-{
-    background-color: aquamarine;
-}
-.view
-{
-    background-color: pink;
-}
 .list_term
 {
     align-items: center;
@@ -198,9 +190,7 @@
 }
 .submit_upload
 {
-    margin: 50px 0 0 0;
-    display: flex;
-    justify-content: center;
+    margin: 0 auto;
 }
 .submit_upload_button
 {
