@@ -5,32 +5,8 @@
     <div class="add">
         <img  src="{{ url_for('static', filename='images/icons/add.png') }}" alt="search icon" onclick="academic_background('submit')">
     </div>
-    <div class="list_container">
-        <div class="year_list">
-            year
-        </div>
-        <div class="academic_list">
-            <div class="filter">
-
-            </div>
-            <div class="filter_header">
-                <div class="filter_date">
-                    Title
-                </div>
-                <div class="filter_date">
-                    Date
-                </div>
-            </div>
-            <div class="list_term" onclick="views()" id="view_button">
-                <input type="hidden" id="viewsId" value="12">
-                <div class="list_term_title">
-                    Title
-                </div>
-                <div class="list_term_date">
-                    Date
-                </div>
-            </div>
-        </div>
+    <div class="all_list">
+        
     </div>
 </div>
 <div class="academic submit" data-id='submit'>
@@ -105,5 +81,8 @@
     </div>
 </div>
 <div class="academic view" data-id='view'>
-    <iframe id="pdfViewer" width="600" height="400"></iframe>
+    <div class="view_grid">
+        <div class="view_header" id="view_header"></div>
+        <iframe id="pdfViewer" class="pdfViewer"></iframe>
+    </div>
 </div>

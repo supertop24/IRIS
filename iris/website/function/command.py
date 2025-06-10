@@ -60,7 +60,6 @@ def search_by_id():
         row = cursor.fetchone()
         if row:
             name, address = row
-            print(f"User name: {name}") 
             return jsonify({
                 "name": name,
                 "address": address
@@ -119,3 +118,44 @@ def search_file():
         )
     else:
         return {"error": "File not found"}, 404
+
+@command.route('/academic_list', methods=['GET'])
+def search_list():
+    student_id = request.args.get("id")
+    if not student_id:
+        return jsonify({"error": "No ID provided"}), 400
+
+    try:
+        student_id = int(student_id)
+    except ValueError:
+        return jsonify({"error": "Invalid ID format"}), 400
+
+    try:
+        db = get_db()
+        cursor = db.cursor()
+        cursor.execute("""
+            SELECT id, grade, note, created_at
+            FROM report
+            WHERE student_id = ?;
+        """, (student_id,))
+        rows = cursor.fetchall()
+
+        if not rows:
+            return jsonify([])  # return empty list if no data
+
+        # Convert rows (tuples) into list of dicts
+        result = []
+        for row in rows:
+            id, year, term, date = row
+            result.append({
+                "id": id,
+                "year": year,
+                "term": term,
+                "date": date
+            })
+
+        return jsonify(result)
+
+    except Exception as e:
+        print(e)  # for debugging
+        return jsonify({"error": "Internal server error"}), 500
