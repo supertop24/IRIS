@@ -29,7 +29,7 @@ def getCOFromTCA():
 
 @views.route('/')
 def portalSelect():
-   return render_template("portalSelect.html")
+   return render_template("student.html")
 
 @views.route('/navBase')
 def navBase():
