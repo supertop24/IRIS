@@ -1,18 +1,34 @@
 <!--Linking style sheet-->
-<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/assessmentLanding.css') }}">
 
 <!--Inherits from navBase and overrides blocks-->
 {% extends "navBase.html" %}
 
 <!--Page titles-->
-{% block title %}assessments landing{% endblock %}
+{% block title %}Assessments{% endblock %}
 
-{% block pageName %}assessments landing{% endblock %}
+{% block pageName %}Assessments{% endblock %}
 
 <!--Page's content-->
 {% block content %}
 
-    <h1>woo?</h1>
-    <p>assessments?</p>
+    <div class="classPageFlexContainer">
+
+        {% for class in myClasses %}
+
+            <div class="classBoxFlexItem">
+                <div class="classCodeArea">
+                {{ class.code }}
+                </div>
+                <div class="classWhiteArea">
+                    <br><br>Mr. Doe<br><br>Room 6
+                </div>
+            </div> 
+            
+
+
+        {% endfor %}
+
+    </div>
 
 {% endblock %}

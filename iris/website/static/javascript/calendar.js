@@ -19,7 +19,7 @@ function loadSchedule(date = null) {
 
 document.addEventListener('DOMContentLoaded', function () {
   loadSchedule(); // This is loading today’s schedule
-//  setupDatePicker(); // Maybe add later
+//  setupDatePicker(); // Maybe add later to let user make calendar selection
 });
 
 function renderCalendar(data) {
@@ -32,13 +32,12 @@ function renderCalendar(data) {
 
         const baseIndex = row * 6 + colGroup * 3;
 
-
-
         gridItems[baseIndex].textContent = ''; // gridItems[baseIndex].textContent = session.period_label || `Period ${session.period_id}` || '';
         gridItems[baseIndex + 1].textContent = session.period_label || `P${session.period_id}` || '';
         gridItems[baseIndex + 2].textContent = session.class_code || '';
     });
 }
+//clear the griditems and replace baseindex with times, or rename time element to seperate? - getElementById
 
 //      gridItems[baseIndex + 1].textContent = session.class_code || '';
 //      gridItems[baseIndex + 2].textContent = session.subject || '';
