@@ -37,6 +37,7 @@ function renderCalendar(data) {
         gridItems[baseIndex + 2].textContent = session.class_code || '';
     });
 }
+//clear the griditems and replace baseindex with times, or rename time element to seperate? - getElementById
 
 //      gridItems[baseIndex + 1].textContent = session.class_code || '';
 //      gridItems[baseIndex + 2].textContent = session.subject || '';

@@ -1,5 +1,5 @@
 <!--Linking style sheet-->
-<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/assessmentLanding.css') }}">
 
 <!--Inherits from navBase and overrides blocks-->
 {% extends "navBase.html" %}
@@ -12,13 +12,21 @@
 <!--Page's content-->
 {% block content %}
 
-    <div class="classFlexContainer">
+    <div class="classPageFlexContainer">
 
         {% for class in myClasses %}
 
-            <div class="classFlexItem">
-            {{ class.subject }}
-            </div>            
+            <div class="classBoxFlexItem">
+                <div class="classCodeArea">
+                {{ class.code }}
+                </div>
+                <div class="classWhiteArea">
+                    <br><br>Mr. Doe<br><br>Room 6
+                </div>
+            </div> 
+            
+
+
         {% endfor %}
 
     </div>
