@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, jsonify, request, abort
 from datetime import datetime, date, timedelta, time
 from flask_login import current_user, login_required
-from .models import notice, Class, Student, Teacher, ClassSession, Period, TeacherClassAssociation, TeacherRole, User
+from .models import notice, Class, Student, Teacher, ClassSession, Period, TeacherClassAssociation, TeacherRole, User, Pastoral
 from . import db
 
 views = Blueprint('views', '__name__')
@@ -41,7 +41,8 @@ def teacherPortal():
 
 @views.route('/studentProfile/<int:student_id>')
 def studentProfile(student_id):
-    return render_template('student.html', student_id=student_id)
+    allPastoralReports = Pastoral.query.all() #Getting all pastoral reports - no filtering yet
+    return render_template('student.html', student_id=student_id, allPastoralReports=allPastoralReports, pastoral=None)
 
 @views.route('/searchStudent')
 def searchstudent():
@@ -132,6 +133,38 @@ def deleteNotice():
         db.session.delete(notices) #Deleting the notice from the database
         db.session.commit() #Committing the changes to the database
     return redirect("/notice")
+
+@views.route('/pastoralReports')
+def viewPastoralReports():
+    allPastoralReports = Pastoral.query.all() #Reading all the pastoral reports for the student
+    return render_template('awards.html', allPastoralReports=allPastoralReports)
+
+@views.route('/pastoralReport/<int:id>')
+def pastoralReport(id):
+    pastoral = Pastoral.query.get_or_404(id) #Getting the report's id and passing it to the template
+    return render_template('student.html', pastoral=pastoral)
+
+@views.route('createPastoralIncidentReport', methods=['POST'])
+def createPastoralIncidentReport():
+    if request.method == 'POST':
+        newReport = Pastoral(
+            date=request.form.get("date"),
+            time=request.form.get("time"),
+            location=request.form.get("location"),
+            type=request.form.get("type"),
+            studentsInvolved=request.form.get("studentsInvolved"),
+            staffInvolved=request.form.get("staffInvolved"),
+            author=request.form.get("author")
+        )
+        db.session.add(newReport) #Adding new notice to the database and committing it
+        db.session.commit()
+        flash("Pastoral Report Created!", category="success")
+        return redirect(url_for('views.viewPastoralReports'))
+    
+@views.route('individualPastoralReport')
+def individualPastoralReport():
+    print("testing if the individual page is showing")
+    return render_template('pastoral.html')
 
 @views.route('assessmentsLanding')
 def assessmentsLanding():

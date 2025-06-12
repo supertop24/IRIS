@@ -1,0 +1,326 @@
+<!--This page gets included in the student page-->
+
+<!--Page titles-->
+<title>Pastoral Reports</title> <!--MAKE THIS WORRRRRK - DON'T FORGET-->
+
+<!--Page's content-->
+
+<!--Linking style sheet-->
+<link rel="stylesheet" href="{{ url_for('static', filename='css/pastoral.css') }}">
+<!--Linking the js-->
+<script src="{{ url_for('static', filename='javascript/pastoral.js') }}"></script>
+
+<!--This is the list of student reports section-->
+<div class="pastoral list" data-id="list">
+    <!--Content container for the pastoral student profile report page/student reprots section-->
+    <div class="pastoralReportListContainer">
+
+        <!--Merit report container-->
+        <div class="meritReportsContainer">
+            <!--Merit report tilte-->
+            <div class="meritTitle">
+                Merit Reports
+            </div>
+
+            <!--Merit report content-->
+            <div class="meritContentContainer">
+
+                <!--Sort and filter container-->
+                <div class="sortFilterContainer">
+                        <!--Filter-->
+                    <div class="filter">
+                        <p>Filter by Type: </p>
+                    </div>
+
+                    <!--Sort-->
+                    <div class="sort">
+                        <p>Sort by: </p>
+                    </div>
+                </div>
+
+                <!--Header-->
+                <div class="headerContainer">
+                    <p class="left">Title</p>
+                    <p class="center">Author</p>
+                    <p class="right">Date</p>
+                </div>
+
+                <!--Loop to display all merit reports-->
+                {% for pastoral in allPastoralReports %}
+                <!--Merit report box layout-->
+                <div class="meritReportBox" onclick="showIndividualReport(this)"
+                data-id="{{ pastoral.id }}"
+                data-title="{{ pastoral.title }}"
+                data-author="{{ pastoral.author }}"
+                data-date="{{ pastoral.date }}"
+                data-time="{{ pastoral.time }}"
+                data-location="{{ pastoral.location }}"
+                data-type="{{ pastoral.type }}"
+                data-students="{{ pastoral.studentsInvolved }}"
+                data-staff="{{ pastoral.staffInvolved }}"
+                data-note="{{ pastoral.note }}">
+                    <p>{{pastoral.title}}</p>
+                    <p>{{pastoral.author}}</p>
+                    <p>{{pastoral.date}}</p>
+                </div>
+                {% endfor %} <!--End of for loop to display notices-->
+            </div>
+        </div>
+
+        <!--Incident report container-->
+        <div class="incidentReportsContainer">
+            <!--Incident report title-->
+            <div class="incidentTitle">
+                Incident Reports
+            </div>
+
+            <!--Incident report content-->
+            <div class="incidentContentContainer">
+                
+                <!--Sort and filter container-->
+                <div class="sortFilterContainer">
+                        <!--Filter-->
+                    <div class="filter">
+                        <p>Filter by Type: </p>
+                    </div>
+
+                    <!--Sort-->
+                    <div class="sort">
+                        <p>Sort by: </p>
+                    </div>
+                </div>
+                
+
+                <!--Header-->
+                <div class="headerContainer">
+                    <p class="left">Title</p>
+                    <p class="center">Author</p>
+                    <p class="right">Date</p>
+                </div>
+
+                <!--Loop to display all incident reports-->
+                {% for pastoral in allPastoralReports %}
+                <!--Merit report box layout-->
+                <div class="meritReportBox" onclick="showIndividualReport(this)" 
+                data-id="{{ pastoral.id }}"
+                data-title="{{ pastoral.title }}"
+                data-author="{{ pastoral.author }}"
+                data-date="{{ pastoral.date }}"
+                data-time="{{ pastoral.time }}"
+                data-location="{{ pastoral.location }}"
+                data-type="{{ pastoral.type }}"
+                data-students="{{ pastoral.studentsInvolved }}"
+                data-staff="{{ pastoral.staffInvolved }}"
+                data-note="{{ pastoral.note }}">
+                    <p>{{pastoral.title}}</p>
+                    <p>{{pastoral.author}}</p>
+                    <p>{{pastoral.date}}</p>
+                </div>
+                {% endfor %} <!--End of for loop to display notices-->
+            </div>
+        </div>
+    </div>
+</div> <!--End of the list of student reports section-->
+
+<!--This is the view of an individual student report section-------------------------------------->
+<div class="pastoral view" data-id="view">
+    
+    <!--Checking if there is a report-->
+        <!--Individual report content container-->
+        <div class="pastoralReportContainer">
+
+            <!--Detail section of report, title-->
+            <div class="detailsContainer">
+
+                <!--Details Title-->
+                <div class="detailsTitle">
+                    <p>Details</p>
+                </div>
+
+                <!--Detials content container-->
+                <div class="detailsConentContainer">
+
+                    <!--Date section's container-->
+                    <div class="dateContainer">
+
+                        <!--Date title-->
+                        <div class="date"><p>Date</p></div>
+
+                        <!--Date displayed/input-->
+                        <div class="dateDisplayed">
+                            <p id="reportDate"></p>
+                        </div>
+
+                    </div>
+
+                    <!--Time section's container-->
+                    <div class="timeContainer">
+
+                        <!--Time title-->
+                        <div class="time">
+                            <p>Time</p>
+                        </div>
+
+                        <!--Time displayed-->
+                        <div class="timeDisplayed">
+                            <p id="reportTime"></p>
+                        </div>
+
+                    </div>
+
+                    <!--Location section's container-->
+                    <div class="locationContainer">
+
+                        <!--Location title-->
+                        <div class="location">
+                            <p>Location</p>
+                        </div>
+
+                        <!--Location displayed-->
+                        <div class="locationDisplayed">
+                            <p id="reportLocation"></p>
+                        </div>
+
+                    </div>
+
+                    <!--Type of report section's container-->
+                    <div class="typeContainer">
+
+                        <!--Report type title-->
+                        <div class="type">
+                            <p>Report Type</p>
+                        </div>
+
+                        <!--Report type displayed-->
+                        <div class="typeDisplayed">
+                            <p id="reportType"></p>
+                        </div>
+
+                    </div>
+
+                    <!--Student involved section's container-->
+                    <div class="studentInvolvedContainer">
+
+                        <!--Students involved title-->
+                        <div class="studentInvolved">
+                            <p>Students Involved</p>
+                        </div>
+
+                        <!--Students involved displayed-->
+                        <div class="studentInvolvedDisplayed">
+                            <p id="reportStudents"></p>
+                        </div>
+
+                    </div>
+
+                    <!--Staff involved section's container-->
+                    <div class="staffInvolvedContainer">
+
+                        <!--Staff involved title-->
+                        <div class="staffInvolved">
+                            <p>Staff Involved</p>
+                        </div>
+
+                        <!--Staff involved displayed-->
+                        <div class="staffInvolvedDisplayed">
+                            <p id="reportStaff"></p>
+                        </div>
+
+                    </div>
+
+                    <!--Author of report section's container-->
+                    <div class="authorContainer">
+
+                        <!--Author of report title-->
+                        <div class="author">
+                            <p>Author of Report</p>
+                        </div>
+
+                        <!--Author of report displayed-->
+                        <div class="authorDisplayed">
+                            <p id="reportAuthor"></p>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div><!--End of the details container-->
+
+
+            <!--Description and follow up detailes container-->
+            <div class="descriptionContainer">
+
+                <!--Description title container-->
+                <div class="descriptionTitle">
+                    <p>Description and Follow Up Details</p>
+                </div>
+
+                <!--Description all content container-->
+                <div class="descriptionContentContainer">
+
+                    <!--Incident description container-->
+                    <div class="incidentDescriptionContainer">
+
+                        <!--Heading-->
+                        <div class="incidentDescriptionHeading">
+                            <p>Incident Description</p>
+                        </div>
+
+                        <!--Incident description box-->
+                        <div class="incidentDescription">
+                            <p id="reportNote"></p>
+                        </div>
+                    </div>
+                
+
+                    <!--Follow up details container-->
+                    <div class="followUpContainer">
+
+                        <!--Parent communication container-->
+                        <div class="parentCommunicationContainer">
+
+                            <!--Heading-->
+                            <div class="parentCommunicationHeading">
+                                <p id="reportNote"></p>
+                            </div>
+
+                            <!--Content-->
+                            <div class="parentCommunication">
+                                <p>test</p>
+                            </div>
+
+                        </div>
+
+                        <!--Disciplinary actions container-->
+                        <div class="disciplinaryActionContainer">
+
+                            <!--Heading-->
+                            <div class="disciplinaryActionHeading">
+                                <p>Disciplinary Actions</p>
+                            </div>
+
+                            <!--Content-->
+                            <div class="disciplinaryActionContent">
+                                <p>test</p>
+                            </div>
+                        </div>
+
+                        <!--Resolution status container-->
+                        <div class="resolutionContainer">
+
+                            <!--Heading-->
+                            <div class="resolutionHeading">
+                                <p>Resolution Status</p>
+                            </div>
+
+                            <!--Content-->
+                            <div class="resolutionContent">
+                                <p>test</p>
+                            </div>
+                        </div>
+                            
+                    </div>
+                </div> 
+            </div><!--End of the description and follow up container-->
+        </div>
+</div><!--End of the view of an individual student report section-->
