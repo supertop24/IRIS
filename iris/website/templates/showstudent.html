@@ -1,0 +1,20 @@
+<link rel="stylesheet" href="{{ url_for('static', filename='css/showstudent.css') }}">
+<script src="{{ url_for('static', filename='javascript/showstudent.js') }}"></script>
+<!--Inherits from navBase and overrides blocks-->
+{% extends "navBase.html" %}
+{% block title %}Search Student{% endblock %}
+{% block pageName %}Student{% endblock %}
+{% block content %} 
+<div class="search_container">
+    <div class="search header">
+        Search Student by Name
+    </div>
+    <div class="search function">
+        <div class="student_search_bar">
+            <input class="student_search_input" type="text" id="student_search" placeholder="Search Students">
+            <img class="student_search_icon" src="{{ url_for('static', filename='images/icons/search.png') }}" alt="search icon">
+            <ul class="student_search_results" id="student_search_results"></ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -29,8 +29,7 @@ def getCOFromTCA():
 
 @views.route('/')
 def portalSelect():
-   allPastoralReports = Pastoral.query.all() #Getting all pastoral reports - no filtering yet
-   return render_template("student.html", allPastoralReports=allPastoralReports, pastoral=None)
+   return render_template("showstudent.html")
 
 @views.route('/navBase')
 def navBase():
@@ -44,6 +43,10 @@ def teacherPortal():
 def studentProfile(student_id):
     allPastoralReports = Pastoral.query.all() #Getting all pastoral reports - no filtering yet
     return render_template('student.html', student_id=student_id, allPastoralReports=allPastoralReports, pastoral=None)
+
+@views.route('/searchStudent')
+def searchstudent():
+    return render_template('showstudent.html')
 
 @views.route('/dashboard')
 def dashboard():
