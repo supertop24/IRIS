@@ -171,7 +171,7 @@ html, body {
 .topNav {
     background-color: #E2DDEB;
     width: 100%;
-    height: 10%;
+    height: 130px;
     display: flex;
     justify-content: space-between;
     align-items: center;
