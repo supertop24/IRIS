@@ -1,5 +1,5 @@
 
-// === Your existing academic_background function ===
+//academic_background function
 function academic_background(id) {
   const targets = document.querySelectorAll('.academic');
   targets.forEach(target => {

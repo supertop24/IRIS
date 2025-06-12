@@ -1,7 +1,7 @@
 <!--This page gets included in the student page-->
 
 <!--Page titles-->
-<title>Pastoral</title> <!--MAKE THIS WORRRRRK - DON'T FORGET-->
+<title>Pastoral Reports</title> <!--MAKE THIS WORRRRRK - DON'T FORGET-->
 
 <!--Page's content-->
 
@@ -11,8 +11,7 @@
 <script src="{{ url_for('static', filename='javascript/pastoral.js') }}"></script>
 
 <!--This is the list of student reports section-->
-<div class="pastoral reportList" data-id="reportList">
-
+<div class="pastoral list" data-id="list">
     <!--Content container for the pastoral student profile report page/student reprots section-->
     <div class="pastoralReportListContainer">
 
@@ -20,7 +19,7 @@
         <div class="meritReportsContainer">
             <!--Merit report tilte-->
             <div class="meritTitle">
-                mtitle
+                Merit Reports
             </div>
 
             <!--Merit report content-->
@@ -38,7 +37,6 @@
                         <p>Sort by: </p>
                     </div>
                 </div>
-                
 
                 <!--Header-->
                 <div class="headerContainer">
@@ -50,7 +48,7 @@
                 <!--Loop to display all merit reports-->
                 {% for pastoral in allPastoralReports %}
                 <!--Merit report box layout-->
-                <div class="meritReportBox" onclick="showIndividualReport(this)" 
+                <div class="meritReportBox" onclick="showIndividualReport(this)"
                 data-id="{{ pastoral.id }}"
                 data-title="{{ pastoral.title }}"
                 data-author="{{ pastoral.author }}"
@@ -66,18 +64,14 @@
                     <p>{{pastoral.date}}</p>
                 </div>
                 {% endfor %} <!--End of for loop to display notices-->
-
             </div>
-
         </div>
-
-
 
         <!--Incident report container-->
         <div class="incidentReportsContainer">
             <!--Incident report title-->
             <div class="incidentTitle">
-                ititle
+                Incident Reports
             </div>
 
             <!--Incident report content-->
@@ -124,14 +118,12 @@
                 </div>
                 {% endfor %} <!--End of for loop to display notices-->
             </div>
-
         </div>
     </div>
 </div> <!--End of the list of student reports section-->
 
-
 <!--This is the view of an individual student report section-------------------------------------->
-<div class="pastoral individualReport" data-id="individualReport">
+<div class="pastoral view" data-id="view">
     
     <!--Checking if there is a report-->
         <!--Individual report content container-->
@@ -332,229 +324,3 @@
             </div><!--End of the description and follow up container-->
         </div>
 </div><!--End of the view of an individual student report section-->
-
-
-
-<!--This is the create new student report section-------------------------------------->
-<div class="pastoral newIndividualReport" data-id="newIndividualReport">
-
-    <!--Individual report content container-->
-    <div class="pastoralReportContainer">
-
-        <!--Detail section of report, title-->
-        <div class="detailsContainer">
-
-            <!--Details Title-->
-            <div class="detailsTitle">
-                <p>Details</p>
-            </div>
-
-            <!--Detials content container-->
-            <div class="detailsConentContainer">
-
-                <!--Date section's container-->
-                <div class="dateContainer">
-
-                    <!--Date title-->
-                    <div class="date">
-                        <p>Date</p>
-                    </div>
-
-                    <!--Date displayed/input-->
-                    <div class="dateDisplayed">
-                        <input class="inputReportDate" type="integer" name="date" placeholder="dd/mm/yy">
-                    </div>
-
-                </div>
-
-                <!--Time section's container-->
-                <div class="timeContainer">
-
-                    <!--Time title-->
-                    <div class="time">
-                        <p>Time</p>
-                    </div>
-
-                    <!--Time displayed-->
-                    <div class="timeDisplayed">
-                        <input class="inputReportTime" type="integer" name="time" placeholder="...">
-                    </div>
-
-                </div>
-
-                <!--Location section's container-->
-                <div class="locationContainer">
-
-                    <!--Location title-->
-                    <div class="location">
-                        <p>Location</p>
-                    </div>
-
-                    <!--Location displayed-->
-                    <div class="locationDisplayed">
-                        <input class="inputReportLocation" type="text" name="location" placeholder="...">
-                    </div>
-
-                </div>
-
-                <!--Type of report section's container-->
-                <div class="typeContainer">
-
-                    <!--Report type title-->
-                    <div class="type">
-                        <p>Report Type</p>
-                    </div>
-
-                    <!--Report type displayed, custom drop down menu that displays options with an icon and it's corresponding text-->
-                    <div class="typeDisplayed">
-                        <div class="dropdownContainer">
-                            <div class="selected-Option" id="selectedOption">
-                                <img src="{{ url_for('static', filename='images/icons/whiteIrisLogo.png') }}" alt="Teamwork icon">
-                                <span>Teamwork</span>
-                            </div>
-                            <!--Dropdown list of options-->
-                            <div class="dropdownOption-List" id="dropdownOptionList">
-                                <!--Option 1-->
-                                <div class="dropdownOption" data-value="teamwork" data-text="Teamwork" data-img="{{ url_for('static', filename='images/icons/whiteIrisLogo.png') }}">
-                                    <img src="{{ url_for('static', filename='images/icons/whiteIrisLogo.png') }}" alt="Teamwork icon">
-                                    <span>Teamwork</span>
-                                </div>
-                                <!--Option 2-->
-                                <div class="dropdownOption" data-value="respect" data-text="Respect" data-img="{{ url_for('static', filename='images/icons/whiteIrisLogo.png') }}">
-                                    <img src="{{ url_for('static', filename='images/icons/whiteIrisLogo.png') }}" alt="Respect icon">
-                                    <span>Respect</span>
-                                </div>
-                            </div>
-                        </div>
-
-                            <!--Hidden input to store the selected value-->
-                            <input type="hidden" name="type" id="selectedValue" value="teamwork">
-                    </div>
-
-                </div>
-
-                <!--Student involved section's container-->
-                <div class="studentInvolvedContainer">
-
-                    <!--Students involved title-->
-                    <div class="studentInvolved">
-                        <p>Students Involved</p>
-                    </div>
-
-                    <!--Students involved displayed-->
-                    <div class="studentInvolvedDisplayed">
-                        <input class="inputReportStudentsInvolved" type="text" name="studentsInvolved" placeholder="...">
-                    </div>
-
-                </div>
-
-                <!--Staff involved section's container-->
-                <div class="staffInvolvedContainer">
-
-                    <!--Staff involved title-->
-                    <div class="staffInvolved">
-                        <p>Staff Involved</p>
-                    </div>
-
-                    <!--Staff involved displayed-->
-                    <div class="staffInvolvedDisplayed">
-                        <input class="inputReportStaffInvolved" type="text" name="staffInvolved" placeholder="...">
-                    </div>
-
-                </div>
-
-                <!--Author of report section's container-->
-                <div class="authorContainer">
-
-                    <!--Author of report title-->
-                    <div class="author">
-                        <p>Author of Report</p>
-                    </div>
-
-                    <!--Author of report displayed-->
-                    <div class="authorDisplayed">
-                        <input class="inputReportAuthor" type="text" name="author" placeholder="...">
-                    </div>
-
-                </div>
-
-            </div>
-        </div><!--End of the details container-->
-
-
-        <!--Description and follow up detailes container-->
-        <div class="descriptionContainer">
-
-            <!--Description title container-->
-            <div class="descriptionTitle">
-                <p>Description and Follow Up Details</p>
-            </div>
-
-            <!--Description all content container-->
-            <div class="descriptionContentContainer">
-
-                <!--Incident description container-->
-                <div class="incidentDescriptionContainer">
-
-                    <!--Heading-->
-                    <div class="incidentDescriptionHeading">
-                        <p>Incident Description</p>
-                    </div>
-
-                    <!--Incident description box-->
-                    <div class="incidentDescription">
-                        <textarea class="inputReportDescription" type="text" name="description" placeholder="Enter your description here..."></textarea>
-                    </div>
-                </div>
-            
-
-                <!--Follow up details container-->
-                <div class="followUpContainer">
-
-                    <!--Parent communication container-->
-                    <div class="parentCommunicationContainer">
-
-                        <!--Heading-->
-                        <div class="parentCommunicationHeading">
-                            <p>Parent Communication</p>
-                        </div>
-
-                        <!--Content-->
-                        <div class="parentCommunication">
-                            <textarea class="inputReportParentCommunication" type="text" name="parentCommunication" placeholder="Enter your content here..."></textarea>
-                        </div>
-
-                    </div>
-
-                    <!--Disciplinary actions container-->
-                    <div class="disciplinaryActionContainer">
-
-                        <!--Heading-->
-                        <div class="disciplinaryActionHeading">
-                            <p>Disciplinary Actions</p>
-                        </div>
-
-                        <!--Content-->
-                        <div class="disciplinaryActionContent">
-                            <textarea class="inputReportDisciplinaryAction" type="text" name="disciplinaryAction" placeholder="Enter your content here..."></textarea>
-                        </div>
-                    </div>
-
-                    <!--Resolution status container-->
-                    <div class="resolutionContainer">
-
-                        <!--Heading-->
-                        <div class="resolutionHeading">
-                            <p>Resolution Status</p>
-                        </div>
-
-                        <!--Content-->
-                        <div class="resolutionContent">
-                            <textarea class="inputReportResolution" type="text" name="resolutionStatus" placeholder="Enter your content here..."></textarea>
-                        </div>
-                    </div>
-                        
-                </div>
-            </div> 
-
-</div>

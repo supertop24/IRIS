@@ -1,3 +1,4 @@
+//Pastoral background function
 function pastoral_background(id) {
   const targets = document.querySelectorAll('.pastoral');
   targets.forEach(target => {
@@ -9,17 +10,10 @@ function pastoral_background(id) {
   section('pastoral');
 }
 
-// Listen for custom 'academic' event
-window.addEventListener('pastoral', () => {
-  pastoral_background('reportList');
-});
-
-
-
-
-
-
-
+// Listen for custom pastoral event
+window.addEventListener('pastoral', function() {
+  pastoral_background('list');
+})
 
 // Custom dropdown menu code 
 document.addEventListener("DOMContentLoaded", () => {
@@ -80,5 +74,5 @@ function showIndividualReport(element) {
     document.querySelectorAll('.reportNote').forEach(el => el.textContent = reportData.note);
 
     //Displaying the individual report section
-    pastoral_background('individualReport');
+    pastoral_background('view');
 }
