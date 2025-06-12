@@ -1,4 +1,4 @@
-/* Restting deafaults to ensure full coverage */
+/* Resetting defaults */
 html, body {
     margin: 0;
     padding: 0;
@@ -8,34 +8,38 @@ html, body {
 
 /* Container for the page */
 .container {
-    min-height: 100vh; /*Using viewport height so that it is tailored  to the device */
-    width: 100vw; /*Viewport width */
+    min-height: 100vh;
+    width: 100vw;
     margin: 0;
     padding: 0;
     background-color: #F3F2F2;
     display: flex;
-    flex-direction: column;
 }
 
 /* Side nav menu - open state */
 .sideNav {
     height: 100%;
-    width: 16%; 
+    width: 16%;
     position: fixed;
-    z-index: 1; /* Stay on top */
+    z-index: 1;
     top: 0;
     left: 0;
     background-color: #988EB1;
-    overflow-x: hidden; /* Disable horizontal scroll */
+    overflow-x: hidden;
     padding-top: 60px;
 }
 
-/* Size of closed nav */
+/* Side nav - collapsed */
 .sideNav.collapsed {
     width: 4%;
 }
+.sideNav.collapsed .irisLogo,
+.sideNav.collapsed .userName,
+.sideNav.collapsed .navItem span {
+    display: none;
+}
 
-/* IRIS logo position */
+/* IRIS logo */
 .irisLogo {
     display: block;
     height: 55px;
@@ -47,12 +51,7 @@ html, body {
     padding-top: 5%;
 }
 
-/*Hiding logo when nav is closed */
-.sideNav.collapsed .irisLogo {
-    display: none;
-}
- 
-/* Close button postion and style */
+/* Toggle button */
 .sideNav .navToggleBtn {
     position: absolute;
     top: 0px;
@@ -61,8 +60,6 @@ html, body {
     width: auto;
     margin-left: 50px;
 }
-
-/* CLose button position when nav closed */
 .sideNav.collapsed .navToggleBtn {
     right: 0;
 }
@@ -72,52 +69,45 @@ html, body {
     height: 200px;
     width: 100%;
     display: flex;
-    flex-direction: column; /* Stack content vertically */
-    align-items: center; /* center horizontally */
-    justify-content: center; /* centers vertically */
-    gap: 10px; /* Adds space between items */
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
     position: relative;
 }
 
-/* User prfile image */
+/* User profile image */
 .userProfileImg {
     height: 80px;
-    width: auto; 
-    object-fit: cover; /* Ensures the image cover the box */;
+    width: auto;
+    object-fit: cover;
     border-radius: 20%;
     position: relative;
-    z-index: 2; /* Places the image above the username box */
-    margin-bottom: -50px; /* Makes the image overlap the username box */
+    z-index: 2;
+    margin-bottom: -50px;
 }
-
-/* Decreasing the size of the image to fit collapsed nav */
 .sideNav.collapsed .userProfileImg {
     height: 60px;
     width: auto;
 }
- 
+
 /* Username box */
 .userName {
     display: flex;
-    flex-direction: column; /* Stack content vertically */
-    align-items: center; /* Center horizontally */
-    justify-content: center; /* Center vertically */
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     background-color: #ffffff;
     padding-top: 55px;
     padding-bottom: 30px;
     border-radius: 20px;
     text-align: center;
-    color:#000000;
+    color: #000000;
     font-size: 30px;
     width: 87%;
     box-sizing: border-box;
     position: relative;
     z-index: 1;
-}
-
-/* Hides username box when nav is closed */
-.sideNav.collapsed .userName {
-    display: none;
 }
 
 /* Nav links */
@@ -128,71 +118,56 @@ html, body {
     color: #000000;
     opacity: 85%;
     display: block;
-    transition: 0.3s; /* Adds transition effect */
+    transition: 0.3s;
 }
 
-/* Changing colour of links when hovered over */
-.sideNav a:hover {
-    background-color: #C6C1D4;
-}
-
-/* Positioning the nav items */
+/* Nav item styling */
 .navItem {
     display: flex;
     align-items: center;
-    gap: 10px; /* Space between icon and text */
+    gap: 10px;
     justify-content: flex-start;
-    height: 60px; /* Consistent height for nav items */
+    height: 60px;
 }
-
-/* Centering icons when nav is closed */
 .sideNav.collapsed .navItem {
     padding: 8px 10px;
     justify-content: center;
 }
-
-/* Nav item text */
 .navItem span {
     font-size: 20px;
     cursor: pointer;
     vertical-align: middle;
-    line-height: 50px; /* Matches height of navItem */
+    line-height: 50px;
 }
 
-/* Adujsting padding of nav items when nav is closed */
-.sideNav.collapsed .navItem span {
-    display: none; /* Hides text when nav is closed */
-}
-
-/* Icon sizing - ensuring they are consistent*/
+/* Nav icons */
 .navIcon {
     height: 50px;
-    width: 60px; /* Maintains aspect ratio */
-    min-width: 58px; /* Makes sure icons don't skrink */
-    object-fit: contain; /*Ensure icons maintain aspect ratio */
+    width: 60px;
+    min-width: 58px;
+    object-fit: contain;
     vertical-align: middle;
 }
-
-/* Centering icons when nav closed */
 .sideNav.collapsed .navIcon {
     margin: 0 auto;
 }
 
-/* Pushing page content to the right when nav opened */
+/* Main content */
 #content {
-    margin-left:  16%; /*Ensure that content isn't hidden by nav bar */
-    height: 100%;
-    width: auto;
+    margin-left: 16%;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
-
-/* content when nav is closed */
 #content.navCollapsed {
     margin-left: 4%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
-
-
-/* Top navigation bar styling */
+/* Top navigation bar */
 .topNav {
     background-color: #E2DDEB;
     width: 100%;
@@ -201,8 +176,6 @@ html, body {
     justify-content: space-between;
     align-items: center;
 }
-
-/* Page title stlying */
 .pageName {
     padding: 20px;
     width: 50%;
@@ -210,11 +183,16 @@ html, body {
     text-align: center;
     font-size: 40px;
 }
-
-/* Search bar styling */
 .searchBar {
     padding: 20px;
     width: 50%;
     height: auto;
     text-align: center;
+}
+
+/* Main content block (fills remaining space) */
+.block_content {
+    width: 100%;
+    flex: 1;
+    overflow-y: auto;
 }
