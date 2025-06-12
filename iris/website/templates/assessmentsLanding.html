@@ -1,5 +1,14 @@
-<!--Linking style sheet-->
-<link rel="stylesheet" href="{{ url_for('static', filename='css/assessmentLanding.css') }}">
+<!DOCTYPE html>
+<head>
+
+    <!--Linking style sheet-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/assessmentLanding.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Acme&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
 
 <!--Inherits from navBase and overrides blocks-->
 {% extends "navBase.html" %}
@@ -32,3 +41,5 @@
     </div>
 
 {% endblock %}
+
+</body>

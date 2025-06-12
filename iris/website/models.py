@@ -128,7 +128,7 @@ class Class(db.Model):
     subject = db.Column(db.String(15))     
     code = db.Column(db.String(15), nullable=False)
 
-    # The two teacher relationship lines serve different purposes. The first one calls the "TeacherClassAssociation" model, which holds their role info. If we just want to call teacher objects, we can use the 2nd line which gets the Teacher model directly.  
+    # The two teacher relationship lines serve different purposes. The first one calls the "TeacherClassAssociation" model, which holds their role info. If we just want to call teacher objects, use the 2nd line which gets the Teacher model directly.  
     teacher_associations = db.relationship("TeacherClassAssociation", back_populates="class_")
     teachers = db.relationship("Teacher", secondary='teacher_class_association', viewonly=True)
 

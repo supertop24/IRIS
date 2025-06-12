@@ -3,6 +3,7 @@ from datetime import datetime, date, timedelta, time
 from flask_login import current_user, login_required
 from .models import notice, Class, Student, Teacher, ClassSession, Period, TeacherClassAssociation, TeacherRole, User
 from . import db
+import re
 
 views = Blueprint('views', '__name__')
 
@@ -28,12 +29,16 @@ def getCOFromTCA():
     return classObject
 
 @views.route('/')
-def portalSelect():
+def student():
    return render_template("student.html")
 
 @views.route('/navBase')
 def navBase():
     return render_template("navBase.html")
+
+@views.route('/portalSelect')
+def portalSelect():
+    return render_template('portalSelect.html')
 
 @views.route('/teacherPortal')
 def teacherPortal():
@@ -134,6 +139,56 @@ def assessmentsLanding():
     currentDate = datetime.now().date()
     myClasses = getMyClasses()
     return render_template("assessmentsLanding.html", user=current_user, currentDate=currentDate, myClasses = myClasses)
+
+@views.route('/morePopulating')
+def morePopulating():
+    try:
+        teacher = Teacher(
+            name = "Jane Smith",
+            email = "janesmith@school.com",
+            password="janesmith",
+            gender = "Female",
+            phone_number = "09 123 456",
+            address = "12 NoOnion Street"
+        )
+        db.session.add(teacher)
+        db.session.flush()
+
+        subjects = ["Year 10 Mathematics", "Year 10 Science", "Year 11 Biology", "Year 11 Chemistry", "Year 11 Physics"]
+        classes=[]
+        for i, subject in enumerate(subjects):
+
+            parts = subject.split()
+            year = parts[1]
+            abr = parts[2][:3].upper()
+            clsCode = '{year}{abr}1'
+            cls = Class(year=2025, subject=subject, code=clsCode)
+            db.session.add(cls)
+            db.session.flush()
+            classes.append(cls)
+
+            assoc = TeacherClassAssociation(teacher_id=teacher.id, class_id=cls.id, role=TeacherRole.MAIN)
+            db.session.add(assoc)
+
+            today = date.today()
+            for i in range(5):  # First 5 classes only
+                session = ClassSession(
+                    class_id=classes[i].id,
+                    date=today,
+                    period_id=1
+            )
+            db.session.add(session)
+
+            db.session.commit()
+            return jsonify({"message": "Test data populated successfully."})
+    
+
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
+
+# Finish adding population route!! 
+
 
 @views.route('/populate-test-data')
 def populate_test_data():
