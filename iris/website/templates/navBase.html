@@ -36,7 +36,7 @@
                 <a href="#" class="navItem"><img class="navIcon" src="{{ url_for('static', filename='images/icons/attendance.png') }}" alt="Attendance icon">
                     <span>Attendance</span>
                 </a>
-                <a onclick="studentProfile(0)" class="navItem"><img class="navIcon" src="{{ url_for('static', filename='images/icons/students.png') }}" alt="Students icon">
+                <a href="/searchStudent" class="navItem"><img class="navIcon" src="{{ url_for('static', filename='images/icons/students.png') }}" alt="Students icon">
                     <span>Students</span>
                 </a>
                 <a href="#" class="navItem"><img class="navIcon" src="{{ url_for('static', filename='images/icons/pastoral.png') }}" alt="Pastoral icon">
@@ -60,15 +60,13 @@
             <div id="content">
                 <div class="topNav">
                     <div class="pageName">{%block pageName %}Nav Base{% endblock %}</div>
-                    <div class="searchBar">Search Students</div>
+                    {% include 'searchstudent.html' %}
                 </div>
-
-                {% block content %} 
-                <p>blah blah</p>
-                <p>blah blah</p>
-                <p>blah blah</p>
-                {% endblock %}
-            
+                <div class="block_content">
+                    {% block content %} 
+                    blah blah
+                    {% endblock %}
+                </div>
             </div>
         </div>
     </body>

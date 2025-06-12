@@ -1,0 +1,113 @@
+body
+{
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+.block_content
+{
+    display: flex;
+    justify-content: center;
+    margin-top: 70px;
+}
+.search_container {
+    width: 800px;
+    height: 660px;
+    background-color: white;
+    display: grid;
+    border-radius: 20px;
+    grid-template-rows: 100px auto;
+    grid-template-columns: 1fr;
+    grid-template-areas:
+        "header"
+        "function";
+    /* optionally add gap */
+    gap: 10px;
+}
+
+.search.header {
+    grid-area: header;
+    background-color: #C5B9DF;
+    border-radius: 20px 20px 0 0 ;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+}
+
+.search.function {
+    grid-area: function;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    height: auto;
+}
+.student_search_bar {
+    position: relative;
+    display: inline-block;
+    margin-right: 30px;
+}
+
+.student_search_input {
+    font-size: 18px;
+    height: 70px;
+    width: 450px;
+    padding: 0 45px 0 20px; /* space for icon on right */
+    text-align: left;
+    border: 2px solid #988EB1;
+    border-radius: 25px;
+    background-color: white;
+    color: #333;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.student_search_input:focus {
+    outline: none;
+    border-color: #7d70a3;
+    box-shadow: 0 0 5px rgba(152, 142, 177, 0.6);
+}
+
+.student_search_icon {
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+    height: 24px;
+    width: 24px;
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+.student_search_results {
+    position: absolute;
+    top: 60px;
+    width: 100%;
+    display: none;
+    background-color: white;
+    border: 2px solid #988EB1;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    list-style-type: none;
+    padding: 0;
+    margin: 10px 0 0 0;
+    font-size: 18px;
+    z-index: 10;
+}
+
+.student_search_results li {
+    padding: 12px 18px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.student_search_results li:last-child {
+    border-bottom: none;
+}
+
+.student_search_results li:hover {
+    background-color: #988EB1;
+    color: white;
+}

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/searchstudent.css') }}">
+        <script src="{{ url_for('static', filename='javascript/searchstudent.js') }}"></script>
+
+        <!--Title that children can override-->
+        <title>{%block title %}Search Student{% endblock %}</title>
+
+    </head>
+
+    <body>
+        <div class="search-bar">
+            <input class="search-input" type="text" id="search" placeholder="Search Students">
+            <img class="search-icon" src="{{ url_for('static', filename='images/icons/search.png') }}" alt="search icon">
+            <ul class="search-result" id="search-result">
+            </ul>
+        </div>
+    </body>
+</html>

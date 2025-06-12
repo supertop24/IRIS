@@ -48,6 +48,10 @@ def teacherPortal():
 def studentProfile(student_id):
     return render_template('student.html', student_id=student_id)
 
+@views.route('/searchStudent')
+def searchstudent():
+    return render_template('showstudent.html')
+
 @views.route('/dashboard')
 def dashboard():
    currentDate = datetime.now().date()
