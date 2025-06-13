@@ -30,11 +30,26 @@
                 {{ class.code }}
                 </div>
                 <div class="classWhiteArea">
-                    <br><br>Mr. Doe<br><br>Room 6
+                    <br><br>{{user.name}}<br><br>Room 6
                 </div>
             </div> 
-            
 
+        {% endfor %}
+
+    </div>
+        ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    <div class="classPageFlexContainer2">
+
+        {% for class in otherClasses %}
+
+            <div class="classBoxFlexItem2">
+                <div class="classCodeArea2">
+                {{ class.code }}
+                </div>
+                <div class="classWhiteArea2">
+                    <br><br>{{user.name}}<br><br>Room 6
+                </div>
+            </div> 
 
         {% endfor %}
 

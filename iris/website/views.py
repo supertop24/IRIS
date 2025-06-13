@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, jsonify, request, abort
 from datetime import datetime, date, timedelta, time
 from flask_login import current_user, login_required
-from .models import notice, Class, Student, Teacher, ClassSession, Period, TeacherClassAssociation, TeacherRole, User
+from .models import notice, Class, Student, Teacher, ClassSession, Period, TeacherClassAssociation, TeacherRole, User, Pastoral
 from . import db
 import re
 
@@ -23,6 +23,25 @@ def getMyClasses():
     ).all()
 
     return myClasses
+
+def getOtherClasses():
+
+    user = current_user
+    userId = user.id
+
+    classFinder = TeacherClassAssociation.query.filter(
+        TeacherClassAssociation.teacher_id != userId
+    ).all()
+
+    otherClassIds = [assoc.class_id for assoc in classFinder]
+
+    otherClasses = Class.query.filter(
+        Class.id.in_(otherClassIds)
+    ).all()
+
+    return otherClasses
+    
+
 
 def getCOFromTCA():
     classObject = TeacherClassAssociation.query.all()
@@ -46,7 +65,8 @@ def teacherPortal():
 
 @views.route('/studentProfile/<int:student_id>')
 def studentProfile(student_id):
-    return render_template('student.html', student_id=student_id)
+    allPastoralReports = Pastoral.query.all() #Getting all pastoral reports - no filtering yet
+    return render_template('student.html', student_id=student_id, allPastoralReports=allPastoralReports, pastoral=None)
 
 @views.route('/searchStudent')
 def searchstudent():
@@ -138,11 +158,46 @@ def deleteNotice():
         db.session.commit() #Committing the changes to the database
     return redirect("/notice")
 
+@views.route('/pastoralReports')
+def viewPastoralReports():
+    allPastoralReports = Pastoral.query.all() #Reading all the pastoral reports for the student
+    return render_template('awards.html', allPastoralReports=allPastoralReports)
+
+@views.route('/pastoralReport/<int:id>')
+def pastoralReport(id):
+    pastoral = Pastoral.query.get_or_404(id) #Getting the report's id and passing it to the template
+    return render_template('student.html', pastoral=pastoral)
+
+@views.route('createPastoralIncidentReport', methods=['POST'])
+def createPastoralIncidentReport():
+    if request.method == 'POST':
+        newReport = Pastoral(
+            date=request.form.get("date"),
+            time=request.form.get("time"),
+            location=request.form.get("location"),
+            type=request.form.get("type"),
+            studentsInvolved=request.form.get("studentsInvolved"),
+            staffInvolved=request.form.get("staffInvolved"),
+            author=request.form.get("author")
+        )
+        db.session.add(newReport) #Adding new notice to the database and committing it
+        db.session.commit()
+        flash("Pastoral Report Created!", category="success")
+        return redirect(url_for('views.viewPastoralReports'))
+    
+@views.route('individualPastoralReport')
+def individualPastoralReport():
+    print("testing if the individual page is showing")
+    return render_template('pastoral.html')
+
 @views.route('assessmentsLanding')
 def assessmentsLanding():
     currentDate = datetime.now().date()
     myClasses = getMyClasses()
-    return render_template("assessmentsLanding.html", user=current_user, currentDate=currentDate, myClasses = myClasses)
+    otherClasses = getOtherClasses()
+    return render_template("assessmentsLanding.html", user=current_user, currentDate=currentDate, myClasses = myClasses, otherClasses = otherClasses)
+
+
 
 @views.route('/morePopulating')
 def morePopulating():
@@ -158,6 +213,10 @@ def morePopulating():
         db.session.add(teacher)
         db.session.flush()
 
+        period = Period.query.order_by(Period.id).limit(5).all()
+        if len(period) < 5:
+            raise Exception("Not enough periods in the database to assign sessions.")
+
         subjects = ["Year 10 Mathematics", "Year 10 Science", "Year 11 Biology", "Year 11 Chemistry", "Year 11 Physics"]
         classes=[]
         for i, subject in enumerate(subjects):
@@ -165,7 +224,7 @@ def morePopulating():
             parts = subject.split()
             year = parts[1]
             abr = parts[2][:3].upper()
-            clsCode = '{year}{abr}1'
+            clsCode = f"{year}{abr}1"
             cls = Class(year=2025, subject=subject, code=clsCode)
             db.session.add(cls)
             db.session.flush()
@@ -174,17 +233,17 @@ def morePopulating():
             assoc = TeacherClassAssociation(teacher_id=teacher.id, class_id=cls.id, role=TeacherRole.MAIN)
             db.session.add(assoc)
 
-            today = date.today()
-            for i in range(5):  # First 5 classes only
-                session = ClassSession(
-                    class_id=classes[i].id,
-                    date=today,
-                    period_id=1
+        today = date.today()
+        for i in range(4):  
+            session = ClassSession(
+                class_id=classes[i].id,
+                date=today,
+                period_id=period[i].id
             )
             db.session.add(session)
 
-            db.session.commit()
-            return jsonify({"message": "Test data populated successfully."})
+        db.session.commit()
+        return jsonify({"message": "Test data populated successfully."})
     
 
     except Exception as e:

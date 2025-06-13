@@ -241,13 +241,17 @@ class notice(db.Model):
     note = db.Column(db.Text, nullable=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow) #default=db.func.current_timestamp())
 
-class pastoral(db.Model):
+class Pastoral(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    type=db.Column(db.String(1))
-    target = db.Column(db.String(1))
-    target_id = db.Column(db.Integer, nullable=False)
-    note = db.Column(db.String(255))
-    created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
+    type=db.Column(db.String(1), nullable=True)
+    studentID = db.Column(db.Integer, nullable=True)
+    author = db.Column(db.String(50), nullable=True)
+    note = db.Column(db.String(255), nullable=True)
+    date = db.Column(db.String(50), nullable=True)
+    time = db.Column(db.Integer, nullable=True)
+    location = db.Column(db.String(50), nullable=True)
+    studentsInvolved = db.Column(db.String(255), nullable=True)
+    staffInvolved = db.Column(db.String(255), nullable=True)
 
 class report(db.Model):
     id = db.Column(db.Integer, primary_key=True)
