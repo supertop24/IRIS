@@ -1,0 +1,39 @@
+<link rel="stylesheet" href="{{ url_for('static', filename='css/communicationcenter.css') }}">
+<script src="{{ url_for('static', filename='javascript/communicationcenter.js') }}"></script>
+<!--Inherits from navBase and overrides blocks-->
+{% extends "navBase.html" %}
+{% block title %}Comunication Center{% endblock %}
+{% block pageName %}Communication Center{% endblock %}
+{% block content %} 
+<div class="message_container">
+    <div class="message_container_top">
+        <div class="message_send">
+            <div class="message_button">
+                Send Email
+            </div>
+            <div class="message_button">
+                Direct Message
+            </div>
+        </div>
+        <div class="message_template">
+            Emailing multiple recipients?
+            <div class="template_button">
+                Use Email Template
+            </div>
+            <img class="info_icon" src="{{ url_for('static', filename='images/icons/Information.png') }}" alt="Info icon">
+            <div class="info_template">
+                Using an Email Template lets you write one email to be personalised for multiple recipients. This is particularly useful when sending the same email to multiple parents.
+                <br>
+                <br>
+                To use the template, select placeholders such as the recipients name, student’s name, or pronouns. These will be filled automatically upon sending. 
+            </div>
+        </div>
+    </div>
+    <div class="message_container_middle">
+        
+    </div>
+    <div class="message_container_bottom">
+        
+    </div>
+</div>
+{% endblock %}
