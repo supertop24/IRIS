@@ -68,6 +68,10 @@ def studentProfile(student_id):
 def searchstudent():
     return render_template('showstudent.html')
 
+@views.route('/communication')
+def communicationC():
+    return render_template('communicationcenter.html')
+
 @views.route('/dashboard')
 def dashboard():
    currentDate = datetime.now().date()
