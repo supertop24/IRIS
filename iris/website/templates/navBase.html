@@ -33,10 +33,10 @@
                 <a href="/dashboard" class="navItem"><img class="navIcon" src="{{ url_for('static', filename='images/icons/dashboard.png') }}" alt="Dashboard icon">
                     <span>Dashboard</span>
                 </a>
-                <a href="#" class="navItem"><img class="navIcon" src="{{ url_for('static', filename='images/icons/attendance.png') }}" alt="Attendance icon">
+                <a href="/attendanceLanding" class="navItem"><img class="navIcon" src="{{ url_for('static', filename='images/icons/attendance.png') }}" alt="Attendance icon">
                     <span>Attendance</span>
                 </a>
-                <a href="/searchStudent" class="navItem"><img class="navIcon" src="{{ url_for('static', filename='images/icons/students.png') }}" alt="Students icon">
+                <a href="/studentsLanding" class="navItem"><img class="navIcon" src="{{ url_for('static', filename='images/icons/students.png') }}" alt="Students icon">
                     <span>Students</span>
                 </a>
                 <a href="#" class="navItem"><img class="navIcon" src="{{ url_for('static', filename='images/icons/pastoral.png') }}" alt="Pastoral icon">
@@ -60,7 +60,7 @@
             <div id="content">
                 <div class="topNav">
                     <div class="pageName">{%block pageName %}Nav Base{% endblock %}</div>
-                    {% include 'searchstudent.html' %}
+                    {% include 'searchStudent.html' %}
                 </div>
                 <div class="block_content">
                     {% block content %} 

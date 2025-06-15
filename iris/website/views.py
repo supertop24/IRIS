@@ -9,8 +9,7 @@ views = Blueprint('views', '__name__')
 
 def getMyClasses():
 
-    user = current_user
-    userId = user.id
+    userId = current_user.id
 
     myClassFinder = TeacherClassAssociation.query.filter(
         TeacherClassAssociation.teacher_id == userId
@@ -26,18 +25,15 @@ def getMyClasses():
 
 def getOtherClasses():
 
-    user = current_user
-    userId = user.id
+    userId = current_user.id 
 
-    classFinder = TeacherClassAssociation.query.filter(
+    associations = TeacherClassAssociation.query.filter(
         TeacherClassAssociation.teacher_id != userId
     ).all()
 
-    otherClassIds = [assoc.class_id for assoc in classFinder]
-
-    otherClasses = Class.query.filter(
-        Class.id.in_(otherClassIds)
-    ).all()
+    otherClasses = [
+        (assoc.class_, assoc.teacher.name) for assoc in associations
+    ]
 
     return otherClasses
     
@@ -112,6 +108,18 @@ def api_daily_schedule():
 
     print("Serialized sessions:", serialized)
     return jsonify(serialized)
+
+@views.route('/attendanceLanding')
+def attendanceLanding():
+    currentDate = datetime.now().date()
+    myClasses = getMyClasses()
+    otherClasses = getOtherClasses()
+    return render_template("assessmentsLanding.html", user=current_user, currentDate=currentDate, myClasses = myClasses, otherClasses = otherClasses)
+
+@views.route('/studentsLanding')
+def studentsLanding():
+    return render_template("studentsLanding.html")
+
 
 @views.route('/notice')
 def viewNotice():

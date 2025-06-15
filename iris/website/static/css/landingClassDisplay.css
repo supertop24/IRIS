@@ -2,10 +2,9 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    width: 1250px;
+    width: 1205px;
     margin-top: 5%;
     margin-left: 10%;
-
 }
 
 .classBoxFlexItem {
@@ -15,9 +14,6 @@
     height: 215px;
     width: 180px;
     margin: 2.5%;
-    
-
-
 }
 
 .classCodeArea {
@@ -32,9 +28,7 @@
     margin-top: -10%;
     height: 40px;
     font-family: 'Inter', sans-serif;
-    font-size: 35;
-
-    
+    font-size: 23px;
 }
 
 .classWhiteArea {
@@ -44,7 +38,16 @@
     margin-top: 15px;
     font-family: 'Acme', sans-serif;
     align-items: center;
-    
+    font-size: 17px;
+}
+
+.classDivide {
+
+    background-color: white;
+    height: 4.5px;
+    color: white;
+    width: 1145px;
+    margin-left: 200px;
 }
 
 .classPageFlexContainer2{
@@ -52,7 +55,7 @@
     flex-direction: row;
     flex-wrap: wrap;
     width: 1250px;
-    margin-top: 5%;
+    margin-top: 1.5%;
     margin-left: 10%;
 
 }
@@ -64,9 +67,6 @@
     height: 215px;
     width: 180px;
     margin: 2.5%;
-    
-
-
 }
 
 .classCodeArea2 {
@@ -81,9 +81,7 @@
     margin-top: -10%;
     height: 40px;
     font-family: 'Inter', sans-serif;
-    font-size: 35;
-
-    
+    font-size: 23px;
 }
 
 .classWhiteArea2 {
@@ -93,5 +91,5 @@
     margin-top: 15px;
     font-family: 'Acme', sans-serif;
     align-items: center;
-    
+    font-size: 17px;
 }
