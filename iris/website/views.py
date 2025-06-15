@@ -3,13 +3,13 @@ from datetime import datetime, date, timedelta, time
 from flask_login import current_user, login_required
 from .models import notice, Class, Student, Teacher, ClassSession, Period, TeacherClassAssociation, TeacherRole, User, Pastoral
 from . import db
+import re
 
 views = Blueprint('views', '__name__')
 
 def getMyClasses():
 
-    user = current_user
-    userId = user.id
+    userId = current_user.id
 
     myClassFinder = TeacherClassAssociation.query.filter(
         TeacherClassAssociation.teacher_id == userId
@@ -23,17 +23,37 @@ def getMyClasses():
 
     return myClasses
 
+def getOtherClasses():
+
+    userId = current_user.id 
+
+    associations = TeacherClassAssociation.query.filter(
+        TeacherClassAssociation.teacher_id != userId
+    ).all()
+
+    otherClasses = [
+        (assoc.class_, assoc.teacher.name) for assoc in associations
+    ]
+
+    return otherClasses
+    
+
+
 def getCOFromTCA():
     classObject = TeacherClassAssociation.query.all()
     return classObject
 
 @views.route('/')
-def portalSelect():
-   return render_template("showstudent.html")
+def student():
+   return render_template("student.html")
 
 @views.route('/navBase')
 def navBase():
     return render_template("navBase.html")
+
+@views.route('/portalSelect')
+def portalSelect():
+    return render_template('portalSelect.html')
 
 @views.route('/teacherPortal')
 def teacherPortal():
@@ -92,6 +112,18 @@ def api_daily_schedule():
 
     print("Serialized sessions:", serialized)
     return jsonify(serialized)
+
+@views.route('/attendanceLanding')
+def attendanceLanding():
+    currentDate = datetime.now().date()
+    myClasses = getMyClasses()
+    otherClasses = getOtherClasses()
+    return render_template("assessmentsLanding.html", user=current_user, currentDate=currentDate, myClasses = myClasses, otherClasses = otherClasses)
+
+@views.route('/studentsLanding')
+def studentsLanding():
+    return render_template("studentsLanding.html")
+
 
 @views.route('/notice')
 def viewNotice():
@@ -174,7 +206,64 @@ def individualPastoralReport():
 def assessmentsLanding():
     currentDate = datetime.now().date()
     myClasses = getMyClasses()
-    return render_template("assessmentsLanding.html", user=current_user, currentDate=currentDate, myClasses = myClasses)
+    otherClasses = getOtherClasses()
+    return render_template("assessmentsLanding.html", user=current_user, currentDate=currentDate, myClasses = myClasses, otherClasses = otherClasses)
+
+
+
+@views.route('/morePopulating')
+def morePopulating():
+    try:
+        teacher = Teacher(
+            name = "Jane Smith",
+            email = "janesmith@school.com",
+            password="janesmith",
+            gender = "Female",
+            phone_number = "09 123 456",
+            address = "12 NoOnion Street"
+        )
+        db.session.add(teacher)
+        db.session.flush()
+
+        period = Period.query.order_by(Period.id).limit(5).all()
+        if len(period) < 5:
+            raise Exception("Not enough periods in the database to assign sessions.")
+
+        subjects = ["Year 10 Mathematics", "Year 10 Science", "Year 11 Biology", "Year 11 Chemistry", "Year 11 Physics"]
+        classes=[]
+        for i, subject in enumerate(subjects):
+
+            parts = subject.split()
+            year = parts[1]
+            abr = parts[2][:3].upper()
+            clsCode = f"{year}{abr}1"
+            cls = Class(year=2025, subject=subject, code=clsCode)
+            db.session.add(cls)
+            db.session.flush()
+            classes.append(cls)
+
+            assoc = TeacherClassAssociation(teacher_id=teacher.id, class_id=cls.id, role=TeacherRole.MAIN)
+            db.session.add(assoc)
+
+        today = date.today()
+        for i in range(4):  
+            session = ClassSession(
+                class_id=classes[i].id,
+                date=today,
+                period_id=period[i].id
+            )
+            db.session.add(session)
+
+        db.session.commit()
+        return jsonify({"message": "Test data populated successfully."})
+    
+
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
+
+# Finish adding population route!! 
+
 
 @views.route('/populate-test-data')
 def populate_test_data():
