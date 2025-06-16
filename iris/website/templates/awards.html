@@ -1,0 +1,117 @@
+<!--This page gets included in the student page-->
+ 
+<!--Page titles-->
+<title>Awards</title> <!--MAKE THIS WORRRRRK - DON'T FORGET-->
+ 
+<!--Linking style sheet-->
+<link rel="stylesheet" href="{{ url_for('static', filename='css/awards.css') }}">
+<!--Linking the js-->
+<script src="{{ url_for('static', filename='javascript/awards.js') }}"></script>
+ 
+<!--List of awards section-->
+<div class="awards list" data-id="list">
+    <div class="awardsContainer">
+
+        <!--Add new award button-->
+        <div class="addContainer">
+            <img class="addButton" id="addButton"
+            src="{{ url_for('static', filename='images/icons/addButton.png') }}"
+            alt="Add new award icon" onclick="awards_background('add')">
+        </div>
+       
+        <!--Displaying existing awards container for each year-->
+        <div class="existingAwardsContainer">
+            <!--Title container-->
+            <div class="titleContainer">
+                <div class="yearTitle">
+                    <p>Awards for award.year</p>
+                </div>
+            </div>
+            
+            <!--Content-->
+            <div class="existingAwardsContent">
+                <!--Award display box that will be looped for each award-->
+                <div class="awardBox">
+                    <p>award.term award.type award.title award.grade award.subject</p>
+                </div>
+            </div>
+        </div>
+
+    </div><!--End of container-->
+</div><!--End of list section-->
+ 
+<!--Add new award section-->
+<div class="awards add" data-id="add">
+    <!--Uploading a new award container-->
+    <div class="uploadAwardContainer">
+        <!--Title container-->
+        <div class="titleContainer">
+            <div class="addYearTitle">
+                <p>Upload Award</p>
+            </div>
+        </div>
+        
+        <!--User input container for uploading a new award-->
+        <div class="inputContainer">
+
+            <!--Term container-->
+            <div class="termContainer">
+                <!--Term title-->
+                <div class="term"><p>Term</p></div>
+                <!--Term displayed-->
+                <div class="dropdowns">
+                    <select id="submit_form_term" class="submit_form_selection">
+                        <option value="empty">-- Select Term --</option>
+                        <option value="1">First Term</option>
+                        <option value="2">Second Term</option>
+                        <option value="3">Third Term</option>
+                        <option value="4">Fourth Term</option>
+                    </select>
+                </div>
+            </div>
+
+            <!--Award type container-->
+            <div class="typeContainer">
+                <!--type title-->
+                <div class="type"><p>Award Type</p></div>
+                <!--Type displayed/input-->
+                <div class="typeDisplayed"><input class="inputAwardType" type="text" name="type" placeholder="Class Award..."></div>
+
+            </div>
+
+            <!--Award title container-->
+            <div class="awardTitleContainer">
+                <!--Title's title-->
+                <div class="awardTitle"><p>Award Title</p></div>
+                <!--Title displayed-->
+                <div class="awardTitleDisplayed"><input class="inputAwardTitle" type="text" name="note" placeholder="Consistent Effort..."></div>
+            </div>
+
+            <!--Award grade container-->
+            <div class="gradeContainer">
+                <!--Grade title-->
+                <div class="grade"><p>Year Level</p></div>
+                <!--Grade displayed-->
+                <div class="dropdowns">
+                    <select id="submit_form_grade" class="submit_form_selection">
+                        <option value="empty">-- Select Year --</option>
+                        <option value="1">Year 9</option>
+                        <option value="2">Year 10</option>
+                        <option value="3">Year 11</option>
+                        <option value="4">Year 12</option>
+                        <option value="5">Year 13</option>
+                    </select>
+                </div>
+            </div>
+
+            <!--Subject container-->
+            <div class="subjectContainer">
+                <!--Subject title-->
+                <div class="subject"><p>Subject</p></div>
+                <!--Subject displayed-->
+                <div class="subjectDisplayed"><input class="inputAwardSubject" type="text" name="subject" placeholder="English..."></div>
+            </div>
+        </div><!--End of input container-->
+
+    </div>
+</div><!--End of add section-->
