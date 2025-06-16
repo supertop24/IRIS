@@ -5,7 +5,6 @@
 }
 .message_container
 {
-    background-color: aquamarine;
     width: 1000px;
     height: 100%;
     margin-top: 30px;
@@ -30,7 +29,12 @@
 .message_container_middle
 {
     grid-area: middle;
-    background-color: beige;
+    border: solid 2px black;
+    border-top-left-radius: 20px ;
+    border-top-right-radius: 20px;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows:70px 60px auto;
 }
 .message_container_bottom
 {
@@ -95,4 +99,17 @@
     align-items: center;
     text-align: justify;
     padding: 10px;
+}
+.draft_header
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #C5B9DF;
+    border-top-left-radius: 20px ;
+    border-top-right-radius: 20px;
+}
+.draft_subject
+{
+
 }
