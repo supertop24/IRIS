@@ -122,8 +122,24 @@ def attendanceLanding():
 
 @views.route('/studentsLanding')
 def studentsLanding():
-    return render_template("studentsLanding.html")
+    currentDate = datetime.now().date()
+    myClasses = getMyClasses()
+    otherClasses = getOtherClasses()
+    return render_template("studentsLanding.html", user=current_user, currentDate=currentDate, myClasses = myClasses, otherClasses = otherClasses)
 
+@views.route('/pastoralLanding')
+def pastoralLanding():
+    currentDate = datetime.now().date()
+    myClasses = getMyClasses()
+    otherClasses = getOtherClasses()
+    return render_template("pastoralLanding.html", user=current_user, currentDate=currentDate, myClasses = myClasses, otherClasses = otherClasses)
+
+@views.route('/reportsLanding')
+def reportsLanding():
+    currentDate = datetime.now().date()
+    myClasses = getMyClasses()
+    otherClasses = getOtherClasses()
+    return render_template("reportsLanding.html", user=current_user, currentDate=currentDate, myClasses = myClasses, otherClasses = otherClasses)
 
 @views.route('/notice')
 def viewNotice():
