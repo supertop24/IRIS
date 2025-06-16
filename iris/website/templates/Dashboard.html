@@ -20,57 +20,66 @@
 
         <div class="calendarHeaderRow">
 
-            <div class="dayIcon">
-                View day
-            </div>
-
+            
+            <img class="dayIcon" src="{{ url_for('static', filename='images/icons/dayIcon.png') }}" alt="day-calendar icon">
+            
             <div class="dayText">
                 View day
             </div>
 
-            <div class="toggleButton">
-                Button
-            </div>
+            <!-- This will eventually be an actual toggle - for now it's a placeholder image -->
+            <img class="toggleIcon" src="{{ url_for('static', filename='images/icons/toggleIcon.png') }}" alt="toggleIcon"> 
 
-            <div class="week">
+            <div class="weekText">
                 View week
             </div>
 
-        </div>
-
-        <div class="calendarContentGrid">
-            <div class="gridItem">1</div>
-            <div class="gridItem">2</div>
-            <div class="gridItem">3</div>
-            <div class="gridItem">4</div>
-            <div class="gridItem">5</div>
-            <div class="gridItem">6</div>
-            <div class="gridItem">7</div>
-            <div class="gridItem">8</div>
-            <div class="gridItem">9</div>
-            <div class="gridItem">10</div>
-            <div class="gridItem">11</div>
-            <div class="gridItem">12</div>
-            <div class="gridItem">13</div>
-            <div class="gridItem">14</div>
-            <div class="gridItem">15</div>
-            <div class="gridItem">16</div>
-            <div class="gridItem">17</div>
-            <div class="gridItem">18</div>
-            <div class="gridItem">19</div>
-            <div class="gridItem">20</div>
-            <div class="gridItem">21</div>
-            <div class="gridItem">22</div>
-            <div class="gridItem">23</div>
-            <div class="gridItem">24</div>
-            <div class="gridItem">25</div>
-            <div class="gridItem">26</div>
-            <div class="gridItem">27</div>
-            <div class="gridItem">28</div>
-            <div class="gridItem">29</div>
-            <div class="gridItem">30</div>
+            <img class="weekIcon" src="{{ url_for('static', filename='images/icons/weekIcon.png') }}" alt="week-calendar icon">
 
         </div>
+
+
+    <div class="calendarContentGrid">
+        <!-- Row 1 -->
+        <div class="gridItem time-slot">08:30am</div>
+        <div class="gridItem period-label" data-period="sod">SoD</div>
+        <div class="gridItem class-info" data-period="sod" data-slot="class"></div> 
+        <div class="gridItem time-slot">11:45am</div>
+        <div class="gridItem period-label" data-period="3">P3</div>
+        <div class="gridItem class-info" data-period="3" data-slot="class"></div>
+        
+        <!-- Row 2 -->
+        <div class="gridItem time-slot">09:10am</div>
+        <div class="gridItem period-label" data-period="1">P1</div>
+        <div class="gridItem class-info" data-period="1" data-slot="class"></div>
+        <div class="gridItem time-slot">12:40pm</div>
+        <div class="gridItem period-label" data-period="4">P4</div>
+        <div class="gridItem class-info" data-period="4" data-slot="class"></div>
+        
+        <!-- Row 3 -->
+        <div class="gridItem time-slot">10:05am</div>
+        <div class="gridItem period-label" data-period="2">P2</div>
+        <div class="gridItem class-info" data-period="2" data-slot="class"></div>
+        <div class="gridItem time-slot">01:30pm</div>
+        <div class="gridItem period-label" data-period="int2">Int</div>
+        <div class="gridItem class-info" data-period="int2" data-slot="class"></div>
+        
+        <!-- Row 4 -->
+        <div class="gridItem time-slot">10:55am</div>
+        <div class="gridItem period-label" data-period="int">Int</div>
+        <div class="gridItem class-info" data-period="int"></div>
+        <div class="gridItem time-slot">02:05pm</div>
+        <div class="gridItem period-label" data-period="5">P6</div>
+        <div class="gridItem class-info" data-period="5" data-slot="class"></div>
+        
+        <!-- Row 5 -->
+        <div class="gridItem time-slot">11:20am</div>
+        <div class="gridItem period-label" data-period="tut">Tut</div>
+        <div class="gridItem class-info" data-period="tut" data-slot="class"> RED 3</div> <!-- Very weird that red3 won't appear - I'll look into this, but it's fine for now -->
+        <div class="gridItem time-slot">03:00pm</div>
+        <div class="gridItem period-label" data-period="eod">EoD</div>
+        <div class="gridItem class-info" data-period="eod" data-slot="class"></div>
+    </div>
 
     </div>
     <!--Staff Absences box-->
