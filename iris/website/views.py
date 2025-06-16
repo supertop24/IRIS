@@ -77,11 +77,11 @@ def dashboard():
    currentDate = datetime.now().date()
    return render_template('dashboard.html', user=current_user, currentDate=currentDate)
 
-# Adding API endpoint for getting teacher schedule data here with the dashboard route, since this is where it'll be used
+# Adding API endpoint for getting teacher schedule data here with dashboard route - this is where it'll be used
 @views.route('/api/daily-schedule')
 @login_required
 def api_daily_schedule():
-    print("Logged in user:", current_user.id, current_user.__class__.__name__)
+    print("Logged in user:", current_user.id, current_user.__class__.__name__) # Console check for the logged in user 
 
     date_str = request.args.get('date')
     if not date_str:
@@ -90,25 +90,38 @@ def api_daily_schedule():
     try:
         selected_date = datetime.strptime(date_str, "%Y-%m-%d").date()
     except ValueError:
-        return jsonify({'error: invalid date format'}), 400
+        return jsonify({'error': 'Invalid date format'}), 400
 
-    print("API request date:", selected_date)
+    print("API request date:", selected_date) # Console check for date requested
 
-    if isinstance(current_user, Student) or isinstance(current_user, Teacher):
-        schedule = current_user.get_daily_schedule(selected_date)
+    if isinstance(current_user, (Student, Teacher)):
+        try:
+            schedule = current_user.get_daily_schedule(selected_date)
+            print(f"Found {len(schedule)} sessions for {current_user.__class__.__name__}") # Another console check, so we can make this function work !!!
+        except Exception as e:
+            print(f"Error getting schedule: {e}")
+            return jsonify({'error': 'Failed to retrieve schedule'}), 500
     else:
         print("User is not a Teacher or Student.")
         return jsonify([])
 
     serialized = []
-    for s in schedule:
-        serialized.append({
-            'class_code': s.class_.code,
-            'subject': s.class_.subject,
-            'period_id': s.period.id if s.period else None,
-            'period_label': s.period.label if hasattr(s.period, 'label') else None,
-            'date': s.date.isoformat()
-        })
+    for session in schedule:
+        try:
+            session_data = {
+                'class_code': session.class_.code if session.class_ else None,
+                'subject': session.class_.subject if session.class_ else None,
+                'period_id': session.period.id if session.period else None,
+                'period_label': session.period.label if (session.period and hasattr(session.period, 'label')) else f"P{session.period.id}" if session.period else None,
+                'period_code': session.period.code if session.period else None,
+                'start_time': session.period.start_time.strftime('%H:%M') if session.period and session.period.start_time else None,
+                'end_time': session.period.end_time.strftime('%H:%M') if session.period and session.period.end_time else None,
+                'date': session.date.isoformat()
+            }
+            serialized.append(session_data)
+        except Exception as e:
+            print(f"Error serializing session {session.id}: {e}")
+            continue
 
     print("Serialized sessions:", serialized)
     return jsonify(serialized)
