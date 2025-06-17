@@ -262,3 +262,18 @@ class report(db.Model):
     note = db.Column(db.String(255))
     file = db.Column(db.LargeBinary, nullable=True)
     created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
+
+class Award(db.Model):
+    __tablename__ = 'award'
+    id = db.Column(db.Integer, primary_key=True)
+    term = db.Column(db.String(15), nullable=False)
+    type=db.Column(db.String(30))
+    grade = db.Column(db.String(20), nullable=False)
+    subject = db.Column(db.String(50))
+    student_id = db.Column(db.Integer, db.ForeignKey('student.id'), nullable=False)
+    note = db.Column(db.String(100))
+    year = db.Column(db.Integer)
+
+    # Relationship back to student
+    student = db.relationship('Student', backref=db.backref('awards', lazy=True))
+
