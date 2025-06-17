@@ -37,7 +37,41 @@ def search_student():
 
     except Exception as ex:
         return jsonify({"error": "Internal server error"}), 500
-        
+
+@command.route('/searchUser', methods=['GET'])
+def search_user():
+    query = request.args.get("q", "")
+    if not query:
+        return jsonify({"error": "No search query provided"}), 400
+
+    search_pattern = f"%{query}%"
+    try:
+        db = get_db()
+        cursor = db.cursor()
+        cursor.execute("""
+            SELECT user.id, user.name
+            FROM user
+            WHERE user.name LIKE ?;
+        """,
+            (search_pattern,),
+        )
+        results = cursor.fetchall()
+
+        user = []
+        for row in results:
+            id,name= row
+            user.append(
+                {
+                    "name": name,
+                    "id": id,
+                }
+            )
+
+        return jsonify(user)
+
+    except Exception as ex:
+        return jsonify({"error": "Internal server error"}), 500
+    
 @command.route('/searchID', methods=['GET'])
 def search_by_id():
     user_id = request.args.get("id")

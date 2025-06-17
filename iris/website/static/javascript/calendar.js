@@ -22,24 +22,44 @@ document.addEventListener('DOMContentLoaded', function () {
 //  setupDatePicker(); // Maybe add later to let user make calendar selection
 });
 
-function renderCalendar(data) {
-    const gridItems = document.querySelectorAll('.calendarContentGrid .gridItem')
-    gridItems.forEach(item => item.textContent = '');
+function renderCalendar(scheduleData) {
+    // Clearing all existing class information before rendering
+    const classInfoItems = document.querySelectorAll('.class-info');
+    classInfoItems.forEach(item => {
+        item.textContent = '';
+    });
 
-    data.forEach((session, index) => {
-        const colGroup = Math.floor(index / 5); 
-        const row = index % 5;
+    // Mapping period codes to period identifiers
+    const periodMapping = {
+        'P1': '1',
+        'P2': '2', 
+        'P3': '3',
+        'P4': '4',
+        'P5': '5',
+        'TUT': 'tut',
+        'SOD': 'sod',
+        'EOD': 'eod',
+        'INT': 'int', 
+        'LUN': 'lun'
+    };
 
-        const baseIndex = row * 6 + colGroup * 3;
-
-        gridItems[baseIndex].textContent = ''; // gridItems[baseIndex].textContent = session.period_label || `Period ${session.period_id}` || '';
-        gridItems[baseIndex + 1].textContent = session.period_label || `P${session.period_id}` || '';
-        gridItems[baseIndex + 2].textContent = session.class_code || '';
+    scheduleData.forEach(session => {
+        console.log('Processing session:', session); //
+        
+        let periodCode = session.period_label || `P${session.period_id}`;
+        let targetPeriod = periodMapping[periodCode.toUpperCase()] || periodCode.toLowerCase();
+        
+        const targetElement = document.querySelector(`.class-info[data-period="${targetPeriod}"]`);
+        
+        if (targetElement) { // I've added console logging to check if sessions are being found
+            targetElement.textContent = session.class_code || session.subject || 'Class';
+            console.log(`Placed ${session.class_code} in period ${targetPeriod}`);
+        } else {
+            console.warn(`Could not find element for period: ${targetPeriod}`);
+        }
     });
 }
-//clear the griditems and replace baseindex with times, or rename time element to seperate? - getElementById
 
-//      gridItems[baseIndex + 1].textContent = session.class_code || '';
-//      gridItems[baseIndex + 2].textContent = session.subject || '';
+
 
 
