@@ -270,10 +270,10 @@ class Award(db.Model):
     type=db.Column(db.String(30))
     grade = db.Column(db.String(20), nullable=False)
     subject = db.Column(db.String(50))
-    student_id = db.Column(db.Integer, nullable=False)
+    student_id = db.Column(db.Integer, db.ForeignKey('student.id'), nullable=False)
     note = db.Column(db.String(100))
     year = db.Column(db.Integer)
 
-    #Relationship back to student
+    # Relationship back to student
     student = db.relationship('Student', backref=db.backref('awards', lazy=True))
 

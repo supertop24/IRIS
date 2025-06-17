@@ -1,11 +1,15 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, jsonify, request, abort
 from datetime import datetime, date, timedelta, time
 from flask_login import current_user, login_required
-from .models import notice, Class, Student, Teacher, ClassSession, Period, TeacherClassAssociation, TeacherRole, User, Pastoral
+from .models import notice, Class, Student, Teacher, ClassSession, Period, TeacherClassAssociation, TeacherRole, User, Pastoral, Award
 from . import db
+from collections import defaultdict
 import re
 
 views = Blueprint('views', '__name__')
+
+#Declaring for awards page
+awardsByYear = defaultdict(list)
 
 def getMyClasses():
 
@@ -45,6 +49,9 @@ def getCOFromTCA():
 
 @views.route('/')
 def student():
+   #Getting all awards
+   allAwards = Award.query.all()
+   
    return render_template("student.html")
 
 @views.route('/navBase')
@@ -62,7 +69,19 @@ def teacherPortal():
 @views.route('/studentProfile/<int:student_id>')
 def studentProfile(student_id):
     allPastoralReports = Pastoral.query.all() #Getting all pastoral reports - no filtering yet
-    return render_template('student.html', student_id=student_id, allPastoralReports=allPastoralReports, pastoral=None)
+    
+    #Getting awards for the specific student
+    allAwards = Award.query.filter_by(student_id=student_id).all()
+
+    #Grouping awards by year
+    awardsByYear = defaultdict(list)
+    for award in allAwards:
+        awardsByYear[award.year].append(award)
+
+    #Converting to regular dict and sorting by year from newest to oldest
+    awardsByYear = dict(sorted(awardsByYear.items(), key=lambda x: x[0], reverse=True))
+
+    return render_template('student.html', student_id=student_id, allPastoralReports=allPastoralReports, pastoral=None, allAwards=allAwards, awardsByYear=awardsByYear)
 
 @views.route('/searchStudent')
 def searchstudent():
@@ -201,6 +220,53 @@ def createPastoralIncidentReport():
 def individualPastoralReport():
     print("testing if the individual page is showing")
     return render_template('pastoral.html')
+
+@views.route('/uploadAward', methods=['POST'])
+def uploadAward():
+    try:
+        #Getting JSON data from the request
+        data = request.get_json()
+
+        #Validating required fields
+        if not data.get('term') or not data.get('grade'):
+            return jsonify({'success': False, 'message': 'Term and Grade are required'})
+        
+        #Converting term and grade from the dropdown values to their actual values
+        termMapping = {
+            '1': 'First Term',
+            '2': 'Second Term',
+            '3': 'Third Term',
+            '4': 'Fourth Term'
+        }
+
+        gradeMapping = {
+            '1': 'Year 9',
+            '2': 'Year 10',
+            '3': 'Year 11',
+            '4': 'Year 12',
+            '5': 'Year 13'
+        }
+
+        #Creating a new award object
+        newAward = Award(
+            term=termMapping.get(data['term'], data['term']),
+            type=data.get('type', ''),
+            note=data.get('title', ''),
+            grade=gradeMapping.get(data['grade'], data['grade']),
+            subject=data.get('subject', ''),
+            year=data.get('year'),
+            student_id=data.get('student_id') #passing the student id
+        )
+
+        #Adding it to the data.base
+        db.session.add(newAward)
+        db.session.commit()
+
+        return jsonify({'success': True, 'message':'Award uploaded successfully!'})
+    
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'success': False, 'message': str(e)})
 
 @views.route('assessmentsLanding')
 def assessmentsLanding():
