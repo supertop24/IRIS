@@ -20,7 +20,6 @@
 .message_container_top
 {
     grid-area: top;
-    background-color: aqua;
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: auto auto;
@@ -28,6 +27,7 @@
 }
 .message_container_middle
 {
+    background-color: white;
     grid-area: middle;
     border: solid 2px black;
     border-top-left-radius: 20px ;
@@ -35,11 +35,15 @@
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows:70px 60px auto;
+    width: 100%;
+    height: 100%;
 }
 .message_container_bottom
 {
     grid-area: bottom;
-    background-color: blueviolet;
+    display: flex;
+    justify-content: end;
+    align-items: center;
 }
 .message_send
 {
@@ -52,11 +56,12 @@
     width: 150px;
     height: 60px;
     border-radius: 20px;
-    border: solid 2px #988EB1;
+    border: solid 3px #988EB1;
     background-color: white;
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
 }
 .message_button:hover
 {
@@ -80,6 +85,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
 }
 .info_icon:hover ~.info_template
 {
@@ -103,6 +109,8 @@
 .draft_header
 {
     display: flex;
+    width: 100%;
+    height: 100%;
     justify-content: center;
     align-items: center;
     background-color: #C5B9DF;
@@ -111,5 +119,153 @@
 }
 .draft_subject
 {
+    display: flex;
+    height: 70px;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+.subject_input
+{
+    color: grey;
+    width: calc(100% - 80px);
+    height: 40px;
+    border: none;
+    border-bottom: solid 5px #F3F2F2;
+    font-size: 16px;
+    outline: none;
+}
+.message_input
+{
+    outline: none;
+    font-size: 16px;
+    color: grey;
+    width: calc(100% - 80px);
+    height: calc(100% - 40px);
+    text-align: start;
+    border: none;
+    vertical-align: top;
+    box-sizing: border-box;
+    resize: none;
+    margin-top: 10px;
+    margin-left: 40px;
+}
+.recipients
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: #988EB1 solid 3px;
+    border-radius: 13px;
+    width: 160px;
+    height: 60px;
+    background-color: white;
+    font-size: 20px;
+    cursor: pointer;
+}
+.recipients:hover
+{
+    background-color: #988EB1;
+    color:white;
+}
+.usersearch-result {
+  position: absolute;
+  display: none;
+  list-style-type: none;
+  font-size: 15px;
+  z-index: 1;
+}
 
+.usersearch-result li {
+  border-color: #988EB1;
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 20px;
+  background-color: white;
+  padding: 10px;
+  margin: 5px;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.usersearch-result li:hover {
+  background-color: #988EB1;
+}
+
+.usersearch-bar {
+  grid-column: 2;
+  align-content: center;
+  justify-self: center;
+  align-items: center;
+  margin-right: 30px;
+  position: relative;
+  display: inline-block;
+}
+
+.usersearch-input {
+  font-size: 15;
+  height: 30px;
+  width: 250px;
+  text-align: center;
+  border-color: white;
+  border-radius: 15px;
+}
+
+.usersearch-icon {
+  width: auto;
+  height: auto;
+  max-width: none;
+  max-height: none;
+}
+.search_user
+{
+    display: none;
+}
+#toggle_search:checked ~ .search_user
+{
+    display: block;
+}
+.target_display
+{
+    display: none;
+    align-items: center;
+    font-size: 16px;
+    margin-right: 30px;
+}
+#target_lock:checked ~ .target_display
+{
+    display: grid;
+}
+.target_button
+{
+    width: 100px;
+    height: 20px;
+    background-color: white;
+    border: #988EB1 2px solid;
+    border-radius: 20px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    cursor: pointer;
+}
+.target_button:hover
+{
+    background-color: #988EB1;
+    color: white;
+}
+.list_container
+{
+    width: 1000px;
+    height: 100%;
+    margin-top: 30px;
+    display: none;
+    background-color: #988EB1;
+    grid-template-columns: 1fr;
+    grid-template-rows:150px 600px 100px;
+    grid-template-areas: 
+    "toplist"
+    "middlelist"
+    "bottomlist";
+    position: relative;
 }

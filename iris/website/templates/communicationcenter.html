@@ -5,14 +5,31 @@
 {% block title %}Comunication Center{% endblock %}
 {% block pageName %}Communication Center{% endblock %}
 {% block content %} 
-<div class="message_container">
+<div class="message_container" id="message">
     <div class="message_container_top">
         <div class="message_send">
-            <div class="message_button">
-                Send Email
-            </div>
-            <div class="message_button">
+            <div class="message_button direct" onclick="changeDisplay('list')">
                 Direct Message
+            </div>
+            <input type="checkbox" id="toggle_search" hidden/>
+            <label for="toggle_search" class="message_button searchuser">
+                Send Direct
+            </label>
+            <input type="checkbox" id="target_lock" hidden/>
+            <div class="target_display">
+                <input type="number" id="target_id" hidden/>
+                <div class="target_name" id="target_name">
+                    Name
+                </div>
+                <div class="target_button">
+                    Send
+                </div>
+            </div>
+            <div class="search_user">
+                <div class="usersearch-bar">
+                    <input class="usersearch-input" type="text" id="usersearch" placeholder="Search User">
+                    <ul class="usersearch-result" id="usersearch-result"></ul>
+                </div>
             </div>
         </div>
         <div class="message_template">
@@ -34,14 +51,22 @@
             Draft Message
         </div>
         <div class="draft_subject">
-            
+            <input class="subject_input" type="text" id="subject" name="subject" placeholder="Add a subject">
         </div>
         <div class="draft_message">
-
+            <textarea class="message_input" type="text" id="message" name="message"placeholder="Write message"></textarea>
         </div>
     </div>
     <div class="message_container_bottom">
-        
+        <div class="recipients">
+            Add Recipient/s
+        </div>
     </div>
+</div>
+<div class="list_container" id="list">
+    
+</div>
+<div class="view_container" id="view">
+
 </div>
 {% endblock %}
