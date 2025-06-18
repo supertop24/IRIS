@@ -11,14 +11,14 @@
 <!--List of awards section-->
 <div class="awards list" data-id="list">
     <div class="awardsContainer">
-
+ 
         <!--Add new award button-->
         <div class="addContainer">
             <img class="addButton" id="addButton"
             src="{{ url_for('static', filename='images/icons/addButton.png') }}"
             alt="Add new award icon" onclick="awards_background('add')">
         </div>
-
+ 
         <!--Awards content - needed to style by column-->
         <div class="allYearContent">
             <!--Checking if there are any awards-->
@@ -32,7 +32,7 @@
                                 <p>Awards for {{year}}</p>
                             </div>
                         </div>
-                        
+                       
                         <!--Content-->
                         <div class="existingAwardsContent">
                             <!--Looping through awards so same years go together-->
@@ -63,7 +63,7 @@
        
     </div><!--End of container-->
 </div><!--End of list section-->
-
+ 
  
 <!--Add new award section-------------------------------------->
 <div class="awards add" data-id="add">
@@ -75,10 +75,10 @@
                 <p>Upload Award</p>
             </div>
         </div>
-        
+       
         <!--User input container for uploading a new award-->
         <div class="awardInputContainer">
-
+ 
             <!--Term container-->
             <div class="termContainer">
                 <!--Term title-->
@@ -94,16 +94,16 @@
                     </select>
                 </div>
             </div>
-
+ 
             <!--Award type container-->
             <div class="awardTypeContainer">
                 <!--type title-->
                 <div class="awardType"><p>Award Type</p></div>
                 <!--Type displayed/input-->
                 <div class="awardTypeDisplayed"><input class="inputAwardType" type="text" name="type" placeholder="Class Award..."></div>
-
+ 
             </div>
-
+ 
             <!--Award title container-->
             <div class="awardTitleContainer">
                 <!--Title's title-->
@@ -111,7 +111,7 @@
                 <!--Title displayed-->
                 <div class="awardTitleDisplayed"><input class="inputAwardTitle" type="text" name="note" placeholder="Consistent Effort..."></div>
             </div>
-
+ 
             <!--Award grade container-->
             <div class="gradeContainer">
                 <!--Grade title-->
@@ -128,7 +128,7 @@
                     </select>
                 </div>
             </div>
-
+ 
             <!--Subject container-->
             <div class="subjectContainer">
                 <!--Subject title-->
@@ -137,13 +137,13 @@
                 <div class="subjectDisplayed"><input class="inputAwardSubject" type="text" name="subject" placeholder="English..."></div>
             </div>
         </div><!--End of input container-->
-
+ 
         <!--Upload button-->
         <div class="awardUploadButtonContainer">
             <div class="awardUploadButton" onclick="upload()">
                 <p>Upload</p>
             </div>
         </div>
-
+ 
     </div>
 </div><!--End of add section-->
