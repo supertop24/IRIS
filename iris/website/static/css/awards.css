@@ -1,10 +1,150 @@
-/*.Pastoral class that holds the list of student reports content*/
-.awards {
+.awards
+{
     width: 100%;
     height: 100%;
     display: none;
 }
 
-.awards.active {
+.awards.active
+{
     display: flex;
+}
+
+.awardsContainer {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: auto;
+    margin-top: 1%;
+    gap: 10px;
+}
+
+.allYearContent {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    height: 100%;
+    row-gap: 5%;
+}
+
+.existingAwardsContainer {
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    height: auto;
+    padding-bottom: 3%;
+    border-radius: 30px 30px 25px 25px;
+}
+.existingAwardsContent {
+    background-color: yellow;
+    margin: 0.5% 1.5%;
+}
+
+.titleContainer {
+    background-color: #E2DDEB;
+    padding: 10px;
+    border-radius: 25px 25px 0 0;
+}
+.yearTitle {
+    margin-left: 1%;
+    font-size: 20px;
+}
+
+.awardBox {
+    background-color: lightcoral;
+    border-bottom: 4px solid black;
+}
+
+/* ----------------- Add new award styling section -----------------*/
+
+.uploadAwardContainer {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.awardHeaderContainer {
+    text-align: center;
+    font-size: 20px;
+    width: 90%;
+    background-color: #E2DDEB;
+    padding: 10px;
+    border-radius: 25px 25px 0 0;
+    margin-left: 1%;
+    font-size: 20px;
+}
+
+.awardInputContainer {
+    background-color: lightgreen;
+    width: 90%;
+}
+
+/* Details's content containers - making their content align in rows */
+.termContainer, .awardTypeContainer, .awardTitleContainer, .gradeContainer, .subjectContainer {
+    background-color: blue;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: auto;
+    align-items: center;
+    justify-content: center;
+}
+
+/*Creating borders and aligning headings to the right */
+.term, .awardType, .awardTitle, .grade, .subject {
+    background-color: orange;
+    width: 50%;
+    height: auto;
+    text-align: right;
+    box-sizing: border-box;
+    padding-right: 3%;
+    border-right: 3px solid #BCBCBC;
+    border-bottom: 3px solid #BCBCBC;
+}
+
+/*Creating border and aligning input to the left */
+.awardTypeDisplayed, .awardTitleDisplayed, .subjectDisplayed {
+    background-color: purple;
+    width: 50%;
+    height: auto;
+    text-align: left;
+    box-sizing: border-box;
+    padding-left: 3%;
+    border-bottom: 3px solid #BCBCBC;
+}
+
+/* Style the dropdown select elements */
+.awardsDropdowns {
+    width: 49.5%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: white;
+    font-size: 14px;
+}
+
+/* Upload button styling */
+.awardUploadButtonContainer
+{
+    margin: 4% auto;
+}
+.awardUploadButton
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    width: 150px;
+    height: 60px;
+    background-color: #988EB1;
+    border: 1px solid #988EB1;
+    border-radius: 20px;
+    font-size: 24px;
+    color: black;
+}
+.awardUploadButton:hover
+{
+    color: white;
 }

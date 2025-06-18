@@ -37,22 +37,25 @@
 .section.active
 {
     display: block;
+
+    /* Profile styling starts  */
 }
-.profile
-{
-    background-color: aqua;
-    display:flex;
-    flex-direction: row;
+.profile.active { /* I changed profile to profile.active so it wouldn't break the other profile pages by overriding them with profile styling */
+    display: flex; 
+    flex-direction: column; 
     margin-top: 2.5%;
     margin-right: 1%;
-
+    height: 100%;
+    background-color: #F3F2F2;
 }
 
-.studentDetailsContainer{
+
+.studentDetailsContainer, 
+.medicalDetailsContainer{
     display: flex;
     flex-direction: column;
     height: auto;
-    background-color: black;
+    margin-bottom: 2rem; 
 }
 
 .containerHeaderArea{
@@ -64,7 +67,6 @@
     padding-bottom: 0%;
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
-
 }
 
 .chaItem1{
@@ -73,7 +75,6 @@
     font-family: 'Inter', sans-serif;
     padding-left: 18%;
     font-size: 25px;
-
 }
 
 .chaItem2{
@@ -94,9 +95,9 @@
 
 .leftDetailsGrid{
     display: grid;
-    grid-template-columns: 49% 49%;
+    grid-template-columns: 30% 60%;
     grid-template-rows: 12% 12% 12% 12% 12% 12% 12% 12%;
-    width: 50%;
+    width: 46%;
     justify-content: center;
     background-color: white;
     margin-top: 1%;
@@ -104,58 +105,115 @@
     padding-right: 2%;
 }
 
-.itemleft {
+.itemleft,
+.itemtopleftcorner,
+.itembottomleftcorner {
     border-top: 3px solid #BCBCBC;
-
-
+    text-align: right;
+    padding-right: 15%;
+    font-family: 'Inter', sans-serif;
 }
 
-.itemright{
+.itemright, 
+.itemtoprightcorner,
+.itembottomrightcorner {
     border-top: 3px solid #BCBCBC;
     border-left: 3px solid #BCBCBC;
-    padding-left: 4%;
-
-}
-
-.itemtopleftcorner{
-    border-top: 3px solid #BCBCBC;
-    
-}
-
-.itemtoprightcorner{
-    border-left: 3px solid #BCBCBC;
-    border-top: 3px solid #BCBCBC;  
-    padding-left: 4%;
+    padding-left: 6%;
+    font-family: 'Inter', sans-serif;
 }
 
 .itembottomleftcorner{
-    border-top: 3px solid #BCBCBC;
     border-bottom: 3px solid #BCBCBC;
 }
 
 .itembottomrightcorner{
-    border-top: 3px solid #BCBCBC;
-    border-left: 3px solid #BCBCBC;
     border-bottom: 3px solid #BCBCBC;
-    padding-left: 4%;
 }
 
 .leftRightDivide{
     width: 3px;
-    background-color:#BCBCBC;
+    background-color:#E2DDEB;
 }
 
-.rightImportant {
+.rightDetailsWarnings,
+.rightDetailsMedical {
     background-color: white;
     width: 50%;
     align-self: right;
 }
 
-.importantFlag{
+.importantFlag,
+.medicalIncidents{
     margin-top: 5%;
     margin-left: 5%;
+    display: flex;
+    flex-direction: column;
+}
+.importantFlagDescription{
+    font-weight: bold;
+    margin-left: 5%;
+    margin-bottom: 3%;
 }
 
+.divideFlags{
+    height: 4px;
+    width: 95%;
+    background-color: #BCBCBC;
+}
+.residenceCaregiverDetailsContainer{
+    display: flex;
+    flex-direction: column;
+    height: auto;
+}
+
+.chaItem3{
+    display: flex;
+    flex-direction: row;
+    font-family: 'Inter', sans-serif;
+    padding-left: 39.5%;
+    font-size: 25px;
+}
+
+.containerBodyLeftRCDC,
+.containerBodyRightRCDC{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+}
+
+.leftHeader,
+.rightHeader{
+    display: grid;
+    justify-content: center;
+    margin-top: 3%;
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.leftAddress, 
+.rightAddress{
+    display: grid;
+    justify-content: center;
+    margin-top: 3%;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+}
+
+.leftDetailsGridRCDC,
+.rightDetailsGridRCDC{
+    display: grid;
+    grid-template-columns: 30% 60%;
+    grid-template-rows: 16% 16% 16% 16% 16% 16%;
+    width: 90%;
+    justify-content: center;
+    background-color: white;
+    margin-top: 1%;
+    padding-left: 2%;
+    padding-right: 2%;
+}
+/* End change  */
 .extracurrilars
 {
     background-color: blue;
