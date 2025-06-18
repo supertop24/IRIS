@@ -4,29 +4,43 @@
     height: 100%;
     display: none;
 }
-
+ 
 .awards.active
 {
     display: flex;
 }
-
+ 
 .awardsContainer {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: wrap;
     width: 100%;
     height: auto;
     margin-top: 1%;
-    gap: 10px;
+    gap: 10px
 }
-
+ 
 .allYearContent {
     display: flex;
     flex-direction: column;
-    width: 90%;
+    width: 100%;
     height: 100%;
     row-gap: 5%;
 }
-
+ 
+.titleContainer {
+    background-color: #E2DDEB;
+    padding: 10px;
+    border-radius: 25px 25px 0 0;
+}
+ 
+.yearTitle {
+    margin-left: 1%;
+    font-size: 20px;
+    text-align: center;
+}
+ 
 .existingAwardsContainer {
     background-color: #ffffff;
     display: flex;
@@ -37,94 +51,112 @@
     border-radius: 30px 30px 25px 25px;
 }
 .existingAwardsContent {
-    background-color: yellow;
     margin: 0.5% 1.5%;
 }
-
-.titleContainer {
-    background-color: #E2DDEB;
-    padding: 10px;
-    border-radius: 25px 25px 0 0;
-}
-.yearTitle {
-    margin-left: 1%;
-    font-size: 20px;
-}
-
+ 
 .awardBox {
-    background-color: lightcoral;
-    border-bottom: 4px solid black;
+    border-bottom: 4px solid #BCBCBC;
 }
-
+ 
 /* ----------------- Add new award styling section -----------------*/
-
 .uploadAwardContainer {
-    width: 100%;
-    height: auto;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 100%;
+    height: auto;
+    margin-top: 1%;
 }
-
+ 
 .awardHeaderContainer {
-    text-align: center;
-    font-size: 20px;
-    width: 90%;
     background-color: #E2DDEB;
     padding: 10px;
     border-radius: 25px 25px 0 0;
+    width: 90.6%;
+}
+ 
+.addYearTitle {
     margin-left: 1%;
     font-size: 20px;
+    text-align: center;
 }
-
+ 
 .awardInputContainer {
-    background-color: lightgreen;
-    width: 90%;
+    background-color: #ffffff;
+    width: 91.9%;
+    border-radius: 0 0 25px 25px;
 }
-
+ 
 /* Details's content containers - making their content align in rows */
 .termContainer, .awardTypeContainer, .awardTitleContainer, .gradeContainer, .subjectContainer {
-    background-color: blue;
     display: flex;
     flex-direction: row;
     width: 100%;
-    height: auto;
+    min-height: 52px; /* Setting consistent minimum height for all rows */
     align-items: center;
     justify-content: center;
 }
-
-/*Creating borders and aligning headings to the right */
+ 
+.termContainer {
+    margin-top: 1%;
+}
+.subjectContainer{
+    margin-bottom: 2%;
+}
+ 
+/* Creating borders and aligning headings to the right */
 .term, .awardType, .awardTitle, .grade, .subject {
-    background-color: orange;
     width: 50%;
-    height: auto;
+    min-height: 55px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
     text-align: right;
     box-sizing: border-box;
     padding-right: 3%;
     border-right: 3px solid #BCBCBC;
     border-bottom: 3px solid #BCBCBC;
+    margin-left: 1%;
 }
-
-/*Creating border and aligning input to the left */
+ 
+/* Creating border and aligning input to the left */
 .awardTypeDisplayed, .awardTitleDisplayed, .subjectDisplayed {
-    background-color: purple;
     width: 50%;
-    height: auto;
+    min-height: 55px;
+    display: flex;
+    align-items: center;
     text-align: left;
     box-sizing: border-box;
     padding-left: 3%;
     border-bottom: 3px solid #BCBCBC;
+    margin-right: 1%;
 }
-
-/* Style the dropdown select elements */
+ 
+/* Style the input fields to fill their containers */
+.inputAwardType, .inputAwardTitle, .inputAwardSubject {
+    width: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: inherit;
+    padding: 0;
+}
+ 
+/* Dropdown styling to match inputs */
 .awardsDropdowns {
-    width: 49.5%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background-color: white;
-    font-size: 14px;
+    width: 50%;
+    min-height: 55px;
+    display: flex;
+    align-items: center;
+    text-align: left;
+    box-sizing: border-box;
+    padding-left: 3%;
+    border-bottom: 3px solid #BCBCBC;
+    margin-right: 1%;
 }
-
+ 
+ 
 /* Upload button styling */
 .awardUploadButtonContainer
 {
