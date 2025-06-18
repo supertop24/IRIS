@@ -38,24 +38,24 @@
 {
     display: block;
 
-    /* Start change  */
+    /* Profile styling starts  */
 }
-.profile.active {
-    display: flex; /* Override the block display for flex layout */
-    flex-direction: column; /* Changed to column to stack the containers vertically */
+.profile.active { /* I changed profile to profile.active so it wouldn't break the other profile pages by overriding them with profile styling */
+    display: flex; 
+    flex-direction: column; 
     margin-top: 2.5%;
     margin-right: 1%;
     height: 100%;
     background-color: #F3F2F2;
 }
 
-/* Profile content styling */
+
 .studentDetailsContainer, 
 .medicalDetailsContainer{
     display: flex;
     flex-direction: column;
     height: auto;
-    margin-bottom: 2rem; /* Add spacing between containers */
+    margin-bottom: 2rem; 
 }
 
 .containerHeaderArea{
