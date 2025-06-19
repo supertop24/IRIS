@@ -53,7 +53,7 @@ def student():
    #Getting all awards
    allAwards = Award.query.all()
    
-   return render_template("portalSelect.html")
+   return render_template("portalselect.html")
 
 @views.route('/navBase')
 def navBase():
