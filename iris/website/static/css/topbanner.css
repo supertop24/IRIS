@@ -13,7 +13,7 @@
     display: grid;
     grid-row: 1 ;
     grid-column: span 2;
-    background-color: #C5B9DF;
+    background-color: #E2DDEB;
     height: 130px;
     grid-template-columns: 1fr 6fr;
 }
