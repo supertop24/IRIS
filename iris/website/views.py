@@ -82,7 +82,7 @@ def studentProfile(student_id):
     #Converting to regular dict and sorting by year from newest to oldest
     awardsByYear = dict(sorted(awardsByYear.items(), key=lambda x: x[0], reverse=True))
 
-    return render_template('student.html', student_id=student_id, allPastoralReports=allPastoralReports, pastoral=None, allAwards=allAwards, awardsByYear=awardsByYear)
+    return render_template('student.html', student_id=student_id, allPastoralReports=allPastoralReports, pastoral=None, allAwards=allAwards, awardsByYear=awardsByYear, user=current_user)
 
 @views.route('/searchStudent')
 def searchstudent():

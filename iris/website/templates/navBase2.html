@@ -25,8 +25,8 @@
 
                 <!--User profile-->
                 <div class="userProfile">
-                    <img class="userProfileImg" src="{{ url_for('static', filename='images/teachers/janeSmith.png') }}" alt="User profile picture">
-                    <div class="userName">User Name</div>
+                    <img class="userProfileImg" src="{{ url_for('views.getProfileImage', user_id=user.id) }}" alt="User profile picture">
+                    <div class="userName">{{user.name}}</div>
                 </div>
 
 
