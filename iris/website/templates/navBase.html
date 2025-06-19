@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/navBase.css') }}">
         <script src="{{ url_for('static', filename='javascript/navBase.js') }}"></script>
+        <link href="https://fonts.googleapis.com/css2?family=Acme&display=swap" rel="stylesheet"><!--Acme font-->
 
         <!--Title that children can override-->
         <title>{%block title %}Nav Base{% endblock %}</title>
@@ -24,8 +25,8 @@
 
                 <!--User profile-->
                 <div class="userProfile">
-                    <img class="userProfileImg" src="{{ url_for('static', filename='images/teachers/janeSmith.png') }}" alt="User profile picture">
-                    <div class="userName">User Name</div>
+                    <img class="userProfileImg" src="{{ url_for('views.getProfileImage', user_id=user.id) }}" alt="User profile picture">
+                    <div class="userName">{{user.name}}</div>
                 </div>
 
 

@@ -108,6 +108,7 @@ html, body {
     box-sizing: border-box;
     position: relative;
     z-index: 1;
+    font-family: 'Inter', sans-serif;
 }
 
 /* Nav links */
@@ -128,6 +129,7 @@ html, body {
     gap: 10px;
     justify-content: flex-start;
     height: 60px;
+    font-family: "Acme", sans-serif;
 }
 .sideNav.collapsed .navItem {
     padding: 8px 10px;
