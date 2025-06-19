@@ -1,10 +1,11 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash, jsonify, request, abort
+from flask import Blueprint, render_template, request, redirect, url_for, flash, jsonify, request, abort, send_file
 from datetime import datetime, date, timedelta, time
 from flask_login import current_user, login_required
 from .models import notice, Class, Student, Teacher, ClassSession, Period, TeacherClassAssociation, TeacherRole, User, Pastoral, Award
 from . import db
 from collections import defaultdict
 import re
+from io import BytesIO
 
 views = Blueprint('views', '__name__')
 
@@ -52,7 +53,7 @@ def student():
    #Getting all awards
    allAwards = Award.query.all()
    
-   return render_template("student.html")
+   return render_template("portalSelect.html")
 
 @views.route('/navBase')
 def navBase():
@@ -304,7 +305,18 @@ def assessmentsLanding():
     otherClasses = getOtherClasses()
     return render_template("assessmentsLanding.html", user=current_user, currentDate=currentDate, myClasses = myClasses, otherClasses = otherClasses)
 
-
+@views.route('/profile_image/<int:user_id>')
+def getProfileImage(user_id):
+    user = User.query.get(user_id)
+    if not user or not user.profile:
+        #Returning a default image if not profile image exists
+        return send_file('static/images/icons/whiteIrisLogo.png')
+    
+    return send_file(
+        BytesIO(user.profile),
+        mimetype='image/jpeg',
+        as_attachment=False
+    )
 
 @views.route('/morePopulating')
 def morePopulating():

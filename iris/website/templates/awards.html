@@ -1,7 +1,7 @@
 <!--This page gets included in the student page-->
  
 <!--Page titles-->
-<title>Awards</title> <!--MAKE THIS WORRRRRK - DON'T FORGET-->
+{% block title %}{% endblock %} <!--MAKE THIS WORRRRRK - DON'T FORGET-->
  
 <!--Linking style sheet-->
 <link rel="stylesheet" href="{{ url_for('static', filename='css/awards.css') }}">
@@ -27,7 +27,7 @@
                     {% for year, awardsInYear in awardsByYear.items() %}
                     <div class="existingAwardsContainer">
                         <!--Title container-->
-                        <div class="titleContainer">
+                        <div class="awardTitleContainer1">
                             <div class="yearTitle">
                                 <p>Awards for {{year}}</p>
                             </div>
