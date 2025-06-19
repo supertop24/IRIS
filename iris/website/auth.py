@@ -23,6 +23,6 @@ def teacherLogin():
         else: 
             flash ('Email not exist', category='error')
 
-
+    print(current_user.__dict__)
     return render_template("teacherLogin.html", user=current_user)
 
