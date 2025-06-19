@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, jsonify, request, abort
 from datetime import datetime, date, timedelta, time
 from flask_login import current_user, login_required
-from .models import notice, Class, Student, Teacher, ClassSession, Period, TeacherClassAssociation, TeacherRole, User, Pastoral, Award
+from .models import notice, Class, Student, Teacher, ClassSession, Period, TeacherClassAssociation, TeacherRole, User, Pastoral, Award, Flags
 from . import db
 from collections import defaultdict
 import re
@@ -68,6 +68,9 @@ def teacherPortal():
 
 @views.route('/studentProfile/<int:student_id>')
 def studentProfile(student_id):
+
+    allFlags = Flags.query.filter_by(student_id=student_id).all() # Getting all flags associated with user
+
     allPastoralReports = Pastoral.query.all() #Getting all pastoral reports - no filtering yet
     
     #Getting awards for the specific student

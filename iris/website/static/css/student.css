@@ -77,13 +77,18 @@
     font-size: 25px;
 }
 
-.chaItem2{
+.chaItem2,
+.chaItem2M{
     display: flex;
     flex-direction: row;
     font-family: 'Inter', sans-serif;
     padding-left: 42%;
     font-size: 25px;
     font-weight: bold;
+}
+
+.chaItem2M{
+    padding-left: 36%;
 }
 
 .containerBody{
