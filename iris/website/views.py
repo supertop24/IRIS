@@ -90,7 +90,7 @@ def searchstudent():
 
 @views.route('/communication')
 def communicationC():
-    return render_template('communicationcenter.html')
+    return render_template('communicationcenter.html',user=current_user)
 
 @views.route('/dashboard')
 def dashboard():

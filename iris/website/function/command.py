@@ -135,6 +135,34 @@ def upload():
     except Exception as e:
         return jsonify({'status': 'error', 'message': str(e)}), 500
 
+@command.route('/sendMessage',methods=['POST'])
+def send():
+    sender_id = request.form.get('sender_id')
+    sender = request.form.get('sender')
+    target_id = request.form.get('target_id')
+    target = request.form.get('target')
+    message = request.form.get('message')
+    created_at = date.today().isoformat()
+    try:
+        db = get_db()
+        cursor = db.cursor()
+        cursor.execute("""
+            INSERT INTO message_log (sender_id, target_id, message,created_at,sender,target)
+            VALUES (?, ?, ?, ?, ?, ?)
+        """, 
+        (
+            sender_id,
+            target_id,
+            message,
+            created_at,
+            sender,
+            target
+        ))
+        db.commit()
+        return jsonify({'status': 'success', 'message': 'Report inserted successfully'}), 201
+    except Exception as e:
+        return jsonify({'status': 'error', 'message': str(e)}), 500
+
 @command.route('/searchFile', methods=['GET'])
 def search_file():
     file_id = request.args.get('id')

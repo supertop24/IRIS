@@ -4,7 +4,8 @@
 {% extends "navBase.html" %}
 {% block title %}Comunication Center{% endblock %}
 {% block pageName %}Communication Center{% endblock %}
-{% block content %} 
+{% block content %}
+<input type="hidden" id="user_id" value="{{ user.id }}">
 <div class="message_container" id="message">
     <div class="message_container_top">
         <div class="message_send">
@@ -12,16 +13,16 @@
                 Direct Message
             </div>
             <input type="checkbox" id="toggle_search" hidden/>
-            <label for="toggle_search" class="message_button searchuser">
+            <label for="toggle_search" class="message_button searchuser" onclick="searchon()">
                 Send Direct
             </label>
             <input type="checkbox" id="target_lock" hidden/>
-            <div class="target_display">
+            <div class="target_display" id="target_display">
                 <input type="number" id="target_id" hidden/>
                 <div class="target_name" id="target_name">
                     Name
                 </div>
-                <div class="target_button">
+                <div class="target_button" onclick="send()">
                     Send
                 </div>
             </div>
@@ -54,7 +55,7 @@
             <input class="subject_input" type="text" id="subject" name="subject" placeholder="Add a subject">
         </div>
         <div class="draft_message">
-            <textarea class="message_input" type="text" id="message" name="message"placeholder="Write message"></textarea>
+            <textarea class="message_input" type="text" id="messagetext" name="message"placeholder="Write message"></textarea>
         </div>
     </div>
     <div class="message_container_bottom">
