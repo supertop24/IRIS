@@ -33,39 +33,48 @@
                             </div>
                             <div class="containerBody">
 
-                                
+                                {% if studentDetails %}
                                 <div class="leftDetailsGrid">
                                     <div class="itemtopleftcorner"><p>Preferred Name</p></div>
-                                    <div class="itemtoprightcorner"><p>(name)</p></div>
+                                    <div class="itemtoprightcorner"><p>{{studentDetails.name | default('-', true) }}</p></div>
                                     <div class="itemleft"><p>Gender</p></div>
-                                    <div class="itemright"><p>(gender)</p></div>
+                                    <div class="itemright"><p>{{studentDetails.gender | default('-', true) }}</p></div>
                                     <div class="itemleft"><p>Date of Birth</p></div>
-                                    <div class="itemright"><p>(dob)</p></div>
+                                    <div class="itemright"><p>{{ studentDetails.dob.strftime('%d/%m/%Y') if studentDetails.dob else '-' }}</p></div>
                                     <div class="itemleft"><p>School Email</p></div>
-                                    <div class="itemright"><p>(s email)</p></div> 
+                                    <div class="itemright"><p>{{studentDetails.email | default('-', true)}}</p></div> 
                                     <div class="itemleft"><p>Personal Email</p></div>
-                                    <div class="itemright"><p>(p e,mail)</p></div>
+                                    <div class="itemright"><p>{{studentDetails.personal_email | default('-', true)}}</p></div>
                                     <div class="itemleft"><p>Home Number</p></div>
-                                    <div class="itemright"><p>(h #)</p></div>
+                                    <div class="itemright"><p>{{studentDetails.phone_number | default('-', true)}}</p></div>
                                     <div class="itemleft"><p>Mobile Number</p></div>
-                                    <div class="itemright"><p>(mob #)</p></div>
+                                    <div class="itemright"><p>{{studentDetails.mobile_number | default('-', true) }}</p></div>
                                     <div class="itembottomleftcorner"><p>Year Level</p></div>
-                                    <div class="itembottomrightcorner"><p>(yrlvl)</p></div>
+                                    <div class="itembottomrightcorner"><p>{{studentDetails.year_level | default('-', true)}}</p></div>
                                     </div>
+
+                                {% endif %}
 
                                 <div class="leftRightDivide"></div>
 
                                 <div class="rightDetailsWarnings">
 
+                                {% for flag in allFlags %}
+
                                     <div class="importantFlag">
+                                        <!-- <img class="flagIcon" src="{{ url_for('static', filename='images/icons/flag.png') }}" alt="Flag icon"> -->
                                         <div class="importantFlagDescription"> important note here with a warning flag icon</div>
                                         <div class="divideFlags"> </div>
                                     </div>
 
                                     <div class="importantFlag">
-                                        <div class="importantFlagDescription"> Another one</div>
+                                        <!-- <img class="flagIcon" src="{{ url_for('static', filename='images/icons/flag.png') }}" alt="Flag icon"> -->
+                                        <div class="importantFlagDescription"> 
+                                            {{ flag.note }}
+                                        </div>
                                         <div class="divideFlags"> </div>
                                     </div>
+                                {% endfor %}
 
                                 </div>
                             </div>
@@ -87,24 +96,30 @@
                                     <div class="containerBodyLeftRCDC">
 
                                         <div class="leftHeader">Residence A</div>
-                                        <div class="leftAddress">14 Jones Street, Kingsland, Auckland 1024</div> <!-- Hard-coded for now, will soon be queried from database -->
-                                        <div class="leftHeader">Caregiver A</div>
-                                        <br><br>
-                                        <div class="leftDetailsGridRCDC">
-                                            <div class="itemtopleftcorner"><p>Name</p></div>
-                                            <div class="itemtoprightcorner"><p>(plchldr)</p></div>
-                                            <div class="itemleft"><p>Relationship</p></div>
-                                            <div class="itemright"><p>(plchldr)</p></div>
-                                            <div class="itemleft"><p>Contact Email</p></div>
-                                            <div class="itemright"><p>(plchldr)</p></div>
-                                            <div class="itemleft"><p>Home Number</p></div>
-                                            <div class="itemright"><p>(s plchldr)</p></div> 
-                                            <div class="itemleft"><p>Mobile Number</p></div>
-                                            <div class="itemright"><p>(plchldr)</p></div>
-                                            <div class="itembottomleftcorner"><p>Work Number</p></div>
-                                            <div class="itembottomrightcorner"><p>(plchldr)</p></div>
 
-                                        </div>
+                                        {% for caregiver, relationship in caregivers %}
+
+                                            <div class="leftAddress">{{ caregiver.address }}</div> 
+
+                                            <div class="leftHeader">Caregiver {{caregiver.alphanum}}</div>
+                                            
+                                            <div class="leftDetailsGridRCDC">
+                                                <div class="itemtopleftcorner"><p>Name</p></div>
+                                                <div class="itemtoprightcorner"><p>{{caregiver.name}}</p></div>
+                                                <div class="itemleft"><p>Relationship</p></div>
+                                                <div class="itemright"><p>{{ relationship }}</p></div>
+                                                <div class="itemleft"><p>Contact Email</p></div>
+                                                <div class="itemright"><p>{{caregiver.email}}</p></div>
+                                                <div class="itemleft"><p>Home Number</p></div>
+                                                <div class="itemright"><p>{{caregiver.home_number}}</p></div> 
+                                                <div class="itemleft"><p>Mobile Number</p></div>
+                                                <div class="itemright"><p>{{caregiver.mobile_number}}</p></div>
+                                                <div class="itembottomleftcorner"><p>Work Number</p></div>
+                                                <div class="itembottomrightcorner"><p>{{caregiver.work_number}}</p></div>
+
+                                            </div>
+
+                                        {% endfor %}
 
                                         <div class="leftHeader">Caregiver A2</div>
                                         <br><br>
@@ -165,10 +180,10 @@
 
                             <div class="containerHeaderArea">
                                 <div class="chaItem1">
-                                    <p>Student Details</p>
+                                    <p>Medical Information</p>
                                 </div>
-                                <div class="chaItem2">
-                                    <p>Important</p>
+                                <div class="chaItem2M">
+                                    <p>Incident History</p>
                                 </div>
                             </div>
                             <div class="containerBody">

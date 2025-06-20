@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, jsonify, request, abort, send_file
 from datetime import datetime, date, timedelta, time
 from flask_login import current_user, login_required
-from .models import notice, Class, Student, Teacher, ClassSession, Period, TeacherClassAssociation, TeacherRole, User, Pastoral, Award
+from .models import notice, Class, Student, Teacher, ClassSession, Period, TeacherClassAssociation, TeacherRole, User, Pastoral, Award, Flags, StudentCaregiverAssociation, Caregiver
 from . import db
 from collections import defaultdict
 import re
@@ -42,8 +42,6 @@ def getOtherClasses():
 
     return otherClasses
     
-
-
 def getCOFromTCA():
     classObject = TeacherClassAssociation.query.all()
     return classObject
@@ -67,8 +65,37 @@ def portalSelect():
 def teacherPortal():
     return render_template('teacherPortal.html', user=current_user)
 
+def getCaregiverDetails(student_id):
+
+    caregiverDetails = db.session.query(Caregiver, StudentCaregiverAssociation.relationship)\
+        .join(StudentCaregiverAssociation, Caregiver.id == StudentCaregiverAssociation.caregiver_id)\
+        .filter(StudentCaregiverAssociation.student_id == student_id)\
+        .all()
+    
+    return caregiverDetails  
+
+def getStudentDetails(student_id):
+    studentDetails = Student.query.filter(Student.id == student_id).first()
+
+
+
+    if studentDetails:
+        if studentDetails.dob == '' or studentDetails.dob == ' ':
+            studentDetails.dob = None
+
+    return studentDetails
+
 @views.route('/studentProfile/<int:student_id>')
 def studentProfile(student_id):
+
+    caregivers = getCaregiverDetails(student_id)
+
+    studentDetails = getStudentDetails(student_id)
+    if studentDetails:
+        print(f"DOB value: '{studentDetails.dob}', type: {type(studentDetails.dob)}")
+
+    allFlags = Flags.query.filter_by(student_id=student_id).all() # Getting all flags associated with user
+
     allPastoralReports = Pastoral.query.all() #Getting all pastoral reports - no filtering yet
     
     #Getting awards for the specific student
@@ -82,7 +109,7 @@ def studentProfile(student_id):
     #Converting to regular dict and sorting by year from newest to oldest
     awardsByYear = dict(sorted(awardsByYear.items(), key=lambda x: x[0], reverse=True))
 
-    return render_template('student.html', student_id=student_id, allPastoralReports=allPastoralReports, pastoral=None, allAwards=allAwards, awardsByYear=awardsByYear, user=current_user)
+    return render_template('student.html', student_id=student_id, allPastoralReports=allPastoralReports, pastoral=None, allAwards=allAwards, awardsByYear=awardsByYear, user=current_user, allFlags=allFlags, caregivers=caregivers, studentDetails=studentDetails)
 
 @views.route('/searchStudent')
 def searchstudent():
