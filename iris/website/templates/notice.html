@@ -25,11 +25,14 @@
 
 <div class="noticeContainer">
 
-    <div class="noticeMainContentWrapper">
+    <div class="noticeButtonsContainer">
         <!--Create and view notices buttons-->
         <div class="buttonContainer">
             <a class="createButton" href="{{ url_for('views.createNotice') }}">Create Notice</a>
-            <button class="yourNoticeButton">Your Notices</button>
+            <a class="yourNoticeButton" href="{{ url_for('views.yourNotices') }}">Your Notices</a>
+            {% if showOnlyYourNotices %}
+                <a class="allNoticesButton" href="{{ url_for('views.viewNotice') }}">All Notices</a>
+            {% endif %}
         </div>
     </div>
 
@@ -38,7 +41,8 @@
     <!--Notice box-->
     <div class="noticeBox">
 
-        <!--Columns for the icons-->
+        <!--Columns for the icons - only shows if it's the user's notice-->
+        {% if notices.author == user.id %}
         <div class="iconColumns">
             
                 <!--Edit icon that redirects to edit notice page-->
@@ -54,8 +58,9 @@
                 </button>
             </form>
         </div>
+        {% endif %}
 
-        <!--Content wrapper used to align the notices and the buttons - excluding the icons-->
+        <!--Content wrapper used to align the notices and the buttons-->
         <div class="noticeContentWrapper">
             <!--Viewing the notices-->
             <div class="noticeContent">

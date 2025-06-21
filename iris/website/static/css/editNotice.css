@@ -1,5 +1,5 @@
-/* Container style to align content */
-.createNoticesContainer {
+/* Edit notice container styling ------------*/
+.editNoticeContainer {
     width: auto;
     display: flex;
     flex-wrap: wrap;
@@ -23,6 +23,7 @@
     text-align: center;
     border: none;
     border-bottom: #988EB1 solid 7px;
+    margin: 0;
 }
 
 /* Input notice content wrapper */
@@ -33,6 +34,8 @@
     border-bottom-right-radius: 25px;
     border-top-left-radius: 30px;
     border-top-right-radius: 30px;
+    margin: 0;
+    padding: 0;
 }
 
 .inputNoticeContent {
@@ -47,10 +50,11 @@
     overflow-y: auto;
     line-height: 1.5;
     border: none;
+    margin: 0;
 }
 
 .noticeBox {
-    flex: 100%;
+    flex: 1;
     box-sizing: border-box;
     min-height: 500px;
     border: #988EB1 solid 7px;
@@ -62,7 +66,6 @@
 .noticeBox p {
     margin: 0;
     padding: 40px 20px;
-    font-family: 'Inter', sans-serif;
 }
 
 /*Upload notice button */
@@ -75,7 +78,14 @@
     cursor: pointer;
 }
 
-/* The styling of the text fields when users click on them */
+/* Button container to center the update button */
+.buttonContainer {
+    flex: 100%;
+    display: flex;
+    justify-content: center; /* Center the button horizontally */
+    align-items: center;
+}
+
 input:focus,
 textarea:focus {
     outline: none;
@@ -91,19 +101,20 @@ input:focus {
 .iconColumn {
     display: flex;
     flex-direction: column;
-    padding-top: 30px;
-    gap: 10px;
+    padding-top: 280px;
+    align-items: center;
+    justify-content: flex-start;
 }
 
-/* Edit notice container styling ------------*/
-.editNoticeContainer {
-    width: auto;
+/* Delete button styling - remove border and background */
+.deleteIcon {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
     display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    row-gap: 30px; /*Creates gap between notice and button */
-    margin: 50px 200px;
+    align-items: center;
     justify-content: center;
-    gap: 20px; /*Gap between the notice and the bin icon */
-    align-items: flex-start;
 }
+
+

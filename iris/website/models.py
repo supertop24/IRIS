@@ -265,7 +265,7 @@ class notice(db.Model):
     target = db.Column(db.String(1), nullable=True)
     target_id = db.Column(db.Integer, nullable=True)
     title = db.Column(db.String(50))
-    author = db.Column(db.String(50), nullable=True)
+    author = db.Column(db.Integer, nullable=True)
     note = db.Column(db.Text, nullable=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow) #default=db.func.current_timestamp())
 

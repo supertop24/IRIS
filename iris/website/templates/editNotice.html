@@ -1,5 +1,5 @@
 <!--Linking style sheet-->
-<link rel="stylesheet" href="{{ url_for('static', filename='css/createNotice.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/editNotice.css') }}">
 
 <!--Inherits from navBase and overrides blocks-->
 {% extends "navBase.html" %}
@@ -12,22 +12,21 @@
 <!--Page's content-->
 {% block content %}
 
-<div class="createNoticesContainer">
+<div class="editNoticeContainer">
 
-        <!--Column for the bin icon-->
-        <div class="iconColumn">
-            <!--Delete icon that deletes a notice-->
-            <form method="POST" action="/deleteNotice">
-                <input type="hidden" name="id" value="{{ notices.id }}">
-                <button type="submit" class="deleteIcon">
-                    <img src="{{ url_for('static', filename='images/icons/deleteBin.png') }}" alt="Bin icon">
-                </button>
-            </form>
-        </div>
+    <!--Column for the bin icon-->
+    <div class="iconColumn">
+        <!--Delete icon that deletes a notice-->
+        <form method="POST" action="/deleteNotice">
+            <input type="hidden" name="id" value="{{ notices.id }}">
+            <button type="submit" class="deleteIcon">
+                <img src="{{ url_for('static', filename='images/icons/deleteBin.png') }}" alt="Bin icon">
+            </button>
+        </form>
+    </div>
 
     <!--Notice box-->
     <div class="noticeBox">
-
         <div class="noticeForm">
             <!--Form to edit a notice-->
             <form method="POST" id="formID" action="{{ url_for('views.editNotice', id=notices.id) }}">
