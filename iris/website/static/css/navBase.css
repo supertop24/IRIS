@@ -184,6 +184,7 @@ html, body {
     height: auto;
     text-align: center;
     font-size: 40px;
+    font-family: 'Inter', sans-serif;
 }
 .searchBar {
     padding: 20px;

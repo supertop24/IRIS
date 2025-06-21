@@ -204,15 +204,17 @@ def reportsLanding():
 @views.route('/notice')
 def viewNotice():
     allNotices = notice.query.all() #Reading all the notices
-    return render_template('notice.html', allNotices=allNotices)
+    return render_template('notice.html', allNotices=allNotices, user=current_user)
 
 @views.route('/createNotice', methods=['GET', 'POST'])
 def createNotice():
    if request.method == 'POST':
+       
        #Creating new notice
        newNotice = notice( 
         title=request.form.get("title"),
-        note=request.form.get("note")
+        note=request.form.get("note"),
+        author=current_user.id #Setting the author of the notice to the current user
         )
        db.session.add(newNotice) #Adding new notice to the database
        db.session.commit() #Committing new notice to the database
@@ -220,12 +222,16 @@ def createNotice():
        #Flash message to show that the notice has been created
        flash("Notice Created!", category="success")
        return redirect(url_for('views.viewNotice')) #Takes user back to the notice page
-   return render_template("createNotice.html")
+   return render_template("createNotice.html", user=current_user)
 
 @views.route("/editNotice/<int:id>", methods=["GET", "POST"])
 def editNotice(id):
     noticeToEdit = notice.query.get(id) #Reading the notice to be edited
-
+    #Checking if the current user is the aithor of the notice
+    if noticeToEdit.author != current_user.id:
+        flash("You are not authorized to edit this notice.", category="error")
+        return redirect(url_for("views.viewNotice")) #Takes user back to the notice page
+    
     if request.method == "POST":
         #Updating the notice
         noticeToEdit.title = request.form.get("title")
@@ -234,17 +240,26 @@ def editNotice(id):
         flash("Notice Updated!", category="success") #Flashing success mesasage
         return redirect(url_for("views.viewNotice")) #Takes user back to the notice page
     
-    return render_template("editNotice.html", notices=noticeToEdit) 
+    return render_template("editNotice.html", notices=noticeToEdit, user=current_user) 
 
 @views.route('/deleteNotice', methods=['POST'])
 def deleteNotice():
     noitceID = request.form.get("id")
-    notices = notice.query.get(noitceID) #Reading the notice to be deleted
+    noticeToDelete = notice.query.get(noitceID) #Reading the notice to be deleted
 
-    if notices:
-        db.session.delete(notices) #Deleting the notice from the database
+    #Checking if the current user is the author of the notice
+    if noticeToDelete and noticeToDelete.author == current_user.id:
+        db.session.delete(noticeToDelete) #Deleting the notice from the database
         db.session.commit() #Committing the changes to the database
+        flash("Notice deleted!", category="success") #Flashing success message
+    else:
+        flash("You are not authorized to delete this notice.", category="error") #User can only delete their own notices
     return redirect("/notice")
+
+@views.route('yourNotices')
+def yourNotices():
+    userNotices = notice.query.filter_by(author=current_user.id).all() #Reading all the notices created by the user
+    return render_template('notice.html', allNotices=userNotices, user=current_user, showOnlyUserNotices=True)
 
 @views.route('/pastoralReports')
 def viewPastoralReports():

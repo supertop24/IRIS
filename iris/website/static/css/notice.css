@@ -9,9 +9,10 @@
     padding: 10px;
     box-sizing: border-box;
     margin: 50px 200px;
+    font-family: 'Inter', sans-serif;
 }
 
-.noticeMainContentWrapper, .noticeContentWrapper {
+.noticeButtonsContainer, .noticeContentWrapper {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
@@ -23,8 +24,10 @@
 
 .buttonContainer {
     display: flex;
-    /*justify-content: flex-end; */
+    justify-content: flex-start;
     margin-top: 10px;
+    margin-left: -50px;
+    padding: 0;
 }
 
 /*Create notice button */
