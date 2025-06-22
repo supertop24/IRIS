@@ -293,7 +293,7 @@
 .content_list
 {
     grid-area: "middlelist";
-    display: grid;
+    display: none;
     width: 100%;
     height: 100%;
     grid-template-columns: 1fr;
@@ -302,11 +302,17 @@
     "headerlist"
     "contentlist";
 }
-.container_view
+.content_view
 {
     grid-area: "middlelist";
-    background-color: bisque;
+    background-color: white;
     display: none;
+    width: 100%;
+    height: 100%;
+    border: solid 2px black;
+    border-radius: 20px;
+    grid-template-columns: 1fr;
+    grid-template-rows: 50px 1fr;
 }
 .list_header
 {
@@ -328,19 +334,22 @@
     grid-area: "contentlist";
     height: 100%;
     width: 100%;
+    flex-direction: column;
     display: flex;
     background-color: white;
     border: solid 2px black;
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
     border-top: none;
-    justify-content: center;
-    overflow-y: hidden;
+    justify-content: start;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 .list_message_container
 {
+    cursor: pointer;
     width: calc(100% - 20px);
-    margin-top: 25px;
+    margin:10px auto;
     height: 80px;
     border: solid #988EB1 1px;
     border-radius: 20px;
@@ -351,6 +360,11 @@
     grid-template-columns: 1fr;
     grid-template-rows: 30px 50px;
 }
+.list_message_container:hover
+{
+    background-color: #988EB1;
+    color: white;
+}
 .list_message_container_top
 {
     grid-area: "message_top";
@@ -359,7 +373,7 @@
     align-items: center;
     justify-content: space-between;
     display: flex;
-    font: 20px;
+    font-size: 20px;
 }
 .list_name, .list_date
 {
@@ -373,6 +387,42 @@
     height: 100%;
     display: flex;
     align-items: center;
-    font-size: 24px;
+    font-size: 30px;
     margin-left: 25px;
+}
+.close_view
+{
+    display: flex;
+    margin:40px;
+    justify-content: end;
+    cursor: pointer;
+    font-size: 15px;
+    width: auto;
+    height: auto;
+}
+.message_shown {
+  display: flex;
+  flex-direction: column;     /* vertical layout */
+  width: 100%;
+  height: 100%;
+}
+
+.message_title {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  margin: 15px 30px 0 30px;
+  /* You can also set font styles here */
+}
+
+.message_read {
+  flex-grow: 1;               /* take up remaining space */
+  overflow-y: auto;           /* scroll vertically if needed */
+  display: flex;
+  flex-direction: column;
+  margin: 15px 30px;          /* same left/right as title */
+  text-align: justify;
+  align-items: flex-start;
+  justify-content: flex-start;
+  height: 500px;
 }

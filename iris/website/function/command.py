@@ -262,12 +262,12 @@ def message_list():
         # Convert rows (tuples) into list of dicts
         result = []
         for row in rows:
-            message, title, date, sender = row
+            message, title, date, name = row
             result.append({
                 "message": message,
                 "title": title,
                 "date": date,
-                "sender": sender
+                "name": name
             })
 
         return jsonify(result)

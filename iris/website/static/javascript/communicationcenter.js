@@ -46,43 +46,57 @@ window.onload = function() {
   .then(res => res.json())
   .then(data => {
     const listContainer = document.getElementById('list_container');
-    listContainer.innerHTML = ''; // Clear previous list
+    listContainer.innerHTML = ''; // Clear any previous content
 
-    userlist.forEach(message => {
-      const container = document.createElement('div');
-      container.className = 'list_message_container';
+    if (!data || data.length === 0) {
+      // If no messages, show fallback text
+      const noMessageDiv = document.createElement('div');
+      noMessageDiv.textContent = 'No messages.';
+      noMessageDiv.className = 'no_messages'; // Optional: for styling
+      listContainer.appendChild(noMessageDiv);
+      return;
+    }
+
+    data.forEach(message => {
+      const messageItem = document.createElement('div');
+      messageItem.className = 'list_message_container';
 
       const top = document.createElement('div');
       top.className = 'list_message_container_top';
 
       const name = document.createElement('div');
       name.className = 'list_name';
-      name.textContent = message.name;
+      name.textContent = message.name || 'Unknown';
 
       const date = document.createElement('div');
       date.className = 'list_date';
       date.textContent = message.date || '';
 
+      top.appendChild(name);
+      top.appendChild(date);
+
       const bottom = document.createElement('div');
       bottom.className = 'list_message_container_bottom';
       bottom.textContent = message.title || '';
 
-      top.appendChild(name);
-      top.appendChild(date);
-      container.appendChild(top);
-      container.appendChild(bottom);
+      messageItem.appendChild(top);
+      messageItem.appendChild(bottom);
 
-      container.addEventListener('click', () => {
-
+      // Optional click handler
+      messageItem.addEventListener('click', () => {
+        changeDisplay('read')
+        document.getElementById('message_read').textContent=message.message;
+        document.getElementById('message_title').textContent=message.title;
       });
 
-      listContainer.appendChild(container);
+      listContainer.appendChild(messageItem);
     });
   })
   .catch(error => {
-    console.error('Error fetching search results:', error);
-    listContainer.innerHTML = '<p>Error loading messages.</p>';
-  })
+    console.error('Error fetching messages:', error);
+  });
+
+
 };
 
 
@@ -92,18 +106,23 @@ function changeDisplay(id)
     {
         document.getElementById('message').style.display='grid';
         document.getElementById('list').style.display='none';
-        document.getElementById('view').style.display='none';
+        document.getElementById('read').style.display='none';
     }
     else if (id=="list") {
         document.getElementById('message').style.display='none';
         document.getElementById('list').style.display='grid';
-        document.getElementById('view').style.display='none';
+        document.getElementById('messages').style.display='grid';
+        document.getElementById('read').style.display='none';
     } 
-    else 
+    else if (id=="messages")
     {
-        document.getElementById('message').style.display='none';
-        document.getElementById('list').style.display='none';
-        document.getElementById('view').style.display='grid';
+        document.getElementById('messages').style.display='grid';
+        document.getElementById('read').style.display='none';
+    }
+    else if (id=="read")
+    {
+        document.getElementById('read').style.display='grid';
+        document.getElementById('messages').style.display='none';
     }
 }
 function searchon()
