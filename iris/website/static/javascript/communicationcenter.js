@@ -3,7 +3,7 @@ window.onload = function() {
   const message = document.getElementById('messagetext');
   if(subject) subject.value = "";
   if(message) message.value = "";
-
+  const user_id=document.getElementById('user_id').value;
   const targetLock = document.getElementById('target_lock');
   if(targetLock) targetLock.checked = false;
 
@@ -41,6 +41,48 @@ window.onload = function() {
       }
     });
   }
+
+  fetch(`/message_list?id=${encodeURIComponent(user_id)}`)
+  .then(res => res.json())
+  .then(data => {
+    const listContainer = document.getElementById('list_container');
+    listContainer.innerHTML = ''; // Clear previous list
+
+    userlist.forEach(message => {
+      const container = document.createElement('div');
+      container.className = 'list_message_container';
+
+      const top = document.createElement('div');
+      top.className = 'list_message_container_top';
+
+      const name = document.createElement('div');
+      name.className = 'list_name';
+      name.textContent = message.name;
+
+      const date = document.createElement('div');
+      date.className = 'list_date';
+      date.textContent = message.date || '';
+
+      const bottom = document.createElement('div');
+      bottom.className = 'list_message_container_bottom';
+      bottom.textContent = message.title || '';
+
+      top.appendChild(name);
+      top.appendChild(date);
+      container.appendChild(top);
+      container.appendChild(bottom);
+
+      container.addEventListener('click', () => {
+
+      });
+
+      listContainer.appendChild(container);
+    });
+  })
+  .catch(error => {
+    console.error('Error fetching search results:', error);
+    listContainer.innerHTML = '<p>Error loading messages.</p>';
+  })
 };
 
 

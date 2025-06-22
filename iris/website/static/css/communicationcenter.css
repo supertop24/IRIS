@@ -260,12 +260,119 @@
     height: 100%;
     margin-top: 30px;
     display: none;
-    background-color: #988EB1;
     grid-template-columns: 1fr;
-    grid-template-rows:150px 600px 100px;
+    grid-template-rows:80px 770px;
     grid-template-areas: 
     "toplist"
-    "middlelist"
-    "bottomlist";
+    "middlelist";
     position: relative;
+}
+.list_container_button
+{
+    grid-area: "toplist";
+}
+.list_message_button
+{
+    margin-right: 30px;
+    font-size: 18px;
+    width: 150px;
+    height: 60px;
+    border-radius: 20px;
+    border: solid 3px #988EB1;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+.list_message_button:hover
+{
+    color: white;
+    background-color: #988EB1;
+}
+.content_list
+{
+    grid-area: "middlelist";
+    display: grid;
+    width: 100%;
+    height: 100%;
+    grid-template-columns: 1fr;
+    grid-template-rows: 100px 1fr;
+    grid-template-areas: 
+    "headerlist"
+    "contentlist";
+}
+.container_view
+{
+    grid-area: "middlelist";
+    background-color: bisque;
+    display: none;
+}
+.list_header
+{
+    grid-area: "headerlist";
+    border: solid 2px black;
+    background-color:#C5B9DF ;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    font-size: 24px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom: none;
+    height: 100%;
+    width: 100%;
+}
+.list_message
+{
+    grid-area: "contentlist";
+    height: 100%;
+    width: 100%;
+    display: flex;
+    background-color: white;
+    border: solid 2px black;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border-top: none;
+    justify-content: center;
+    overflow-y: hidden;
+}
+.list_message_container
+{
+    width: calc(100% - 20px);
+    margin-top: 25px;
+    height: 80px;
+    border: solid #988EB1 1px;
+    border-radius: 20px;
+    display: grid;
+    grid-template-areas: 
+    "message_top"
+    "message_bottom";
+    grid-template-columns: 1fr;
+    grid-template-rows: 30px 50px;
+}
+.list_message_container_top
+{
+    grid-area: "message_top";
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: space-between;
+    display: flex;
+    font: 20px;
+}
+.list_name, .list_date
+{
+    margin:25px;
+    font-size: 20px;
+}
+.list_message_container_bottom
+{
+    grid-area: "message_bottom";
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    font-size: 24px;
+    margin-left: 25px;
 }
