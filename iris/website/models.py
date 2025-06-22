@@ -183,7 +183,7 @@ class Class(db.Model):
 
 class ClassSession(db.Model):
     __tablename__ = 'class_session'   
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True,autoincrement=True)
     class_id = db.Column(db.Integer, db.ForeignKey('class.id'), nullable=False)
     date = db.Column(db.Date, nullable=False)
     period_id = db.Column(db.Integer, db.ForeignKey('period.id'), nullable=False)
@@ -200,8 +200,8 @@ class Period(db.Model):
 
 class AttendanceStatus(enum.Enum):
     Present = "present"
-    AbsentUnjustified = "absentunjustified"
-    AbsentJustified = "absentjustified"
+    AbsentUnjustified = "absent_unjustified"
+    AbsentJustified = "absent_justified"
     Late = "late"
  
 class Attendance(db.Model):
