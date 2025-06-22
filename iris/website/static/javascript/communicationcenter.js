@@ -51,7 +51,7 @@ window.onload = function() {
     if (!data || data.length === 0) {
       // If no messages, show fallback text
       const noMessageDiv = document.createElement('div');
-      noMessageDiv.textContent = 'No messages.';
+      noMessageDiv.textContent = 'No message.';
       noMessageDiv.className = 'no_messages'; // Optional: for styling
       listContainer.appendChild(noMessageDiv);
       return;
