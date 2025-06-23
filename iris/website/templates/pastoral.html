@@ -1,7 +1,7 @@
 <!--This page gets included in the student page-->
 
 <!--Page titles-->
-<title>Pastoral Reports</title> <!--MAKE THIS WORRRRRK - DON'T FORGET-->
+<title>Pastoral Reports</title>
 
 <!--Page's content-->
 
@@ -12,118 +12,157 @@
 
 <!--This is the list of student reports section-->
 <div class="pastoral list" data-id="list">
+
     <!--Content container for the pastoral student profile report page/student reprots section-->
     <div class="pastoralReportListContainer">
 
-        <!--Merit report container-->
-        <div class="meritReportsContainer">
-            <!--Merit report tilte-->
-            <div class="meritTitle">
-                Merit Reports
+        <!--Merit report and add button container-->
+        <div class="addReportContianer">
+
+            <!--Add button container - sets the type of report to 'Merit'-->
+            <div class="addContainer">
+                <img class="addButton" id="addMeritButtn" data-type="Merit" src="{{ url_for('static', filename='images/icons/addButton.png') }}" alt="Add merit report icon">
             </div>
 
-            <!--Merit report content-->
-            <div class="meritContentContainer">
+            <!--Merit report container-->
+            <div class="meritReportsContainer">
+                <!--Merit report tilte-->
+                <div class="meritTitle">
+                    Merit Reports
+                </div>
 
-                <!--Sort and filter container-->
-                <div class="sortFilterContainer">
-                        <!--Filter-->
-                    <div class="filter">
-                        <p>Filter by Type: </p>
+                <!--Merit report content-->
+                <div class="meritContentContainer">
+
+                    <!--Sort and filter container-->
+                    <div class="pastoralSortFilterContainer">
+                        <div class="pastoralFilter">
+                            <label for="meritFilter">Filter by Type: </label>
+                            <select id="meritFilter">
+                                <option value="">All Types</option>
+                                <option value="teamwork">Teamwork</option>
+                                <option value="respect">Respect</option>
+                            </select>
+                        </div>
+
+                        <!--Sort-->
+                        <div class="pastoralSort">
+                            <label for="meritSort">Sort by: </label>
+                            <select id="meritSort">
+                                <option value="latest">Latest First</option>
+                                <option value="oldest">Oldest First</option>
+                            </select>
+                        </div>
                     </div>
 
-                    <!--Sort-->
-                    <div class="sort">
-                        <p>Sort by: </p>
+                    <!--Header-->
+                    <div class="headerContainer">
+                        <p class="left">Title</p>
+                        <p class="center">Author</p>
+                        <p class="right">Date</p>
                     </div>
-                </div>
 
-                <!--Header-->
-                <div class="headerContainer">
-                    <p class="left">Title</p>
-                    <p class="center">Author</p>
-                    <p class="right">Date</p>
+                    <!--Loop to display all merit reports - using pre-filtered list-->
+                    {% for pastoral in meritReports %}
+                    <!--Merit report box layout-->
+                    <div class="meritReportBox" onclick="showIndividualReport(this)"
+                    data-id="{{ pastoral.id }}"
+                    data-author="{{ pastoral.author }}"
+                    data-date="{{ pastoral.date }}"
+                    data-time="{{ pastoral.time }}"
+                    data-location="{{ pastoral.location }}"
+                    data-type="{{ pastoral.reportType }}"
+                    data-students="{{ pastoral.studentsInvolved }}"
+                    data-staff="{{ pastoral.staffInvolved }}"
+                    data-note="{{ pastoral.note }}"
+                    data-title="{{ pastoral.titleType }}">
+                        <p>{{pastoral.titleType}}</p>
+                        <p>{{pastoral.author}}</p>
+                        <p>{{pastoral.date}}</p>
+                    </div>
+                    {% endfor %} <!--End of for loop to display reports-->
                 </div>
-
-                <!--Loop to display all merit reports-->
-                {% for pastoral in allPastoralReports %}
-                <!--Merit report box layout-->
-                <div class="meritReportBox" onclick="showIndividualReport(this)"
-                data-id="{{ pastoral.id }}"
-                data-title="{{ pastoral.title }}"
-                data-author="{{ pastoral.author }}"
-                data-date="{{ pastoral.date }}"
-                data-time="{{ pastoral.time }}"
-                data-location="{{ pastoral.location }}"
-                data-type="{{ pastoral.type }}"
-                data-students="{{ pastoral.studentsInvolved }}"
-                data-staff="{{ pastoral.staffInvolved }}"
-                data-note="{{ pastoral.note }}">
-                    <p>{{pastoral.title}}</p>
-                    <p>{{pastoral.author}}</p>
-                    <p>{{pastoral.date}}</p>
-                </div>
-                {% endfor %} <!--End of for loop to display reports-->
             </div>
         </div>
+        
 
-        <!--Incident report container-->
-        <div class="incidentReportsContainer">
-            <!--Incident report title-->
-            <div class="incidentTitle">
-                Incident Reports
+        <!--Incident report and add button container-->
+        <div class="addReportContianer">
+
+            <!--Add button container - sets the type of report to 'Incident'-->
+            <div class="addContainer">
+                <img class="addButton" id="addIncidentButtn" data-type="Incident" src="{{ url_for('static', filename='images/icons/addButton.png') }}" alt="Add incident report icon">
             </div>
 
-            <!--Incident report content-->
-            <div class="incidentContentContainer">
-                
-                <!--Sort and filter container-->
-                <div class="sortFilterContainer">
-                        <!--Filter-->
-                    <div class="filter">
-                        <p>Filter by Type: </p>
+            <!--Incident report container-->
+            <div class="incidentReportsContainer">
+                <!--Incident report title-->
+                <div class="incidentTitle">
+                    Incident Reports
+                </div>
+
+                <!--Incident report content-->
+                <div class="incidentContentContainer">
+                    
+                    <!--Sort and filter container-->
+                    <div class="pastoralSortFilterContainer">
+                        <div class="pastoralFilter">
+                            <label for="incidentFilter">Filter by Type: </label>
+                            <select id="incidentFilter">
+                                <option value="">All Types</option>
+                                <option value="teamwork">Teamwork</option>
+                                <option value="respect">Respect</option>
+                            </select>
+                        </div>
+
+                        <!--Sort-->
+                        <div class="pastoralSort">
+                            <label for="incidentSort">Sort by: </label>
+                            <select id="incidentSort">
+                                <option value="latest">Latest First</option>
+                                <option value="oldest">Oldest First</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+
+                    <!--Header-->
+                    <div class="headerContainer">
+                        <p class="left">Title</p>
+                        <p class="center">Author</p>
+                        <p class="right">Date</p>
                     </div>
 
-                    <!--Sort-->
-                    <div class="sort">
-                        <p>Sort by: </p>
+                    <!--Loop to display all incident reports - using pre-filtered list-->
+                    {% for pastoral in incidentReports %}
+                    <!--Incident report box layout-->
+                    <div class="incidentReportBox" onclick="showIndividualReport(this)" 
+                    data-id="{{ pastoral.id }}"
+                    data-author="{{ pastoral.author }}"
+                    data-date="{{ pastoral.date }}"
+                    data-time="{{ pastoral.time }}"
+                    data-location="{{ pastoral.location }}"
+                    data-type="{{ pastoral.reportType }}"
+                    data-students="{{ pastoral.studentsInvolved }}"
+                    data-staff="{{ pastoral.staffInvolved }}"
+                    data-note="{{ pastoral.note }}"
+                    data-title="{{ pastoral.titleType }}"
+                    data-parent-communication="{{ pastoral.parentCommunication or '' }}"
+                    data-disciplinary-actions="{{ pastoral.disciplinaryActions or '' }}"
+                    data-resolution-status="{{ pastoral.resolutionStatus or '' }}">
+                        <p>{{pastoral.titleType}}</p>
+                        <p>{{pastoral.author}}</p>
+                        <p>{{pastoral.date}}</p>
                     </div>
+                    {% endfor %} <!--End of for loop to display reports-->
                 </div>
-                
-
-                <!--Header-->
-                <div class="headerContainer">
-                    <p class="left">Title</p>
-                    <p class="center">Author</p>
-                    <p class="right">Date</p>
-                </div>
-
-                <!--Loop to display all incident reports-->
-                {% for pastoral in allPastoralReports %}
-                <!--Merit report box layout-->
-                <div class="meritReportBox" onclick="showIndividualReport(this)" 
-                data-id="{{ pastoral.id }}"
-                data-title="{{ pastoral.title }}"
-                data-author="{{ pastoral.author }}"
-                data-date="{{ pastoral.date }}"
-                data-time="{{ pastoral.time }}"
-                data-location="{{ pastoral.location }}"
-                data-type="{{ pastoral.type }}"
-                data-students="{{ pastoral.studentsInvolved }}"
-                data-staff="{{ pastoral.staffInvolved }}"
-                data-note="{{ pastoral.note }}">
-                    <p>{{pastoral.title}}</p>
-                    <p>{{pastoral.author}}</p>
-                    <p>{{pastoral.date}}</p>
-                </div>
-                {% endfor %} <!--End of for loop to display notices-->
             </div>
         </div>
     </div>
 </div> <!--End of the list of student reports section-->
 
-<!--This is the view of an individual student report section-------------------------------------->
-<div class="pastoral view" data-id="view">
+<!--This is the view of an individual merit report section-------------------------------------->
+<div class="pastoral viewMerit" data-id="viewMerit">
     
     <!--Checking if there is a report-->
         <!--Individual report content container-->
@@ -193,7 +232,7 @@
 
                         <!--Report type displayed-->
                         <div class="typeDisplayed">
-                            <p id="reportType"></p>
+                            <p id="reportTitleType"></p>
                         </div>
 
                     </div>
@@ -252,6 +291,346 @@
 
                 <!--Description title container-->
                 <div class="descriptionTitle">
+                    <p>Description</p>
+                </div>
+
+                <!--Description all content container-->
+                <div class="descriptionContentContainer">
+
+                    <!--Merit description container-->
+                    <div class="incidentDescriptionContainer">
+
+                        <!--Heading-->
+                        <div class="incidentDescriptionHeading">
+                            <p>Description</p>
+                        </div>
+
+                        <!--Merit description box-->
+                        <div class="meritDescription">
+                            <p id="reportNote"></p>
+                        </div>
+                    </div>
+                </div> 
+            </div><!--End of the description and follow up container-->
+        </div>
+</div><!--End of the view of an individual merit report section-->
+
+
+<!--This is the add new merit report section-------------------------------------->
+<div class="pastoral addMerit" data-id="addMerit">
+
+    <!--Individual report content container-->
+    <div class="pastoralReportContainer">
+
+        <!--Input form-->
+        <form class="reportform" id="reportForm">
+
+            <!--Hidden inputs to store student id-->
+            <input type="hidden" name="student_id" value="{{ student_id }}">
+
+            <!--Detail section of report, title-->
+            <div class="detailsContainer">
+
+                <!--Details Title-->
+                <div class="detailsTitle">
+                    <p>Details</p>
+                </div>
+
+                <!--Detials content container-->
+                <div class="detailsConentContainer">
+
+                    <!--Date section's container-->
+                    <div class="dateContainer">
+
+                        <!--Date title-->
+                        <div class="date">
+                            <p>Date</p>
+                        </div>
+
+                        <!--Date displayed/input-->
+                        <div class="dateDisplayed">
+                            <input class="inputReportDate" type="integer" name="date" placeholder="dd/mm/yy">
+                        </div>
+
+                    </div>
+
+                    <!--Time section's container-->
+                    <div class="timeContainer">
+
+                        <!--Time title-->
+                        <div class="time">
+                            <p>Time</p>
+                        </div>
+
+                        <!--Time displayed-->
+                        <div class="timeDisplayed">
+                            <input class="inputReportTime" type="integer" name="time" placeholder="...">
+                        </div>
+
+                    </div>
+
+                    <!--Location section's container-->
+                    <div class="locationContainer">
+
+                        <!--Location title-->
+                        <div class="location">
+                            <p>Location</p>
+                        </div>
+
+                        <!--Location displayed-->
+                        <div class="locationDisplayed">
+                            <input class="inputReportLocation" type="text" name="location" placeholder="...">
+                        </div>
+
+                    </div>
+
+                    <!-- Merit Add Form Dropdown -->
+                    <div class="typeContainer">
+                        <div class="type">
+                            <p>Report Type</p>
+                        </div>
+                        
+                        <div class="typeDisplayed">
+                            <div class="dropdownContainer" data-form-type="merit">
+                                <div class="selected-option" id="meritSelectedOption">
+                                    <img src="{{ url_for('static', filename='images/icons/closeNav.png') }}" alt="Teamwork icon">
+                                    <span>-- Select Type --</span>
+                                </div>
+                                
+                                <div class="dropdown-option-list" id="meritDropdownOptionList">
+                                    <div class="dropdown-option" data-value="Teamwork" data-text="Teamwork" data-img="{{ url_for('static', filename='images/icons/whiteIrisLogo.png') }}">
+                                        <img src="{{ url_for('static', filename='images/icons/whiteIrisLogo.png') }}" alt="Teamwork icon">
+                                        <span>Teamwork</span>
+                                    </div>
+                                    
+                                    <div class="dropdown-option" data-value="Respect" data-text="Respect" data-img="{{ url_for('static', filename='images/icons/whiteIrisLogo.png') }}">
+                                        <img src="{{ url_for('static', filename='images/icons/whiteIrisLogo.png') }}" alt="Respect icon">
+                                        <span>Respect</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <input type="hidden" name="type" id="meritSelectedValue" value="teamwork">
+                        </div>
+                    </div>
+
+                    <!--Student involved section's container-->
+                    <div class="studentInvolvedContainer">
+
+                        <!--Students involved title-->
+                        <div class="studentInvolved">
+                            <p>Students Involved</p>
+                        </div>
+
+                        <!--Students involved displayed-->
+                        <div class="studentInvolvedDisplayed">
+                            <input class="inputReportStudentsInvolved" type="text" name="studentsInvolved" placeholder="...">
+                        </div>
+
+                    </div>
+
+                    <!--Staff involved section's container-->
+                    <div class="staffInvolvedContainer">
+
+                        <!--Staff involved title-->
+                        <div class="staffInvolved">
+                            <p>Staff Involved</p>
+                        </div>
+
+                        <!--Staff involved displayed-->
+                        <div class="staffInvolvedDisplayed">
+                            <input class="inputReportStaffInvolved" type="text" name="staffInvolved" placeholder="...">
+                        </div>
+
+                    </div>
+
+                    <!--Author of report section's container-->
+                    <div class="authorContainer">
+
+                        <!--Author of report title-->
+                        <div class="author">
+                            <p>Author of Report</p>
+                        </div>
+
+                        <!--Author of report displayed-->
+                        <div class="authorDisplayed">
+                            <input class="inputReportAuthor" type="text" name="author" placeholder="...">
+                        </div>
+
+                    </div>
+
+                </div>
+            </div><!--End of the details container-->
+
+
+            <!--Description and follow up detailes container-->
+            <div class="descriptionContainer">
+
+                <!--Description title container-->
+                <div class="descriptionTitle">
+                    <p>Description</p>
+                </div>
+
+                <!--Description all content container-->
+                <div class="descriptionContentContainer">
+
+                    <!--Merit description container-->
+                    <div class="incidentDescriptionContainer">
+
+                        <!--Heading-->
+                        <div class="meritDescriptionHeading">
+                            <p>Description</p>
+                        </div>
+
+                        <!--Merit description box-->
+                        <div class="meritDescription">
+                            <textarea class="meritInputReportDescription" type="text" name="description" placeholder="Enter your description here..."></textarea>
+                        </div>
+
+                    </div>
+                </div>
+            </div><!--End of description container-->
+            <!--Upload button-->
+            <div class="buttonContainer">
+                <button type="submit" class="uploadButton">Upload</button>
+            </div>
+        </form>
+
+        
+    </div> 
+</div><!--End of add merit report section-->
+
+
+<!--This is the view of an individual incident report section-------------------------------------->
+<div class="pastoral viewIncident" data-id="viewIncident">
+    
+    <!--Checking if there is a report-->
+        <!--Individual report content container-->
+        <div class="pastoralReportContainer">
+
+            <!--Detail section of report, title-->
+            <div class="detailsContainer">
+
+                <!--Details Title-->
+                <div class="detailsTitle">
+                    <p>Details</p>
+                </div>
+
+                <!--Detials content container-->
+                <div class="detailsConentContainer">
+
+                    <!--Date section's container-->
+                    <div class="dateContainer">
+
+                        <!--Date title-->
+                        <div class="date"><p>Date</p></div>
+
+                        <!--Date displayed/input-->
+                        <div class="dateDisplayed">
+                            <p id="incidentReportDate"></p>
+                        </div>
+
+                    </div>
+
+                    <!--Time section's container-->
+                    <div class="timeContainer">
+
+                        <!--Time title-->
+                        <div class="time">
+                            <p>Time</p>
+                        </div>
+
+                        <!--Time displayed-->
+                        <div class="timeDisplayed">
+                            <p id="incidentReportTime"></p>
+                        </div>
+
+                    </div>
+
+                    <!--Location section's container-->
+                    <div class="locationContainer">
+
+                        <!--Location title-->
+                        <div class="location">
+                            <p>Location</p>
+                        </div>
+
+                        <!--Location displayed-->
+                        <div class="locationDisplayed">
+                            <p id="incidentReportLocation"></p>
+                        </div>
+
+                    </div>
+
+                    <!--Type of report section's container-->
+                    <div class="typeContainer">
+
+                        <!--Report type title-->
+                        <div class="type">
+                            <p>Report Type</p>
+                        </div>
+
+                        <!--Report type displayed-->
+                        <div class="typeDisplayed">
+                            <p id="incidentReportTitleType"></p>
+                        </div>
+
+                    </div>
+
+                    <!--Student involved section's container-->
+                    <div class="studentInvolvedContainer">
+
+                        <!--Students involved title-->
+                        <div class="studentInvolved">
+                            <p>Students Involved</p>
+                        </div>
+
+                        <!--Students involved displayed-->
+                        <div class="studentInvolvedDisplayed">
+                            <p id="incidentReportStudents"></p>
+                        </div>
+
+                    </div>
+
+                    <!--Staff involved section's container-->
+                    <div class="staffInvolvedContainer">
+
+                        <!--Staff involved title-->
+                        <div class="staffInvolved">
+                            <p>Staff Involved</p>
+                        </div>
+
+                        <!--Staff involved displayed-->
+                        <div class="staffInvolvedDisplayed">
+                            <p id="incidentReportStaff"></p>
+                        </div>
+
+                    </div>
+
+                    <!--Author of report section's container-->
+                    <div class="authorContainer">
+
+                        <!--Author of report title-->
+                        <div class="author">
+                            <p>Author of Report</p>
+                        </div>
+
+                        <!--Author of report displayed-->
+                        <div class="authorDisplayed">
+                            <p id="incidentReportAuthor"></p>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div><!--End of the details container-->
+
+
+            <!--Description and follow up detailes container-->
+            <div class="descriptionContainer">
+
+                <!--Description title container-->
+                <div class="descriptionTitle">
                     <p>Description and Follow Up Details</p>
                 </div>
 
@@ -268,7 +647,7 @@
 
                         <!--Incident description box-->
                         <div class="incidentDescription">
-                            <p id="reportNote"></p>
+                            <p id="incidentReportNote"></p>
                         </div>
                     </div>
                 
@@ -281,12 +660,12 @@
 
                             <!--Heading-->
                             <div class="parentCommunicationHeading">
-                                <p id="reportNote"></p>
+                                <p>Parent Communication</p>
                             </div>
 
                             <!--Content-->
                             <div class="parentCommunication">
-                                <p>test</p>
+                                <p id="incidentReportParentCommunication"></p>
                             </div>
 
                         </div>
@@ -301,7 +680,7 @@
 
                             <!--Content-->
                             <div class="disciplinaryActionContent">
-                                <p>test</p>
+                                <p id="incidentReportDisciplinaryActions"></p>
                             </div>
                         </div>
 
@@ -315,7 +694,7 @@
 
                             <!--Content-->
                             <div class="resolutionContent">
-                                <p>test</p>
+                                <p id="incidentReportResolutionStatus"></p>
                             </div>
                         </div>
                             
@@ -323,4 +702,236 @@
                 </div> 
             </div><!--End of the description and follow up container-->
         </div>
-</div><!--End of the view of an individual student report section-->
+</div><!--End of the view of an individual incident report section-->
+
+
+<!--This is the add new incident report section-------------------------------------->
+<div class="pastoral addIncident" data-id="addIncident">
+
+    <!--Individual report content container-->
+    <div class="pastoralReportContainer">
+
+        <!--Input form-->
+        <form class="reportform" id="reportForm">
+
+            <!--Hidden inputs to store student id-->
+            <input type="hidden" name="student_id" value="{{ student_id }}">
+
+            <!--Detail section of report, title-->
+            <div class="detailsContainer">
+
+                <!--Details Title-->
+                <div class="detailsTitle">
+                    <p>Details</p>
+                </div>
+
+                <!--Detials content container-->
+                <div class="detailsConentContainer">
+
+                    <!--Date section's container-->
+                    <div class="dateContainer">
+
+                        <!--Date title-->
+                        <div class="date">
+                            <p>Date</p>
+                        </div>
+
+                        <!--Date displayed/input-->
+                        <div class="dateDisplayed">
+                            <input class="inputReportDate" type="integer" name="date" placeholder="dd/mm/yy">
+                        </div>
+
+                    </div>
+
+                    <!--Time section's container-->
+                    <div class="timeContainer">
+
+                        <!--Time title-->
+                        <div class="time">
+                            <p>Time</p>
+                        </div>
+
+                        <!--Time displayed-->
+                        <div class="timeDisplayed">
+                            <input class="inputReportTime" type="integer" name="time" placeholder="...">
+                        </div>
+
+                    </div>
+
+                    <!--Location section's container-->
+                    <div class="locationContainer">
+
+                        <!--Location title-->
+                        <div class="location">
+                            <p>Location</p>
+                        </div>
+
+                        <!--Location displayed-->
+                        <div class="locationDisplayed">
+                            <input class="inputReportLocation" type="text" name="location" placeholder="...">
+                        </div>
+
+                    </div>
+
+                    <!-- Incident Add Form Dropdown -->
+                    <div class="typeContainer">
+                        <div class="type">
+                            <p>Report Type</p>
+                        </div>
+                        
+                        <div class="typeDisplayed">
+                            <div class="dropdownContainer" data-form-type="incident">
+                                <div class="selected-option" id="incidentSelectedOption">
+                                    <img src="{{ url_for('static', filename='images/icons/whiteIrisLogo.png') }}" alt="Teamwork icon">
+                                    <span>-- Select Type --</span>
+                                </div>
+                                
+                                <div class="dropdown-option-list" id="incidentDropdownOptionList">
+                                    <div class="dropdown-option" data-value="Behavioral" data-text="Behavioral" data-img="{{ url_for('static', filename='images/icons/whiteIrisLogo.png') }}">
+                                        <img src="{{ url_for('static', filename='images/icons/whiteIrisLogo.png') }}" alt="Teamwork icon">
+                                        <span>Behavioral </span>
+                                    </div>
+                                    
+                                    <div class="dropdown-option" data-value="Property" data-text="Property" data-img="{{ url_for('static', filename='images/icons/whiteIrisLogo.png') }}">
+                                        <img src="{{ url_for('static', filename='images/icons/whiteIrisLogo.png') }}" alt="Respect icon">
+                                        <span>Property</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <input type="hidden" name="type" id="incidentSelectedValue" value="teamwork">
+                        </div>
+                    </div>
+
+                    <!--Student involved section's container-->
+                    <div class="studentInvolvedContainer">
+
+                        <!--Students involved title-->
+                        <div class="studentInvolved">
+                            <p>Students Involved</p>
+                        </div>
+
+                        <!--Students involved displayed-->
+                        <div class="studentInvolvedDisplayed">
+                            <input class="inputReportStudentsInvolved" type="text" name="studentsInvolved" placeholder="...">
+                        </div>
+
+                    </div>
+
+                    <!--Staff involved section's container-->
+                    <div class="staffInvolvedContainer">
+
+                        <!--Staff involved title-->
+                        <div class="staffInvolved">
+                            <p>Staff Involved</p>
+                        </div>
+
+                        <!--Staff involved displayed-->
+                        <div class="staffInvolvedDisplayed">
+                            <input class="inputReportStaffInvolved" type="text" name="staffInvolved" placeholder="...">
+                        </div>
+
+                    </div>
+
+                    <!--Author of report section's container-->
+                    <div class="authorContainer">
+
+                        <!--Author of report title-->
+                        <div class="author">
+                            <p>Author of Report</p>
+                        </div>
+
+                        <!--Author of report displayed-->
+                        <div class="authorDisplayed">
+                            <input class="inputReportAuthor" type="text" name="author" placeholder="...">
+                        </div>
+
+                    </div>
+
+                </div>
+            </div><!--End of the details container-->
+
+
+            <!--Description and follow up detailes container-->
+            <div class="descriptionContainer">
+
+                <!--Description title container-->
+                <div class="descriptionTitle">
+                    <p>Description and Follow Up Details</p>
+                </div>
+
+                <!--Description all content container-->
+                <div class="descriptionContentContainer">
+
+                    <!--Incident description container-->
+                    <div class="incidentDescriptionContainer">
+
+                        <!--Heading-->
+                        <div class="incidentDescriptionHeading">
+                            <p>Incident Description</p>
+                        </div>
+
+                        <!--Incident description box-->
+                        <div class="incidentDescription">
+                            <textarea class="incidentInputReportDescription" type="text" name="description" placeholder="Enter your description here..."></textarea>
+                        </div>
+                    </div>
+                
+
+                    <!--Follow up details container-->
+                    <div class="followUpContainer">
+
+                        <!--Parent communication container-->
+                        <div class="parentCommunicationContainer">
+
+                            <!--Heading-->
+                            <div class="parentCommunicationHeading">
+                                <p>Parent Communication</p>
+                            </div>
+
+                            <!--Content-->
+                            <div class="parentCommunication">
+                                <textarea class="inputReportParentCommunication" type="text" name="parentCommunication" placeholder="Enter your content here..."></textarea>
+                            </div>
+
+                        </div>
+
+                        <!--Disciplinary actions container-->
+                        <div class="disciplinaryActionContainer">
+
+                            <!--Heading-->
+                            <div class="disciplinaryActionHeading">
+                                <p>Disciplinary Actions</p>
+                            </div>
+
+                            <!--Content-->
+                            <div class="disciplinaryActionContent">
+                                <textarea class="inputReportDisciplinaryAction" type="text" name="disciplinaryActions" placeholder="Enter your content here..."></textarea>
+                            </div>
+                        </div>
+
+                        <!--Resolution status container-->
+                        <div class="resolutionContainer">
+
+                            <!--Heading-->
+                            <div class="resolutionHeading">
+                                <p>Resolution Status</p>
+                            </div>
+
+                            <!--Content-->
+                            <div class="resolutionContent">
+                                <textarea class="inputReportResolution" type="text" name="resolutionStatus" placeholder="Enter your content here..."></textarea>
+                            </div>
+                        </div>
+                    </div>    
+                </div>
+            </div><!--End of description container-->
+            <!--Upload button-->
+            <div class="buttonContainer">
+                <button type="submit" class="uploadButton">Upload</button>
+            </div>
+        </form>
+
+        
+    </div> 
+</div><!--End of add incident report section-->
