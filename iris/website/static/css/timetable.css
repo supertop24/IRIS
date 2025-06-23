@@ -1,0 +1,47 @@
+.timetable
+{
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    display: flex;   
+}
+.timetable_view
+{
+    width: 800px;
+    height: 800px;
+    grid-template-columns: 1fr;
+    grid-template-rows: 80px 1fr;
+    display: grid;
+}
+.modifybutton
+{
+    display: flex;
+    height: 100%;
+}
+.modify
+{
+    background-color: white;
+    border: 1px solid #988EB1;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 50px;
+    cursor: pointer;
+}
+.modify:hover
+{
+    background-color: #988EB1;
+    color: white;
+}
+.viewtable
+{
+    display: grid;
+    background-color: white;
+}
+.modifytable
+{
+    display: none;
+    background-color: #988EB1;
+}
