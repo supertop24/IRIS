@@ -204,15 +204,15 @@ class AttendanceStatus(enum.Enum):
     AbsentJustified = "absent_justified"
     Late = "late"
  
-class Attendance(db.Model):
-    __tablename__ = 'attendance'  
-    student_id = db.Column(db.Integer, db.ForeignKey('student.id'), primary_key=True)
-    session_id = db.Column(db.Integer, db.ForeignKey('class_session.id'), primary_key=True)
-    status = db.Column(Enum(AttendanceStatus), nullable=False) 
-    note = db.Column(db.String(50), nullable=True)
+# class Attendance(db.Model):
+#     __tablename__ = 'attendance'  
+#     student_id = db.Column(db.Integer, db.ForeignKey('student.id'), primary_key=True)
+#     # session_id = db.Column(db.Integer, db.ForeignKey('class_session.id'), primary_key=True)
+#     status = db.Column(Enum(AttendanceStatus), nullable=False) 
+#     note = db.Column(db.String(50), nullable=True)
 
-    student = db.relationship("Student", backref="attendance_records")
-    session = db.relationship("ClassSession", backref="attendance_records")
+#     student = db.relationship("Student", backref="attendance_records")
+#     # session = db.relationship("ClassSession", backref="attendance_records")
 
 
 class Assessment(db.Model):
