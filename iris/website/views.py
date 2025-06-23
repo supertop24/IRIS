@@ -178,7 +178,7 @@ def attendanceLanding():
     currentDate = datetime.now().date()
     myClasses = getMyClasses()
     otherClasses = getOtherClasses()
-    return render_template("assessmentsLanding.html", user=current_user, currentDate=currentDate, myClasses = myClasses, otherClasses = otherClasses)
+    return render_template("attendanceLanding.html", user=current_user, currentDate=currentDate, myClasses = myClasses, otherClasses = otherClasses)
 
 @views.route('/studentsLanding')
 def studentsLanding():
@@ -414,66 +414,66 @@ def morePopulating():
 # Finish adding population route!! 
 
 
-@views.route('/populate-test-data')
-def populate_test_data():
-    try:
-        # 1. Create a teacher
-        teacher = Teacher(
-            name="John Doe",
-            email="johndoe@example.com",
-            password="password123",
-            gender="Male",
-            phone_number=1234567890,
-            address="123 Example Street"
-        )
-        db.session.add(teacher)
-        db.session.flush()  # So teacher.id is available
+# @views.route('/populate-test-data') 
+# def populate_test_data():
+#     try:
+#         # 1. Create a teacher
+#         teacher = Teacher(
+#             name="John Doe",
+#             email="johndoe@example.com",
+#             password="password123",
+#             gender="Male",
+#             phone_number=1234567890,
+#             address="123 Example Street"
+#         )
+#         db.session.add(teacher)
+#         db.session.flush()  # So teacher.id is available
 
-        # 2. Create 6 classes
-        subjects = ["Math", "Science", "History", "English", "Geography", "Art"]
-        classes = []
-        for i, subject in enumerate(subjects):
-            cls = Class(year=2025, subject=subject, code=f"{subject[:3].upper()}101")
-            db.session.add(cls)
-            db.session.flush()
-            classes.append(cls)
+#         # 2. Create 6 classes
+#         subjects = ["Math", "Science", "History", "English", "Geography", "Art"]
+#         classes = []
+#         for i, subject in enumerate(subjects):
+#             cls = Class(year=2025, subject=subject, code=f"{subject[:3].upper()}101")
+#             db.session.add(cls)
+#             db.session.flush()
+#             classes.append(cls)
 
-            # Associate each class with the teacher as MAIN
-            assoc = TeacherClassAssociation(teacher_id=teacher.id, class_id=cls.id, role=TeacherRole.MAIN)
-            db.session.add(assoc)
+#             # Associate each class with the teacher as MAIN
+#             assoc = TeacherClassAssociation(teacher_id=teacher.id, class_id=cls.id, role=TeacherRole.MAIN)
+#             db.session.add(assoc)
 
-        # 3. Create 5 periods
-        period_times = [
-            ("P1", time(9, 0), time(9, 50)),
-            ("P2", time(10, 0), time(10, 50)),
-            ("P3", time(11, 0), time(11, 50)),
-            ("P4", time(13, 0), time(13, 50)),
-            ("P5", time(14, 0), time(14, 50))
-        ]
+#         # 3. Create 5 periods
+#         period_times = [
+#             ("P1", time(9, 0), time(9, 50)),
+#             ("P2", time(10, 0), time(10, 50)),
+#             ("P3", time(11, 0), time(11, 50)),
+#             ("P4", time(13, 0), time(13, 50)),
+#             ("P5", time(14, 0), time(14, 50))
+#         ]
 
-        periods = []
-        for code, start, end in period_times:
-            p = Period(code=code, start_time=start, end_time=end)
-            db.session.add(p)
-            db.session.flush()
-            periods.append(p)
+#         periods = []
+#         for code, start, end in period_times:
+#             p = Period(code=code, start_time=start, end_time=end)
+#             db.session.add(p)
+#             db.session.flush()
+#             periods.append(p)
 
-        # 4. Create class sessions for today, assigning each class to one period
-        today = date.today()
-        for i in range(5):  # First 5 classes only
-            session = ClassSession(
-                class_id=classes[i].id,
-                date=today,
-                period_id=periods[i].id
-            )
-            db.session.add(session)
+#         # 4. Create class sessions for today, assigning each class to one period
+#         today = date.today()
+#         for i in range(5):  # First 5 classes only
+#             session = ClassSession(
+#                 class_id=classes[i].id,
+#                 date=today,
+#                 period_id=periods[i].id
+#             )
+#             db.session.add(session)
 
-        db.session.commit()
-        return jsonify({"message": "Test data populated successfully."})
+#         db.session.commit()
+#         return jsonify({"message": "Test data populated successfully."})
 
-    except Exception as e:
-        db.session.rollback()
-        return jsonify({"error": str(e)}), 500
+#     except Exception as e:
+#         db.session.rollback()
+#         return jsonify({"error": str(e)}), 500
 
 '''
 
@@ -517,20 +517,9 @@ def test_seed():
     return "Sample data inserted successfully!"
 # Not need atm - But please leave commented for now, for my reference & other db insertions 
 '''        
-@views.route('AddClassSession')
-def AddClassSession():
-    cls = Class.query.get(1)
-    cls.schedule = "Mon 09:00,Wed 11:00"
-    db.session.commit()
-
-    from iris.utils.schedule_utils import generate_class_sessions_from_class
-
-    sessions = generate_class_sessions_from_class(cls, date(2025, 9, 1), date(2025, 12, 20))
-    db.session.add_all(sessions)
-    db.session.commit()
 
 
-# @views.route('/populate_class_sessions', methods=['GET','POST'])
+# @views.route('/populate_class_sessions', methods=['GET','POST']) # Re-using route to populate db with class sessions to fill teacher timetables
 # def populate_class_sessions():
 #     """
 #     Populate class sessions for the next month based on timetable
@@ -540,7 +529,7 @@ def AddClassSession():
 #         start_date = date.today()
 #         end_date = start_date + timedelta(days=30)
         
-#         # Get class IDs by their codes - you'll need to populate this mapping
+#         # Get class IDs by their codes - to populate this mapping
 #         class_code_to_id = {}
         
 #         # Query all classes and create a mapping from code to ID
@@ -551,39 +540,39 @@ def AddClassSession():
 #         # Define the timetable based on class codes
 #         timetable = {
 #             'monday': {
-#                 'P1': ['9SOS1'],
-#                 'P2': ['10HIS'],
+#                 'P1': ['9ENG1'],
+#                 'P2': ['10ENG1'],
 #                 'P3': [],  # No class
-#                 'P4': ['11GEO1'],
-#                 'P5': ['9SOS2']
+#                 'P4': ['11ENG1'],
+#                 'P5': ['12ENG1']
 #             },
 #             'tuesday': {
-#                 'P1': ['12GEO'],
+#                 'P1': ['9ENG2'],
 #                 'P2': [],  # No class
-#                 'P3': ['11HIS'],
-#                 'P4': ['10SOS'],
-#                 'P5': ['13GEO']
+#                 'P3': ['10ENG2'],
+#                 'P4': ['11ENG2'],
+#                 'P5': ['12ENG2']
 #             },
 #             'wednesday': {
-#                 'P1': ['10HIS'],
-#                 'P2': ['11GEO1'],
-#                 'P3': ['9SOS1'],
-#                 'P4': ['11GEO2'],
+#                 'P1': ['9ART1'],
+#                 'P2': [],  # No class
+#                 'P3': ['9ENG1'],
+#                 'P4': ['10ENG1'],
 #                 'P5': []  # No class
 #             },
 #             'thursday': {
-#                 'P1': ['9SOS2'],
-#                 'P2': ['12GEO'],
+#                 'P1': ['12ENG1'],
+#                 'P2': ['9ENG2'],
 #                 'P3': [],  # No class
-#                 'P4': ['11HIS'],
-#                 'P5': ['10SOS']
+#                 'P4': ['11ENG2'],
+#                 'P5': ['12ENG2']
 #             },
 #             'friday': {
-#                 'P1': ['10HIS'],
+#                 'P1': ['9ART1'],
 #                 'P2': [],  # No class
-#                 'P3': ['9SOS1'],
+#                 'P3': ['10ENG1'],
 #                 'P4': [],  # No class
-#                 'P5': ['11GEO2']
+#                 'P5': ['13ENG']
 #             }
 #         }
         
