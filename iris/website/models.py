@@ -5,7 +5,7 @@ import enum
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Enum
 
-# The following three tables are used to connect the Student and Teacher models with the Class model.  
+# The following three tables connect the Student and Teacher models with the Class model.  
 
 class TeacherRole(enum.Enum):
     MAIN = "main"
@@ -31,11 +31,39 @@ class StudentClassAssociation(db.Model):
     student = db.relationship('Student', back_populates='enrolled_classes')
     class_ = db.relationship('Class', back_populates='student_associations')
 
+class StudentCaregiverAssociation(db.Model):
+    __tablename__='student_caregiver_association'
+
+    student_id = db.Column(db.Integer, db.ForeignKey('student.id'), primary_key=True)
+    caregiver_id = db.Column(db.Integer, db.ForeignKey('caregiver.id'), primary_key=True)
+    relationship = db.Column(db.String(50), nullable=False)
+
+    student = db.relationship('Student', back_populates='caregivers')
+    caregiver = db.relationship('Caregiver', back_populates='student_associations')
+
+
+class Caregiver(db.Model):
+    __tablename__='caregiver'
+
+    id = db.Column(db.Integer, primary_key=True)
+    address = db.Column(db.String(100), nullable=False)
+    alphanum = db.Column(db.String(2), nullable=False)
+
+    name = db.Column(db.String(50), unique=True, nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    home_number = db.Column(db.String(20), nullable=True)
+    mobile_number = db.Column(db.String(20), nullable=False)
+    work_number = db.Column(db.String(20), nullable=True)
+    
+    student_associations = db.relationship('StudentCaregiverAssociation', back_populates='caregiver')
+
+
+
 class User(db.Model, UserMixin):
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
     role = db.Column(db.String(20), nullable=False)
-    name = db.Column(db.String(50), unique=True, nullable=False)
+    name = db.Column(db.String(50), nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(50))
     gender = db.Column(db.String(15))
@@ -47,9 +75,15 @@ class User(db.Model, UserMixin):
 class Student(User):
     __tablename__ = 'student'
     id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True, nullable=False)
-    enrolled_classes = db.relationship('StudentClassAssociation', back_populates='student')
+    preferred_name = db.Column(db.String(50), nullable=True)
     dob = db.Column(db.DateTime, nullable=True)
-    personal_email = db.Column(db.String(120), unique=True)
+    personal_email = db.Column(db.String(120), unique=True, nullable=True)
+    mobile_number = db.Column(db.Integer, nullable=True)
+    year_level = db.Column(db.String(2), nullable=True)
+    
+    enrolled_classes = db.relationship('StudentClassAssociation', back_populates='student')
+    caregivers = db.relationship('StudentCaregiverAssociation', back_populates='student')
+
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -77,6 +111,15 @@ class Student(User):
         )
 
     #need to add get_weekly_schedule method to here and Teacher classes to render into calendar 
+
+class Flags(db.Model):
+    __tablename__ = 'flags'
+    id = db.Column(db.Integer, primary_key=True, nullable=False)
+    student_id = db.Column(db.Integer, db.ForeignKey('student.id'), nullable=False)
+    note = db.Column(db.String(150), nullable=False)
+    additional_context = db.Column(db.String(150), nullable=True)
+
+    student = db.relationship('Student', backref=db.backref('flags', lazy=True))
 
 class Teacher(User):
     __tablename__ = 'teacher'
@@ -120,7 +163,6 @@ class Teacher(User):
             .all()
         )
 
-
 class Class(db.Model):
     __tablename__ = 'class'    
     id = db.Column(db.Integer, primary_key=True, nullable=False)
@@ -141,7 +183,7 @@ class Class(db.Model):
 
 class ClassSession(db.Model):
     __tablename__ = 'class_session'   
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True,autoincrement=True)
     class_id = db.Column(db.Integer, db.ForeignKey('class.id'), nullable=False)
     date = db.Column(db.Date, nullable=False)
     period_id = db.Column(db.Integer, db.ForeignKey('period.id'), nullable=False)
@@ -158,8 +200,8 @@ class Period(db.Model):
 
 class AttendanceStatus(enum.Enum):
     Present = "present"
-    AbsentUnjustified = "absentunjustified"
-    AbsentJustified = "absentjustified"
+    AbsentUnjustified = "absent_unjustified"
+    AbsentJustified = "absent_justified"
     Late = "late"
  
 class Attendance(db.Model):
@@ -186,20 +228,6 @@ class Assessment(db.Model):
     # assessments must be uploaded as files - single pdf, including isntructions and criteria, then separate file just for teachers - including resources and other marking notes
     # a new class/table for "submissions" needed for tracking. Must contain a relationship to the assessment, the class, the students and the status
 
-class Caregiver(db.Model):
-    __tablename__ = 'caregiver'
-    id = db.Column(db.Integer, primary_key=True)
-    student_id = db.Column(db.Integer, nullable=False)
-    type = db.Column(db.String(1))
-    name = db.Column(db.String(50), unique=True, nullable=False)
-    email = db.Column(db.String(120), unique=True, nullable=False)
-    gender = db.Column(db.String(1))
-    phone_number = db.Column(db.Integer, nullable=True)
-    home_number = db.Column(db.Integer, nullable=True)
-    work_number = db.Column(db.Integer, nullable=True)
-    address = db.Column(db.String(255))
-    dob = db.Column(db.DateTime, nullable=False)
-    relationship = db.Column(db.String(1))
 
 class class_log(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -237,7 +265,7 @@ class notice(db.Model):
     target = db.Column(db.String(1), nullable=True)
     target_id = db.Column(db.Integer, nullable=True)
     title = db.Column(db.String(50))
-    author = db.Column(db.String(50), nullable=True)
+    author = db.Column(db.Integer, nullable=True)
     note = db.Column(db.Text, nullable=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow) #default=db.func.current_timestamp())
 

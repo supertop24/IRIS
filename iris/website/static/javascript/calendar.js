@@ -2,8 +2,25 @@ function formatDateToISO(dateObj) {
     return dateObj.toISOString().split('T')[0];
 }
 
-function loadSchedule(date = null) {
-  const queryDate = date || formatDateToISO(new Date());
+// function loadSchedule(date = null) {
+//   const queryDate = date || formatDateToISO(new Date());
+
+//   fetch(`/api/daily-schedule?date=${queryDate}`)
+//     .then(response => response.json())
+//     .then(data => {
+//       renderCalendar(data); 
+//     })
+//     .catch(error => {
+//       console.error("Error loading schedule:", error);
+//     });
+// }
+
+function loadSchedule(date = null) { // alternative function to display "tomorrow" timetable instead of todays for easy weekend testing 
+  // Use tomorrow's date as default instead of today
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  
+  const queryDate = date || formatDateToISO(tomorrow);
 
   fetch(`/api/daily-schedule?date=${queryDate}`)
     .then(response => response.json())

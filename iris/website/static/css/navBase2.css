@@ -113,7 +113,7 @@ html, body {
     box-sizing: border-box;
     position: relative;
     z-index: 1;
-    font-family: "Acme", sans-serif;
+    font-family: 'Inter', sans-serif;
 }
 
 /* Hides username box when nav is closed */
@@ -144,6 +144,7 @@ html, body {
     gap: 10px; /* Space between icon and text */
     justify-content: flex-start;
     height: 60px; /* Consistent height for nav items */
+    font-family: "Acme", sans-serif;
 }
 
 /* Centering icons when nav is closed */

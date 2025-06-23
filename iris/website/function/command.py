@@ -144,8 +144,11 @@ def send():
     message = request.form.get('message')
     created_at = date.today().isoformat()
     try:
+        
         db = get_db()
         cursor = db.cursor()
+        
+        print('test3')
         cursor.execute("""
             INSERT INTO message_log (sender_id, target_id, message,created_at,sender,target)
             VALUES (?, ?, ?, ?, ?, ?)
@@ -158,7 +161,10 @@ def send():
             sender,
             target
         ))
+        
+        print('test1')
         db.commit()
+        print('test')
         return jsonify({'status': 'success', 'message': 'Report inserted successfully'}), 201
     except Exception as e:
         return jsonify({'status': 'error', 'message': str(e)}), 500
@@ -214,6 +220,54 @@ def search_list():
                 "year": year,
                 "term": term,
                 "date": date
+            })
+
+        return jsonify(result)
+
+    except Exception as e:
+        print(e)  # for debugging
+        return jsonify({"error": "Internal server error"}), 500
+    
+@command.route('/message_list', methods=['GET'])
+def message_list():
+    user_id = request.args.get("id")
+    if not user_id:
+        return jsonify({"error": "No ID provided"}), 400
+
+    try:
+        user_id = int(user_id)
+    except ValueError:
+        return jsonify({"error": "Invalid ID format"}), 400
+
+    try:
+        db = get_db()
+        cursor = db.cursor()
+
+        cursor.execute("""
+            SELECT 
+                message_log.message,
+                message_log.sender,
+                message_log.created_at,
+                user.name
+            FROM message_log
+            JOIN user ON message_log.sender_id = user.id
+            WHERE message_log.target_id = ?;
+        """, (user_id,))
+
+        rows = cursor.fetchall()
+
+        if not rows:
+            return jsonify([])  # return empty list if no data
+
+        # Convert rows (tuples) into list of dicts
+        result = []
+        for row in rows:
+            message, title, date, name = row
+            result.append({
+                "message": message,
+                "title": title,
+                "date": date,
+                "name": name
             })
 
         return jsonify(result)

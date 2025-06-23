@@ -24,7 +24,8 @@ window.onload = function() {
   const typeInput = document.getElementById("submit_form_type");
   if (typeInput) typeInput.value = "Report";
   // Initialize drag & drop event listeners
-  initDragAndDrop();const allList = document.querySelector('.all_list');
+  initDragAndDrop();
+  const allList = document.querySelector('.all_list');
   allList.innerHTML = ''; // clear previous content
 
   const studentId = document.getElementById('studentId').value;
@@ -198,7 +199,7 @@ function handleFiles(files) {
     fileList.appendChild(item);
   });
 }
-function upload()
+function uploadd()
 {
   const gradeSelect= document.getElementById('submit_form_year').value;
   const termSelect= document.getElementById('submit_form_term').value;

@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, jsonify, request, abort, send_file
 from datetime import datetime, date, timedelta, time
 from flask_login import current_user, login_required
-from .models import notice, Class, Student, Teacher, ClassSession, Period, TeacherClassAssociation, TeacherRole, User, Pastoral, Award
+from .models import notice, Class, Student, Teacher, ClassSession, Period, TeacherClassAssociation, TeacherRole, User, Pastoral, Award, Flags, StudentCaregiverAssociation, Caregiver
 from . import db
 from collections import defaultdict
 import re
@@ -42,8 +42,6 @@ def getOtherClasses():
 
     return otherClasses
     
-
-
 def getCOFromTCA():
     classObject = TeacherClassAssociation.query.all()
     return classObject
@@ -67,8 +65,37 @@ def portalSelect():
 def teacherPortal():
     return render_template('teacherPortal.html', user=current_user)
 
+def getCaregiverDetails(student_id):
+
+    caregiverDetails = db.session.query(Caregiver, StudentCaregiverAssociation.relationship)\
+        .join(StudentCaregiverAssociation, Caregiver.id == StudentCaregiverAssociation.caregiver_id)\
+        .filter(StudentCaregiverAssociation.student_id == student_id)\
+        .all()
+    
+    return caregiverDetails  
+
+def getStudentDetails(student_id):
+    studentDetails = Student.query.filter(Student.id == student_id).first()
+
+
+
+    if studentDetails:
+        if studentDetails.dob == '' or studentDetails.dob == ' ':
+            studentDetails.dob = None
+
+    return studentDetails
+
 @views.route('/studentProfile/<int:student_id>')
 def studentProfile(student_id):
+
+    caregivers = getCaregiverDetails(student_id)
+
+    studentDetails = getStudentDetails(student_id)
+    if studentDetails:
+        print(f"DOB value: '{studentDetails.dob}', type: {type(studentDetails.dob)}")
+
+    allFlags = Flags.query.filter_by(student_id=student_id).all() # Getting all flags associated with user
+
     allPastoralReports = Pastoral.query.all() #Getting all pastoral reports - no filtering yet
     
     #Getting awards for the specific student
@@ -82,7 +109,7 @@ def studentProfile(student_id):
     #Converting to regular dict and sorting by year from newest to oldest
     awardsByYear = dict(sorted(awardsByYear.items(), key=lambda x: x[0], reverse=True))
 
-    return render_template('student.html', student_id=student_id, allPastoralReports=allPastoralReports, pastoral=None, allAwards=allAwards, awardsByYear=awardsByYear)
+    return render_template('student.html', student_id=student_id, allPastoralReports=allPastoralReports, pastoral=None, allAwards=allAwards, awardsByYear=awardsByYear, user=current_user, allFlags=allFlags, caregivers=caregivers, studentDetails=studentDetails)
 
 @views.route('/searchStudent')
 def searchstudent():
@@ -177,15 +204,17 @@ def reportsLanding():
 @views.route('/notice')
 def viewNotice():
     allNotices = notice.query.all() #Reading all the notices
-    return render_template('notice.html', allNotices=allNotices)
+    return render_template('notice.html', allNotices=allNotices, user=current_user)
 
 @views.route('/createNotice', methods=['GET', 'POST'])
 def createNotice():
    if request.method == 'POST':
+       
        #Creating new notice
        newNotice = notice( 
         title=request.form.get("title"),
-        note=request.form.get("note")
+        note=request.form.get("note"),
+        author=current_user.id #Setting the author of the notice to the current user
         )
        db.session.add(newNotice) #Adding new notice to the database
        db.session.commit() #Committing new notice to the database
@@ -193,12 +222,16 @@ def createNotice():
        #Flash message to show that the notice has been created
        flash("Notice Created!", category="success")
        return redirect(url_for('views.viewNotice')) #Takes user back to the notice page
-   return render_template("createNotice.html")
+   return render_template("createNotice.html", user=current_user)
 
 @views.route("/editNotice/<int:id>", methods=["GET", "POST"])
 def editNotice(id):
     noticeToEdit = notice.query.get(id) #Reading the notice to be edited
-
+    #Checking if the current user is the aithor of the notice
+    if noticeToEdit.author != current_user.id:
+        flash("You are not authorized to edit this notice.", category="error")
+        return redirect(url_for("views.viewNotice")) #Takes user back to the notice page
+    
     if request.method == "POST":
         #Updating the notice
         noticeToEdit.title = request.form.get("title")
@@ -207,17 +240,26 @@ def editNotice(id):
         flash("Notice Updated!", category="success") #Flashing success mesasage
         return redirect(url_for("views.viewNotice")) #Takes user back to the notice page
     
-    return render_template("editNotice.html", notices=noticeToEdit) 
+    return render_template("editNotice.html", notices=noticeToEdit, user=current_user) 
 
 @views.route('/deleteNotice', methods=['POST'])
 def deleteNotice():
     noitceID = request.form.get("id")
-    notices = notice.query.get(noitceID) #Reading the notice to be deleted
+    noticeToDelete = notice.query.get(noitceID) #Reading the notice to be deleted
 
-    if notices:
-        db.session.delete(notices) #Deleting the notice from the database
+    #Checking if the current user is the author of the notice
+    if noticeToDelete and noticeToDelete.author == current_user.id:
+        db.session.delete(noticeToDelete) #Deleting the notice from the database
         db.session.commit() #Committing the changes to the database
+        flash("Notice deleted!", category="success") #Flashing success message
+    else:
+        flash("You are not authorized to delete this notice.", category="error") #User can only delete their own notices
     return redirect("/notice")
+
+@views.route('yourNotices')
+def yourNotices():
+    userNotices = notice.query.filter_by(author=current_user.id).all() #Reading all the notices created by the user
+    return render_template('notice.html', allNotices=userNotices, user=current_user, showOnlyUserNotices=True)
 
 @views.route('/pastoralReports')
 def viewPastoralReports():
@@ -486,6 +528,138 @@ def AddClassSession():
     sessions = generate_class_sessions_from_class(cls, date(2025, 9, 1), date(2025, 12, 20))
     db.session.add_all(sessions)
     db.session.commit()
+
+
+# @views.route('/populate_class_sessions', methods=['GET','POST'])
+# def populate_class_sessions():
+#     """
+#     Populate class sessions for the next month based on timetable
+#     """
+#     try:
+#         # Get the start date (today) and end date (30 days from now)
+#         start_date = date.today()
+#         end_date = start_date + timedelta(days=30)
+        
+#         # Get class IDs by their codes - you'll need to populate this mapping
+#         class_code_to_id = {}
+        
+#         # Query all classes and create a mapping from code to ID
+#         classes = Class.query.all()
+#         for cls in classes:
+#             class_code_to_id[cls.code] = cls.id
+        
+#         # Define the timetable based on class codes
+#         timetable = {
+#             'monday': {
+#                 'P1': ['9SOS1'],
+#                 'P2': ['10HIS'],
+#                 'P3': [],  # No class
+#                 'P4': ['11GEO1'],
+#                 'P5': ['9SOS2']
+#             },
+#             'tuesday': {
+#                 'P1': ['12GEO'],
+#                 'P2': [],  # No class
+#                 'P3': ['11HIS'],
+#                 'P4': ['10SOS'],
+#                 'P5': ['13GEO']
+#             },
+#             'wednesday': {
+#                 'P1': ['10HIS'],
+#                 'P2': ['11GEO1'],
+#                 'P3': ['9SOS1'],
+#                 'P4': ['11GEO2'],
+#                 'P5': []  # No class
+#             },
+#             'thursday': {
+#                 'P1': ['9SOS2'],
+#                 'P2': ['12GEO'],
+#                 'P3': [],  # No class
+#                 'P4': ['11HIS'],
+#                 'P5': ['10SOS']
+#             },
+#             'friday': {
+#                 'P1': ['10HIS'],
+#                 'P2': [],  # No class
+#                 'P3': ['9SOS1'],
+#                 'P4': [],  # No class
+#                 'P5': ['11GEO2']
+#             }
+#         }
+        
+#         # Weekday mapping (Monday = 0, Sunday = 6)
+#         weekday_names = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
+        
+#         sessions_created = 0
+#         current_date = start_date
+        
+#         while current_date <= end_date:
+#             # Get the day of the week
+#             weekday = current_date.weekday()  # 0 = Monday, 6 = Sunday
+#             day_name = weekday_names[weekday]
+            
+#             # Skip weekends if your school doesn't have classes then
+#             if day_name in ['saturday', 'sunday']:
+#                 current_date += timedelta(days=1)
+#                 continue
+            
+#             # Check if this day has classes scheduled
+#             if day_name in timetable:
+#                 daily_schedule = timetable[day_name]
+                
+#                 # Iterate through each period for this day
+#                 for period_code, class_codes in daily_schedule.items():
+#                     # Skip empty periods
+#                     if not class_codes:
+#                         continue
+                        
+#                     # Get the period object
+#                     period = Period.query.filter_by(code=period_code).first()
+#                     if not period:
+#                         continue
+                    
+#                     # Create sessions for each class in this period
+#                     for class_code in class_codes:
+#                         # Get the class ID from the mapping
+#                         class_id = class_code_to_id.get(class_code)
+#                         if not class_id:
+#                             print(f"Warning: Class code '{class_code}' not found in database")
+#                             continue
+                        
+#                         # Check if session already exists
+#                         existing_session = ClassSession.query.filter_by(
+#                             class_id=class_id,
+#                             date=current_date,
+#                             period_id=period.id
+#                         ).first()
+                        
+#                         if not existing_session:
+#                             new_session = ClassSession(
+#                                 class_id=class_id,
+#                                 date=current_date,
+#                                 period_id=period.id
+#                             )
+#                             db.session.add(new_session)
+#                             sessions_created += 1
+            
+#             current_date += timedelta(days=1)
+        
+#         # Commit all changes
+#         db.session.commit()
+        
+#         return jsonify({
+#             'success': True,
+#             'message': f'Successfully created {sessions_created} class sessions',
+#             'sessions_created': sessions_created,
+#             'date_range': f'{start_date} to {end_date}'
+#         }), 200
+        
+#     except Exception as e:
+#         db.session.rollback()
+#         return jsonify({
+#             'success': False,
+#             'error': str(e)
+#         }), 500
 
 @views.route('/api/schedule/<string:user_type>/<int:user_id>')
 def schedule_api(user_type, user_id):

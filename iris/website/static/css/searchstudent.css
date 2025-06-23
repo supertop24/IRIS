@@ -20,6 +20,7 @@
 }
 .search-result li:hover {
     background-color: #988EB1;
+    border-radius: 20px;
 }
 .search-bar
 {

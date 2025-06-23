@@ -65,7 +65,31 @@
     </div>
 </div>
 <div class="list_container" id="list">
-    
+    <div class="list_container_button">
+        <div class="list_message_button" onclick="changeDisplay('message')">
+            Send Message
+        </div>
+    </div>
+    <div class="content_list" id="messages">
+        <div class="list_header">
+            Message
+        </div>
+        <div class="list_message" id="list_container">
+        </div>
+    </div>
+    <div class="content_view" id="read">
+        <div class="close_view" onclick="changeDisplay('messages')">
+            close
+        </div>
+        <div class="message_shown">
+            <div class="message_title" id="message_title"style="font-size: 30px;">
+
+            </div>
+            <div class="message_read"id="message_read" style="font-size: 20px;">
+
+            </div>
+        </div>
+    </div>
 </div>
 <div class="view_container" id="view">
 
