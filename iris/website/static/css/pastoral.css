@@ -1,17 +1,27 @@
 /*.Pastoral class that holds the list of student reports content*/
 .pastoral {
     width: 100%;
-    height: 100%;
+    height: auto;
     display: none;
+    font-family: 'Inter', sans-serif;
 }
 
 .pastoral.active {
     display: flex;
+    flex-direction: column;
 }
 
-/*Pastoral student reports list container */
+/* Makes the add buttons and the report lists display in a row/side-by-side */
+.addReportContianer {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: auto;
+    gap: 10px;
+}
+
+/* Pastoral student reports list container */
 .pastoralReportListContainer {
-    background-color: lightblue;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -19,53 +29,56 @@
     width: 100%;
     height: auto;
     margin-top: 1%;
+    overflow: visible; /* Making sure content isn't being cut off */
 }
 
 /* Merit reports container */
 .meritReportsContainer, .incidentReportsContainer {
-    background-color: lightgreen;
+    background-color: #ffffff;
     width: 90%;
     height: auto;
     text-align: center;
     margin-bottom: 3%;
-    border-top-left-radius: 30px;
-    border-top-right-radius: 30px;
+    border-radius: 30px 30px 25px 25px;
 }
 
 /* Merit and incident title styling */
 .meritTitle, .incidentTitle {
     background-color: #E2DDEB;
-    padding: 20px;
+    padding: 25px 0;
     border-radius: 25px 25px 0 0;
+    font-size: 25px;
 }
 
 /* Merit and incident content container styling */
 .meritContentContainer, .incidentContentContainer {
-    background-color: yellow;
     margin: 1%;
 }
 
 /* Sort bar and filter bar container styling */
-.sortFilterContainer {
-    background-color: blueviolet;
+.pastoralSortFilterContainer {
     display: flex;
     justify-content: space-between;
     padding: 10px 0;
     margin: 0.5% 0;
 }
 
-.filter, .sort {
+/* Filter and sort dropdown styling */
+.pastoralSortFilterContainer select {
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    margin-left: 10px;
+}
+
+.pastoralSortFilterContainer label {
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+.pastoralFilter, .pastoralSort {
     flex: 1; /* Each takes up equal space */
-}
-
-.filter p {
-    text-align: left;
-    margin: 0;
-}
-
-.sort p {
-    text-align: right;
-    margin: 0;
 }
 
 /* The header for the sections in the reports */
@@ -82,43 +95,43 @@
     flex: 1; /* Each header text takes up equal space */
 }
 
-/*Aligning 'Title' text to the right */
+/*Aligning title text to the right */
 .headerContainer .left {
     text-align: left;
 }
 
-/*Aligning 'Date' text to the right */
+/*Aligning date text to the right */
 .headerContainer .right {
     text-align: right;
 }
 
 /* Individual report box, item styling for merit and incident reports */
 .meritReportBox, .incidentReportBox {
-    background-color: chocolate;
     display: flex;
     justify-content: space-between;
     margin: 1% 0; /* Margin for spacing between items */
     border: 4px solid #E2DDEB;
     border-radius: 20px;
     padding: 0 10px;
+    cursor: pointer;
 }
 
 /*Individual report section styling --------------------------------------------------------------*/
 
 /* Pastoral individual report container styling*/
 .pastoralReportContainer {
-    background-color: lightpink;
     display: flex;
     flex-direction: column;
     align-items: center;
     flex-wrap: nowrap;
     width: 100%;
     height: auto;
+    margin-top: 1%;
 }
 
 /* Details container styling */
 .detailsContainer, .descriptionContainer {
-    background-color: lightgreen;
+    background-color: #ffffff;
     width: 90%;
     height: auto;
     text-align: center;
@@ -126,24 +139,25 @@
     border-top-right-radius: 30px;
     border-radius: 30px 30px 25px 25px;
     margin-bottom: 2%;
+    border: 5px solid #988EB1;
 }
 
 /* The details section's title */
 .detailsTitle, .descriptionTitle {
-    background-color: brown;
-    padding: 10px;
+    background-color: #E2DDEB;
+    padding: 1px 0;
     border-radius: 25px 25px 0 0;
+    font-size: 25px;
+    border-bottom: 5px solid #988EB1;
 }
 
 /* Details content container styling */
 .detailsConentContainer {
-    background-color: yellow;
-    margin: 1% 1% 2% 1%;
+    margin: 0% 1% 2% 1%;
 }
 
 /* Details's content containers - making their content align in rows */
 .dateContainer, .timeContainer, .locationContainer, .typeContainer, .studentInvolvedContainer, .staffInvolvedContainer, .authorContainer {
-    background-color: blue;
     display: flex;
     flex-direction: row;
     width: 100%;
@@ -154,7 +168,6 @@
 
 /*Creating borders and aligning headings to the right */
 .date, .time, .location, .type, .studentInvolved, .staffInvolved, .author {
-    background-color: orange;
     width: 50%;
     height: auto;
     text-align: right;
@@ -166,7 +179,6 @@
 
 /*Creating border and aligning input to the left */
 .dateDisplayed, .timeDisplayed, .locationDisplayed, .typeDisplayed, .studentInvolvedDisplayed, .staffInvolvedDisplayed, .authorDisplayed {
-    background-color: purple;
     width: 50%;
     text-align: left;
     box-sizing: border-box;
@@ -187,84 +199,190 @@
 
 /* Description and follow up conent styling */
 .descriptionContentContainer {
-    background-color: lightblue;
     display: flex;
     flex-direction: row;
-    width: 100%;
+    width: 99.5%;
     height: auto;
     border-radius: 0 0 25px 25px;
 }
 
-.incidentDescriptionContainer, .followUpContainer {
-    background-color: lightcoral;
-    width: 50%;
-    margin: 2%;
-    text-align: left;
+.incidentDescriptionContainer, .meritDescriptionContainer {
     box-sizing: border-box; /* Makes it so padding is included in the width */
+    width: 100%;
+    margin: 2%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-/* Creating border in the description section and margins */
 .incidentDescriptionContainer {
-    border-right: 3px solid #BCBCBC;
+    /*border-right: 3px solid #BCBCBC;*/
     margin-right: 0;
+    width: 100%;
+    margin: 2%;
+    text-align: center;
 }
 
 .followUpContainer {
     margin-left: 0;
     padding: 0 4%;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .incidentDescription {
     padding: 0 4%;
 }
 
-/* Making the headings bold and centered */
-.incidentDescriptionHeading, .parentCommunicationHeading,
-.disciplinaryActionHeading, .resolutionHeading {
-    font-weight: bold;
-    text-align: center;
+.meritDescription {
+    width: 90%;
 }
 
+.meritInputReportDescription {
+    width: 60%;
+    min-height: 200px;
+    border-radius: 25px;
+    border: 4px solid #988EB1;
+    text-align: center;
+    resize: none; /* Prevents resizing */;
+}
 
-/*Dropdown menu container */
+.incidentInputReportDescription {
+    min-width: 400px;
+    min-height: 435px;
+    border-radius: 25px;
+    border: 4px solid #988EB1;
+    text-align: center;
+    resize: none; /* Prevents resizing */;
+}
+
+.inputReportParentCommunication, .inputReportDisciplinaryAction, .inputReportResolution {
+    width: 60%;
+    min-height: 100px;
+    border-radius: 25px;
+    border: 4px solid #988EB1;
+    text-align: center;
+    resize: none; /* Prevents resizing */
+}
+
+/* Making the headings bold and centered */
+.incidentDescriptionHeading, .meritDescriptionHeading, .parentCommunicationHeading,
+.disciplinaryActionHeading, .resolutionHeading {
+    text-align: center;
+    width: 100%;
+    font-weight: bold;
+    margin: 0;
+}
+
+.addButton {
+    cursor: pointer;
+    width: 70px;
+    height: auto;
+}
+
+/* New report upload button ---------------------------------*/
+.buttonContainer {
+    display: flex;
+    /*justify-content: flex-end; */
+    margin-top: 10px;
+}
+
+/*Create new report form */
+.reportform {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+/* Styling the input fields to fill their containers */
+.inputReportDate, .inputReportTime, .inputReportLocation, .inputReportStudentsInvolved, .inputReportStaffInvolved, .inputReportAuthor {
+    width: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: inherit;
+    padding: 0;
+    min-height: 36px;
+}
+
+/* Dropdown container */
 .dropdownContainer {
     position: relative;
-    width: 250px;
+    width: 100%;
+    min-height: 52px;
 }
 
-.selected-Option {
+/* Selected option styling - align with form inputs */
+.selected-option {
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding: 10px;
-    background-color: yellow;
+    gap: 8px;
+    padding: 0.5em 3%;
+    background-color: white;
     cursor: pointer;
-    border: 1px solid #988EB1;
+    border: none;
+    height: auto; 
+    width: 100%;
+    box-sizing: border-box;
+    font-size: inherit; 
 }
 
-.dropdownOption-List {
+/* Image sizing within dropdown */
+.selected-option img,
+.dropdown-option img {
+    width: 16px; /* Smaller size to fit nicely */
+    height: 16px;
+    flex-shrink: 0; /* Prevent image from shrinking */
+}
+
+/* Dropdown option list */
+.dropdown-option-list {
     display: none;
     position: absolute;
     width: 100%;
     border: 1px solid #ccc;
     background: white;
     z-index: 10;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-.dropdownOption {
+/* Individual dropdown options */
+.dropdown-option {
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding: 10px;
+    gap: 8px; 
+    padding: 8px 3%; 
     cursor: pointer;
+    transition: background-color 0.2s ease; /* Hover transition */
 }
 
-.dropdownOption:hover {
-    background-color: #eee;
+
+.dropdown-option:hover {
+    background-color: #f5f5f5; 
 }
 
-.dropdownOption img {
-    width: 24px;
-    height: 24px;
+/* Ensures the dropdown fits properly within the typeDisplayed container */
+.typeDisplayed .dropdownContainer {
+    width: 100%;
 }
 
+/* Upload button styling */
+.uploadButton {
+    background-color: #988EB1;
+    color: #000000;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.uploadButton:hover {
+    color: #ffffff;
+}
