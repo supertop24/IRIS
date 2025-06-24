@@ -267,12 +267,12 @@ class notice(db.Model):
     title = db.Column(db.String(50))
     author = db.Column(db.Integer, nullable=True)
     note = db.Column(db.Text, nullable=True)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow) #default=db.func.current_timestamp())
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
 class Pastoral(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    type=db.Column(db.String(1), nullable=True)
-    studentID = db.Column(db.Integer, nullable=True)
+    reportType=db.Column(db.String(15), nullable=True)
+    student_id = db.Column(db.Integer, nullable=True)
     author = db.Column(db.String(50), nullable=True)
     note = db.Column(db.String(255), nullable=True)
     date = db.Column(db.String(50), nullable=True)
@@ -280,6 +280,10 @@ class Pastoral(db.Model):
     location = db.Column(db.String(50), nullable=True)
     studentsInvolved = db.Column(db.String(255), nullable=True)
     staffInvolved = db.Column(db.String(255), nullable=True)
+    titleType = db.Column(db.String(50), nullable=True)
+    parentCommunication = db.Column(db.String(255), nullable=True)
+    disciplinaryActions = db.Column(db.String(255), nullable=True)
+    resolutionStatus = db.Column(db.String(255), nullable=True)
 
 class report(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -302,6 +306,6 @@ class Award(db.Model):
     note = db.Column(db.String(100))
     year = db.Column(db.Integer)
 
-    # Relationship back to student
+    #Relationship back to student table
     student = db.relationship('Student', backref=db.backref('awards', lazy=True))
 

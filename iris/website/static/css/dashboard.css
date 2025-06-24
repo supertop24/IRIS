@@ -7,6 +7,7 @@
     column-gap: 10px;
     padding: 10px;
     box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
 }
 /* Heading styling of each section */
 .sectionTitle {

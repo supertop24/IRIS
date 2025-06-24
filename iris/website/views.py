@@ -110,7 +110,12 @@ def studentProfile(student_id):
 
     allFlags = Flags.query.filter_by(student_id=student_id).all() # Getting all flags associated with user
 
-    allPastoralReports = Pastoral.query.all() #Getting all pastoral reports - no filtering yet
+    #Getting pastoral reports for this specific student only
+    all_reports = Pastoral.query.filter_by(student_id=student_id).order_by(Pastoral.date.desc()).all()
+    
+    #Separating merit and incident reports (same as pastoral_reports route)
+    merit_reports = [report for report in all_reports if report.reportType == 'Merit']
+    incident_reports = [report for report in all_reports if report.reportType == 'Incident']
     
     #Getting awards for the specific student
     allAwards = Award.query.filter_by(student_id=student_id).all()
@@ -275,37 +280,127 @@ def yourNotices():
     userNotices = notice.query.filter_by(author=current_user.id).all() #Reading all the notices created by the user
     return render_template('notice.html', allNotices=userNotices, user=current_user, showOnlyUserNotices=True)
 
-@views.route('/pastoralReports')
-def viewPastoralReports():
-    allPastoralReports = Pastoral.query.all() #Reading all the pastoral reports for the student
-    return render_template('awards.html', allPastoralReports=allPastoralReports)
-
-@views.route('/pastoralReport/<int:id>')
-def pastoralReport(id):
-    pastoral = Pastoral.query.get_or_404(id) #Getting the report's id and passing it to the template
-    return render_template('student.html', pastoral=pastoral)
-
-@views.route('createPastoralIncidentReport', methods=['POST'])
-def createPastoralIncidentReport():
-    if request.method == 'POST':
-        newReport = Pastoral(
-            date=request.form.get("date"),
-            time=request.form.get("time"),
-            location=request.form.get("location"),
-            type=request.form.get("type"),
-            studentsInvolved=request.form.get("studentsInvolved"),
-            staffInvolved=request.form.get("staffInvolved"),
-            author=request.form.get("author")
-        )
-        db.session.add(newReport) #Adding new notice to the database and committing it
-        db.session.commit()
-        flash("Pastoral Report Created!", category="success")
-        return redirect(url_for('views.viewPastoralReports'))
+@views.route('/pastoral/<int:student_id>')#Display pastoral reports for a specific student
+def pastoral_reports(student_id):
     
-@views.route('individualPastoralReport')
-def individualPastoralReport():
-    print("testing if the individual page is showing")
-    return render_template('pastoral.html')
+    #Getting all the reports for the student
+    all_reports = Pastoral.query.filter_by(student_id=student_id).order_by(Pastoral.date.desc()).all()
+
+    #Separating merit and incident reports
+    merit_reports = [report for report in all_reports if report.reportType == 'Merit']
+    incident_reports = [report for report in all_reports if report.reportType == 'Incident']
+
+    return render_template('pastoral.html', 
+                         student_id=student_id, 
+                         meritReports=merit_reports,      
+                         incidentReports=incident_reports)
+
+@views.route('/add_pastoral_report', methods=['POST'])#Adding a new pastoral report
+def add_pastoral_report():
+    
+    #Getting the form data
+    student_id = request.form.get('student_id')
+    report_type = request.form.get('report_type')  #Merit or Incident
+    
+    #Validating required fields
+    if not student_id or not report_type:
+        flash("Missing required fields!", category="error")
+        return redirect(url_for('views.pastoral_reports', student_id=student_id or 1))
+    
+    #Creating a new report
+    new_report = Pastoral(
+        reportType=report_type,
+        student_id=int(student_id),
+        author=request.form.get('author', ''),
+        note=request.form.get('description', ''),
+        date=request.form.get('date', ''),
+        time=request.form.get('time', ''),
+        location=request.form.get('location', ''),
+        studentsInvolved=request.form.get('studentsInvolved', ''),
+        staffInvolved=request.form.get('staffInvolved', ''),
+        titleType=request.form.get('type', ''),
+    )
+
+    #Additional fields only for incident reports
+    if report_type == 'Incident':
+        new_report.parentCommunication = request.form.get('parentCommunication', '')
+        new_report.disciplinaryActions = request.form.get('disciplinaryActions', '')
+        new_report.resolutionStatus = request.form.get('resolutionStatus', '')
+
+    try:
+        #Adding and committing to the database
+        db.session.add(new_report)
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        flash("Error adding report!", category="error")
+    
+    return redirect(url_for('views.pastoral_reports', student_id=student_id))
+
+@views.route('/get_report/<int:report_id>')#Get a specific report by ID for viewing
+def get_report(report_id):
+    
+    report = Pastoral.query.get_or_404(report_id)
+    return jsonify({
+        'id': report.id,
+        'author': report.author,
+        'date': report.date,
+        'time': report.time,
+        'location': report.location,
+        'reportType': report.reportType,
+        'studentsInvolved': report.studentsInvolved,
+        'staffInvolved': report.staffInvolved,
+        'note': report.note,
+        'titleType': report.titleType,
+        'parentCommunication': report.parentCommunication,
+        'disciplinaryActions': report.disciplinaryActions,
+        'resolutionStatus': report.resolutionStatus
+    })
+
+@views.route('/filter_reports/<int:student_id>')#Filter reports by type, title, and sort options
+def filter_reports(student_id):
+
+    filter_type = request.args.get('filterType')  #Merit or Incident
+    title_filter = request.args.get('titleFilter')  #teamwork or respect
+    sort_by = request.args.get('sortBy', 'latest')
+
+    #Base query filtered by student
+    query = Pastoral.query.filter_by(student_id=student_id)
+
+    #Applying filters when provided
+    if filter_type:
+        query = query.filter_by(reportType=filter_type)
+
+    if title_filter:
+        query = query.filter_by(titleType=title_filter)
+
+    #Applying sorting with latest/oldest options
+    if sort_by == 'latest':
+        reports = query.order_by(Pastoral.date.asc()).all()
+    elif sort_by == 'oldest':
+        reports = query.order_by(Pastoral.date.desc()).all()
+    else:
+        #Setting default to latest
+        reports = query.order_by(Pastoral.date.desc()).all()
+
+    #Converting reports to list of dictionaries for JSON response
+    reports_data = [{
+        'id': report.id,
+        'author': report.author,
+        'date': report.date,
+        'time': report.time,
+        'location': report.location,
+        'reportType': report.reportType,
+        'studentsInvolved': report.studentsInvolved,
+        'staffInvolved': report.staffInvolved,
+        'note': report.note,
+        'titleType': report.titleType,
+        'parentCommunication': report.parentCommunication,
+        'disciplinaryActions': report.disciplinaryActions,
+        'resolutionStatus': report.resolutionStatus
+    } for report in reports]
+
+    return jsonify(reports_data)
 
 @views.route('/uploadAward', methods=['POST'])
 def uploadAward():
