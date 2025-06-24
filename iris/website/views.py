@@ -96,7 +96,12 @@ def studentProfile(student_id):
 
     allFlags = Flags.query.filter_by(student_id=student_id).all() # Getting all flags associated with user
 
-    allPastoralReports = Pastoral.query.all() #Getting all pastoral reports - no filtering yet
+    #Getting pastoral reports for this specific student only
+    all_reports = Pastoral.query.filter_by(student_id=student_id).order_by(Pastoral.date.desc()).all()
+    
+    #Separating merit and incident reports (same as pastoral_reports route)
+    merit_reports = [report for report in all_reports if report.reportType == 'Merit']
+    incident_reports = [report for report in all_reports if report.reportType == 'Incident']
     
     #Getting awards for the specific student
     allAwards = Award.query.filter_by(student_id=student_id).all()
@@ -109,7 +114,7 @@ def studentProfile(student_id):
     #Converting to regular dict and sorting by year from newest to oldest
     awardsByYear = dict(sorted(awardsByYear.items(), key=lambda x: x[0], reverse=True))
 
-    return render_template('student.html', student_id=student_id, allPastoralReports=allPastoralReports, pastoral=None, allAwards=allAwards, awardsByYear=awardsByYear, user=current_user, allFlags=allFlags, caregivers=caregivers, studentDetails=studentDetails)
+    return render_template('student.html', student_id=student_id, meritReports=merit_reports, incidentReports=incident_reports, pastoral=None, allAwards=allAwards, awardsByYear=awardsByYear, user=current_user, allFlags=allFlags, caregivers=caregivers, studentDetails=studentDetails)
 
 @views.route('/searchStudent')
 def searchstudent():
@@ -178,7 +183,7 @@ def attendanceLanding():
     currentDate = datetime.now().date()
     myClasses = getMyClasses()
     otherClasses = getOtherClasses()
-    return render_template("assessmentsLanding.html", user=current_user, currentDate=currentDate, myClasses = myClasses, otherClasses = otherClasses)
+    return render_template("attendanceLanding.html", user=current_user, currentDate=currentDate, myClasses = myClasses, otherClasses = otherClasses)
 
 @views.route('/studentsLanding')
 def studentsLanding():
@@ -261,37 +266,127 @@ def yourNotices():
     userNotices = notice.query.filter_by(author=current_user.id).all() #Reading all the notices created by the user
     return render_template('notice.html', allNotices=userNotices, user=current_user, showOnlyUserNotices=True)
 
-@views.route('/pastoralReports')
-def viewPastoralReports():
-    allPastoralReports = Pastoral.query.all() #Reading all the pastoral reports for the student
-    return render_template('awards.html', allPastoralReports=allPastoralReports)
-
-@views.route('/pastoralReport/<int:id>')
-def pastoralReport(id):
-    pastoral = Pastoral.query.get_or_404(id) #Getting the report's id and passing it to the template
-    return render_template('student.html', pastoral=pastoral)
-
-@views.route('createPastoralIncidentReport', methods=['POST'])
-def createPastoralIncidentReport():
-    if request.method == 'POST':
-        newReport = Pastoral(
-            date=request.form.get("date"),
-            time=request.form.get("time"),
-            location=request.form.get("location"),
-            type=request.form.get("type"),
-            studentsInvolved=request.form.get("studentsInvolved"),
-            staffInvolved=request.form.get("staffInvolved"),
-            author=request.form.get("author")
-        )
-        db.session.add(newReport) #Adding new notice to the database and committing it
-        db.session.commit()
-        flash("Pastoral Report Created!", category="success")
-        return redirect(url_for('views.viewPastoralReports'))
+@views.route('/pastoral/<int:student_id>')#Display pastoral reports for a specific student
+def pastoral_reports(student_id):
     
-@views.route('individualPastoralReport')
-def individualPastoralReport():
-    print("testing if the individual page is showing")
-    return render_template('pastoral.html')
+    #Getting all the reports for the student
+    all_reports = Pastoral.query.filter_by(student_id=student_id).order_by(Pastoral.date.desc()).all()
+
+    #Separating merit and incident reports
+    merit_reports = [report for report in all_reports if report.reportType == 'Merit']
+    incident_reports = [report for report in all_reports if report.reportType == 'Incident']
+
+    return render_template('pastoral.html', 
+                         student_id=student_id, 
+                         meritReports=merit_reports,      
+                         incidentReports=incident_reports)
+
+@views.route('/add_pastoral_report', methods=['POST'])#Adding a new pastoral report
+def add_pastoral_report():
+    
+    #Getting the form data
+    student_id = request.form.get('student_id')
+    report_type = request.form.get('report_type')  #Merit or Incident
+    
+    #Validating required fields
+    if not student_id or not report_type:
+        flash("Missing required fields!", category="error")
+        return redirect(url_for('views.pastoral_reports', student_id=student_id or 1))
+    
+    #Creating a new report
+    new_report = Pastoral(
+        reportType=report_type,
+        student_id=int(student_id),
+        author=request.form.get('author', ''),
+        note=request.form.get('description', ''),
+        date=request.form.get('date', ''),
+        time=request.form.get('time', ''),
+        location=request.form.get('location', ''),
+        studentsInvolved=request.form.get('studentsInvolved', ''),
+        staffInvolved=request.form.get('staffInvolved', ''),
+        titleType=request.form.get('type', ''),
+    )
+
+    #Additional fields only for incident reports
+    if report_type == 'Incident':
+        new_report.parentCommunication = request.form.get('parentCommunication', '')
+        new_report.disciplinaryActions = request.form.get('disciplinaryActions', '')
+        new_report.resolutionStatus = request.form.get('resolutionStatus', '')
+
+    try:
+        #Adding and committing to the database
+        db.session.add(new_report)
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        flash("Error adding report!", category="error")
+    
+    return redirect(url_for('views.pastoral_reports', student_id=student_id))
+
+@views.route('/get_report/<int:report_id>')#Get a specific report by ID for viewing
+def get_report(report_id):
+    
+    report = Pastoral.query.get_or_404(report_id)
+    return jsonify({
+        'id': report.id,
+        'author': report.author,
+        'date': report.date,
+        'time': report.time,
+        'location': report.location,
+        'reportType': report.reportType,
+        'studentsInvolved': report.studentsInvolved,
+        'staffInvolved': report.staffInvolved,
+        'note': report.note,
+        'titleType': report.titleType,
+        'parentCommunication': report.parentCommunication,
+        'disciplinaryActions': report.disciplinaryActions,
+        'resolutionStatus': report.resolutionStatus
+    })
+
+@views.route('/filter_reports/<int:student_id>')#Filter reports by type, title, and sort options
+def filter_reports(student_id):
+
+    filter_type = request.args.get('filterType')  #Merit or Incident
+    title_filter = request.args.get('titleFilter')  #teamwork or respect
+    sort_by = request.args.get('sortBy', 'latest')
+
+    #Base query filtered by student
+    query = Pastoral.query.filter_by(student_id=student_id)
+
+    #Applying filters when provided
+    if filter_type:
+        query = query.filter_by(reportType=filter_type)
+
+    if title_filter:
+        query = query.filter_by(titleType=title_filter)
+
+    #Applying sorting with latest/oldest options
+    if sort_by == 'latest':
+        reports = query.order_by(Pastoral.date.asc()).all()
+    elif sort_by == 'oldest':
+        reports = query.order_by(Pastoral.date.desc()).all()
+    else:
+        #Setting default to latest
+        reports = query.order_by(Pastoral.date.desc()).all()
+
+    #Converting reports to list of dictionaries for JSON response
+    reports_data = [{
+        'id': report.id,
+        'author': report.author,
+        'date': report.date,
+        'time': report.time,
+        'location': report.location,
+        'reportType': report.reportType,
+        'studentsInvolved': report.studentsInvolved,
+        'staffInvolved': report.staffInvolved,
+        'note': report.note,
+        'titleType': report.titleType,
+        'parentCommunication': report.parentCommunication,
+        'disciplinaryActions': report.disciplinaryActions,
+        'resolutionStatus': report.resolutionStatus
+    } for report in reports]
+
+    return jsonify(reports_data)
 
 @views.route('/uploadAward', methods=['POST'])
 def uploadAward():
@@ -414,66 +509,66 @@ def morePopulating():
 # Finish adding population route!! 
 
 
-@views.route('/populate-test-data')
-def populate_test_data():
-    try:
-        # 1. Create a teacher
-        teacher = Teacher(
-            name="John Doe",
-            email="johndoe@example.com",
-            password="password123",
-            gender="Male",
-            phone_number=1234567890,
-            address="123 Example Street"
-        )
-        db.session.add(teacher)
-        db.session.flush()  # So teacher.id is available
+# @views.route('/populate-test-data') 
+# def populate_test_data():
+#     try:
+#         # 1. Create a teacher
+#         teacher = Teacher(
+#             name="John Doe",
+#             email="johndoe@example.com",
+#             password="password123",
+#             gender="Male",
+#             phone_number=1234567890,
+#             address="123 Example Street"
+#         )
+#         db.session.add(teacher)
+#         db.session.flush()  # So teacher.id is available
 
-        # 2. Create 6 classes
-        subjects = ["Math", "Science", "History", "English", "Geography", "Art"]
-        classes = []
-        for i, subject in enumerate(subjects):
-            cls = Class(year=2025, subject=subject, code=f"{subject[:3].upper()}101")
-            db.session.add(cls)
-            db.session.flush()
-            classes.append(cls)
+#         # 2. Create 6 classes
+#         subjects = ["Math", "Science", "History", "English", "Geography", "Art"]
+#         classes = []
+#         for i, subject in enumerate(subjects):
+#             cls = Class(year=2025, subject=subject, code=f"{subject[:3].upper()}101")
+#             db.session.add(cls)
+#             db.session.flush()
+#             classes.append(cls)
 
-            # Associate each class with the teacher as MAIN
-            assoc = TeacherClassAssociation(teacher_id=teacher.id, class_id=cls.id, role=TeacherRole.MAIN)
-            db.session.add(assoc)
+#             # Associate each class with the teacher as MAIN
+#             assoc = TeacherClassAssociation(teacher_id=teacher.id, class_id=cls.id, role=TeacherRole.MAIN)
+#             db.session.add(assoc)
 
-        # 3. Create 5 periods
-        period_times = [
-            ("P1", time(9, 0), time(9, 50)),
-            ("P2", time(10, 0), time(10, 50)),
-            ("P3", time(11, 0), time(11, 50)),
-            ("P4", time(13, 0), time(13, 50)),
-            ("P5", time(14, 0), time(14, 50))
-        ]
+#         # 3. Create 5 periods
+#         period_times = [
+#             ("P1", time(9, 0), time(9, 50)),
+#             ("P2", time(10, 0), time(10, 50)),
+#             ("P3", time(11, 0), time(11, 50)),
+#             ("P4", time(13, 0), time(13, 50)),
+#             ("P5", time(14, 0), time(14, 50))
+#         ]
 
-        periods = []
-        for code, start, end in period_times:
-            p = Period(code=code, start_time=start, end_time=end)
-            db.session.add(p)
-            db.session.flush()
-            periods.append(p)
+#         periods = []
+#         for code, start, end in period_times:
+#             p = Period(code=code, start_time=start, end_time=end)
+#             db.session.add(p)
+#             db.session.flush()
+#             periods.append(p)
 
-        # 4. Create class sessions for today, assigning each class to one period
-        today = date.today()
-        for i in range(5):  # First 5 classes only
-            session = ClassSession(
-                class_id=classes[i].id,
-                date=today,
-                period_id=periods[i].id
-            )
-            db.session.add(session)
+#         # 4. Create class sessions for today, assigning each class to one period
+#         today = date.today()
+#         for i in range(5):  # First 5 classes only
+#             session = ClassSession(
+#                 class_id=classes[i].id,
+#                 date=today,
+#                 period_id=periods[i].id
+#             )
+#             db.session.add(session)
 
-        db.session.commit()
-        return jsonify({"message": "Test data populated successfully."})
+#         db.session.commit()
+#         return jsonify({"message": "Test data populated successfully."})
 
-    except Exception as e:
-        db.session.rollback()
-        return jsonify({"error": str(e)}), 500
+#     except Exception as e:
+#         db.session.rollback()
+#         return jsonify({"error": str(e)}), 500
 
 '''
 
@@ -517,20 +612,9 @@ def test_seed():
     return "Sample data inserted successfully!"
 # Not need atm - But please leave commented for now, for my reference & other db insertions 
 '''        
-@views.route('AddClassSession')
-def AddClassSession():
-    cls = Class.query.get(1)
-    cls.schedule = "Mon 09:00,Wed 11:00"
-    db.session.commit()
-
-    from iris.utils.schedule_utils import generate_class_sessions_from_class
-
-    sessions = generate_class_sessions_from_class(cls, date(2025, 9, 1), date(2025, 12, 20))
-    db.session.add_all(sessions)
-    db.session.commit()
 
 
-# @views.route('/populate_class_sessions', methods=['GET','POST'])
+# @views.route('/populate_class_sessions', methods=['GET','POST']) # Re-using route to populate db with class sessions to fill teacher timetables
 # def populate_class_sessions():
 #     """
 #     Populate class sessions for the next month based on timetable
@@ -540,7 +624,7 @@ def AddClassSession():
 #         start_date = date.today()
 #         end_date = start_date + timedelta(days=30)
         
-#         # Get class IDs by their codes - you'll need to populate this mapping
+#         # Get class IDs by their codes - to populate this mapping
 #         class_code_to_id = {}
         
 #         # Query all classes and create a mapping from code to ID
@@ -551,39 +635,39 @@ def AddClassSession():
 #         # Define the timetable based on class codes
 #         timetable = {
 #             'monday': {
-#                 'P1': ['9SOS1'],
-#                 'P2': ['10HIS'],
+#                 'P1': ['9ENG1'],
+#                 'P2': ['10ENG1'],
 #                 'P3': [],  # No class
-#                 'P4': ['11GEO1'],
-#                 'P5': ['9SOS2']
+#                 'P4': ['11ENG1'],
+#                 'P5': ['12ENG1']
 #             },
 #             'tuesday': {
-#                 'P1': ['12GEO'],
+#                 'P1': ['9ENG2'],
 #                 'P2': [],  # No class
-#                 'P3': ['11HIS'],
-#                 'P4': ['10SOS'],
-#                 'P5': ['13GEO']
+#                 'P3': ['10ENG2'],
+#                 'P4': ['11ENG2'],
+#                 'P5': ['12ENG2']
 #             },
 #             'wednesday': {
-#                 'P1': ['10HIS'],
-#                 'P2': ['11GEO1'],
-#                 'P3': ['9SOS1'],
-#                 'P4': ['11GEO2'],
+#                 'P1': ['9ART1'],
+#                 'P2': [],  # No class
+#                 'P3': ['9ENG1'],
+#                 'P4': ['10ENG1'],
 #                 'P5': []  # No class
 #             },
 #             'thursday': {
-#                 'P1': ['9SOS2'],
-#                 'P2': ['12GEO'],
+#                 'P1': ['12ENG1'],
+#                 'P2': ['9ENG2'],
 #                 'P3': [],  # No class
-#                 'P4': ['11HIS'],
-#                 'P5': ['10SOS']
+#                 'P4': ['11ENG2'],
+#                 'P5': ['12ENG2']
 #             },
 #             'friday': {
-#                 'P1': ['10HIS'],
+#                 'P1': ['9ART1'],
 #                 'P2': [],  # No class
-#                 'P3': ['9SOS1'],
+#                 'P3': ['10ENG1'],
 #                 'P4': [],  # No class
-#                 'P5': ['11GEO2']
+#                 'P5': ['13ENG']
 #             }
 #         }
         
