@@ -49,7 +49,7 @@ function handleCustomDropdown() {
                 const value = option.getAttribute("data-value");
 
                 meritSelectedOption.innerHTML = `<img src="${imgSrc}" alt="${text}"><span>${text}</span>`;
-                meritSelectedValue.value = value;
+                meritSelectedValue.value = text;
                 meritDropdownList.style.display = "none";
             });
         });
@@ -72,7 +72,7 @@ function handleCustomDropdown() {
                 const value = option.getAttribute("data-value");
 
                 incidentSelectedOption.innerHTML = `<img src="${imgSrc}" alt="${text}"><span>${text}</span>`;
-                incidentSelectedValue.value = value;
+                incidentSelectedValue.value = text;
                 incidentDropdownList.style.display = "none";
             });
         });
