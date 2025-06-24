@@ -40,8 +40,8 @@
                             <label for="meritFilter">Filter by Type: </label>
                             <select id="meritFilter">
                                 <option value="">All Types</option>
-                                <option value="teamwork">Teamwork</option>
-                                <option value="respect">Respect</option>
+                                <option value="Teamwork">Teamwork</option>
+                                <option value="Respect">Respect</option>
                             </select>
                         </div>
 
@@ -110,8 +110,8 @@
                             <label for="incidentFilter">Filter by Type: </label>
                             <select id="incidentFilter">
                                 <option value="">All Types</option>
-                                <option value="teamwork">Teamwork</option>
-                                <option value="respect">Respect</option>
+                                <option value="Behavioural">Behavioural</option>
+                                <option value="Property">Property</option>
                             </select>
                         </div>
 
@@ -384,7 +384,7 @@
 
                     </div>
 
-                    <!-- Merit Add Form Dropdown -->
+                    <!--Merit Add Form Dropdown-->
                     <div class="typeContainer">
                         <div class="type">
                             <p>Report Type</p>
@@ -398,12 +398,12 @@
                                 </div>
                                 
                                 <div class="dropdown-option-list" id="meritDropdownOptionList">
-                                    <div class="dropdown-option" data-value="Teamwork" data-text="Teamwork" data-img="{{ url_for('static', filename='images/icons/whiteIrisLogo.png') }}">
+                                    <div class="dropdown-option" data-value="teamwork" data-text="Teamwork" data-img="{{ url_for('static', filename='images/icons/whiteIrisLogo.png') }}">
                                         <img src="{{ url_for('static', filename='images/icons/whiteIrisLogo.png') }}" alt="Teamwork icon">
                                         <span>Teamwork</span>
                                     </div>
                                     
-                                    <div class="dropdown-option" data-value="Respect" data-text="Respect" data-img="{{ url_for('static', filename='images/icons/whiteIrisLogo.png') }}">
+                                    <div class="dropdown-option" data-value="respect" data-text="Respect" data-img="{{ url_for('static', filename='images/icons/whiteIrisLogo.png') }}">
                                         <img src="{{ url_for('static', filename='images/icons/whiteIrisLogo.png') }}" alt="Respect icon">
                                         <span>Respect</span>
                                     </div>
@@ -773,7 +773,7 @@
 
                     </div>
 
-                    <!-- Incident Add Form Dropdown -->
+                    <!--Incident Add Form Dropdown-->
                     <div class="typeContainer">
                         <div class="type">
                             <p>Report Type</p>
@@ -787,19 +787,19 @@
                                 </div>
                                 
                                 <div class="dropdown-option-list" id="incidentDropdownOptionList">
-                                    <div class="dropdown-option" data-value="Behavioral" data-text="Behavioral" data-img="{{ url_for('static', filename='images/icons/whiteIrisLogo.png') }}">
+                                    <div class="dropdown-option" data-value="behavioural" data-text="Behavioural" data-img="{{ url_for('static', filename='images/icons/whiteIrisLogo.png') }}">
                                         <img src="{{ url_for('static', filename='images/icons/whiteIrisLogo.png') }}" alt="Teamwork icon">
-                                        <span>Behavioral </span>
+                                        <span>Behavioural </span>
                                     </div>
                                     
-                                    <div class="dropdown-option" data-value="Property" data-text="Property" data-img="{{ url_for('static', filename='images/icons/whiteIrisLogo.png') }}">
+                                    <div class="dropdown-option" data-value="property" data-text="Property" data-img="{{ url_for('static', filename='images/icons/whiteIrisLogo.png') }}">
                                         <img src="{{ url_for('static', filename='images/icons/whiteIrisLogo.png') }}" alt="Respect icon">
                                         <span>Property</span>
                                     </div>
                                 </div>
                             </div>
                             
-                            <input type="hidden" name="type" id="incidentSelectedValue" value="teamwork">
+                            <input type="hidden" name="type" id="incidentSelectedValue" value="behavioural">
                         </div>
                     </div>
 
