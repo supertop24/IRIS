@@ -37,7 +37,7 @@
             <button class="button" onclick="selected('timetable')" data-id="timetable">Timetable & Subjects</button>
         </div>
         <div class="profile-picture">
-            <img class="picture" src="{{ url_for('static', filename='images/teachers/janeSmith.png') }}" alt="User profile picture">
+            <img class="picture" src="{{ url_for('views.getStudentProfileImage', student_id=student_id) }}" alt="User profile picture">
         </div>
     </div>
 </html>
