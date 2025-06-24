@@ -77,16 +77,30 @@ def getCaregiverDetails(student_id):
 def getStudentDetails(student_id):
     studentDetails = Student.query.filter(Student.id == student_id).first()
 
-
-
     if studentDetails:
         if studentDetails.dob == '' or studentDetails.dob == ' ':
             studentDetails.dob = None
 
     return studentDetails
 
+@views.route('/student_profile_image/<int:student_id>')
+def getStudentProfileImage(student_id):
+
+    student = Student.query.get(student_id)
+    if not student or not student.profile:
+        #Returning a default image if not profile image exists
+        return send_file('static/images/icons/whiteIrisLogo.png')
+    
+    return send_file(
+        BytesIO(student.profile),
+        mimetype='image/jpeg',
+        as_attachment=False
+    )
+
 @views.route('/studentProfile/<int:student_id>')
 def studentProfile(student_id):
+
+    profileImage = getStudentProfileImage(student_id)
 
     caregivers = getCaregiverDetails(student_id)
 
@@ -109,7 +123,7 @@ def studentProfile(student_id):
     #Converting to regular dict and sorting by year from newest to oldest
     awardsByYear = dict(sorted(awardsByYear.items(), key=lambda x: x[0], reverse=True))
 
-    return render_template('student.html', student_id=student_id, allPastoralReports=allPastoralReports, pastoral=None, allAwards=allAwards, awardsByYear=awardsByYear, user=current_user, allFlags=allFlags, caregivers=caregivers, studentDetails=studentDetails)
+    return render_template('student.html', student_id=student_id, allPastoralReports=allPastoralReports, pastoral=None, allAwards=allAwards, awardsByYear=awardsByYear, user=current_user, allFlags=allFlags, caregivers=caregivers, studentDetails=studentDetails, profileImage=profileImage)
 
 @views.route('/searchStudent')
 def searchstudent():

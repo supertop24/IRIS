@@ -34,6 +34,7 @@
                             <div class="containerBody">
 
                                 {% if studentDetails %}
+
                                 <div class="leftDetailsGrid">
                                     <div class="itemtopleftcorner"><p>Preferred Name</p></div>
                                     <div class="itemtoprightcorner"><p>{{studentDetails.name | default('-', true) }}</p></div>
@@ -52,6 +53,27 @@
                                     <div class="itembottomleftcorner"><p>Year Level</p></div>
                                     <div class="itembottomrightcorner"><p>{{studentDetails.year_level | default('-', true)}}</p></div>
                                     </div>
+
+                                    {%else %}
+
+                                    <div class="leftDetailsGrid">
+                                    <div class="itemtopleftcorner"><p>Preferred Name</p></div>
+                                    <div class="itemtoprightcorner"><p>Error: Please select a student</p></div>
+                                    <div class="itemleft"><p>Gender</p></div>
+                                    <div class="itemright"><p>(plchldr)</p></div>
+                                    <div class="itemleft"><p>Date of Birth</p></div>
+                                    <div class="itemright"><p>(plchldr)</p></div>
+                                    <div class="itemleft"><p>School Email</p></div>
+                                    <div class="itemright"><p>(plchldr)</p></div> 
+                                    <div class="itemleft"><p>Personal Email</p></div>
+                                    <div class="itemright"><p>(plchldr)</p></div>
+                                    <div class="itemleft"><p>Home Number</p></div>
+                                    <div class="itemright"><p>(plchldr)</p></div>
+                                    <div class="itemleft"><p>Mobile Number</p></div>
+                                    <div class="itemright"><p>(plchldr)</p></div>
+                                    <div class="itembottomleftcorner"><p>Year Level</p></div>
+                                    <div class="itembottomrightcorner"><p>(plchldr)</p></div>
+
 
                                 {% endif %}
 
