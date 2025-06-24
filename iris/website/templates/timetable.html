@@ -1,18 +1,371 @@
 <title>Academic Reports</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='css/timetable.css') }}">
 <script src="{{ url_for('static', filename='javascript/timetable.js') }}"></script>
-<div class="timetable">
     <div class="timetable_view">
         <div class="modifybutton">
-            <div class="modify">
+            <div class="modify" id="modify" onclick="modified()">
                 Modify
             </div>
         </div>
         <div class="viewtable">
+            <!--First row-->
+            <div class="cell">
+                Time
+            </div>
+            <div class="cell">
+                Monday
+            </div>
+            <div class="cell">
+                Tuesday
+            </div>
+            <div class="cell">
+                Wednesday
+            </div>
+            <div class="cell">
+                Thrusday
+            </div>
+            <div class="cell">
+                Friday
+            </div>
+                        <!-- Second row: 08:30am -->
+            <div class="cell">08:30am</div>
+            <input type="hidden" id="11" value="English">
+            <div class="viewed cell" id="v11"></div>
+            <div class="modified cell">
+                <select id="m11" class="selection">
+                    <option value="English">English</option>
+                    <option value="Science">Science</option>
+                    <option value="Math">Math</option>
+                    <option value="Social Studies">Social Studies</option>
+                    <option value="Art">Art</option>
+                    <option value="IT">IT</option>
+                    <option value="PE">PE</option>
+                </select>
+            </div>
+            <input type="hidden" id="12" value="Math">
+            <div class="viewed cell" id="v12"></div>
+            <div class="modified cell">
+                <select id="m12" class="selection">
+                    <option value="English">English</option>
+                    <option value="Science">Science</option>
+                    <option value="Math">Math</option>
+                    <option value="Social Studies">Social Studies</option>
+                    <option value="Art">Art</option>
+                    <option value="IT">IT</option>
+                    <option value="PE">PE</option>
+                </select>
+            </div>
+            <input type="hidden" id="13" value="Science">
+            <div class="viewed cell" id="v13"></div>
+            <div class="modified cell">
+                <select id="m13" class="selection">
+                    <option value="English">English</option>
+                    <option value="Science">Science</option>
+                    <option value="Math">Math</option>
+                    <option value="Social Studies">Social Studies</option>
+                    <option value="Art">Art</option>
+                    <option value="IT">IT</option>
+                    <option value="PE">PE</option>
+                </select>
+            </div>
+            <input type="hidden" id="14" value="Art">
+            <div class="viewed cell" id="v14"></div>
+            <div class="modified cell">
+                <select id="m14" class="selection">
+                    <option value="English">English</option>
+                    <option value="Science">Science</option>
+                    <option value="Math">Math</option>
+                    <option value="Social Studies">Social Studies</option>
+                    <option value="Art">Art</option>
+                    <option value="IT">IT</option>
+                    <option value="PE">PE</option>
+                </select>
+            </div>
+            <input type="hidden" id="15" value="PE">
+            <div class="viewed cell" id="v15"></div>
+            <div class="modified cell">
+                <select id="m15" class="selection">
+                    <option value="English">English</option>
+                    <option value="Science">Science</option>
+                    <option value="Math">Math</option>
+                    <option value="Social Studies">Social Studies</option>
+                    <option value="Art">Art</option>
+                    <option value="IT">IT</option>
+                    <option value="PE">PE</option>
+                </select>
+            </div>
 
-        </div>
-        <div class="modifytable">
+            <!-- Third row: 09:10am -->
+            <div class="cell">09:10am</div>
+            <input type="hidden" id="21" value="Math">
+            <div class="viewed cell" id="v21"></div>
+            <div class="modified cell">
+                <select id="m21" class="selection">
+                    <option value="English">English</option>
+                    <option value="Science">Science</option>
+                    <option value="Math">Math</option>
+                    <option value="Social Studies">Social Studies</option>
+                    <option value="Art">Art</option>
+                    <option value="IT">IT</option>
+                    <option value="PE">PE</option>
+                </select>
+            </div>
+            <input type="hidden" id="22" value="English">
+            <div class="viewed cell" id="v22"></div>
+            <div class="modified cell">
+                <select id="m22" class="selection">
+                    <option value="English">English</option>
+                    <option value="Science">Science</option>
+                    <option value="Math">Math</option>
+                    <option value="Social Studies">Social Studies</option>
+                    <option value="Art">Art</option>
+                    <option value="IT">IT</option>
+                    <option value="PE">PE</option>
+                </select>
+            </div>
+            <input type="hidden" id="23" value="Science">
+            <div class="viewed cell" id="v23"></div>
+            <div class="modified cell">
+                <select id="m23" class="selection">
+                    <option value="English">English</option>
+                    <option value="Science">Science</option>
+                    <option value="Math">Math</option>
+                    <option value="Social Studies">Social Studies</option>
+                    <option value="Art">Art</option>
+                    <option value="IT">IT</option>
+                    <option value="PE">PE</option>
+                </select>
+            </div>
+            <input type="hidden" id="24" value="Art">
+            <div class="viewed cell" id="v24"></div>
+            <div class="modified cell">
+                <select id="m24" class="selection">
+                    <option value="English">English</option>
+                    <option value="Science">Science</option>
+                    <option value="Math">Math</option>
+                    <option value="Social Studies">Social Studies</option>
+                    <option value="Art">Art</option>
+                    <option value="IT">IT</option>
+                    <option value="PE">PE</option>
+                </select>
+            </div>
+            <input type="hidden" id="25" value="IT">
+            <div class="viewed cell" id="v25"></div>
+            <div class="modified cell">
+                <select id="m25" class="selection">
+                    <option value="English">English</option>
+                    <option value="Science">Science</option>
+                    <option value="Math">Math</option>
+                    <option value="Social Studies">Social Studies</option>
+                    <option value="Art">Art</option>
+                    <option value="IT">IT</option>
+                    <option value="PE">PE</option>
+                </select>
+            </div>
+
+            <!-- Fourth row: 10:05am -->
+            <div class="cell">10:05am</div>
+            <input type="hidden" id="31" value="English">
+            <div class="viewed cell" id="v31"></div>
+            <div class="modified cell">
+                <select id="m31" class="selection">
+                    <option value="English">English</option>
+                    <option value="Science">Science</option>
+                    <option value="Math">Math</option>
+                    <option value="Social Studies">Social Studies</option>
+                    <option value="Art">Art</option>
+                    <option value="IT">IT</option>
+                    <option value="PE">PE</option>
+                </select>
+            </div>
+            <input type="hidden" id="32" value="PE">
+            <div class="viewed cell" id="v32"></div>
+            <div class="modified cell">
+                <select id="m32" class="selection">
+                    <option value="English">English</option>
+                    <option value="Science">Science</option>
+                    <option value="Math">Math</option>
+                    <option value="Social Studies">Social Studies</option>
+                    <option value="Art">Art</option>
+                    <option value="IT">IT</option>
+                    <option value="PE">PE</option>
+                </select>
+            </div>
+            <input type="hidden" id="33" value="Math">
+            <div class="viewed cell" id="v33"></div>
+            <div class="modified cell">
+                <select id="m33" class="selection">
+                    <option value="English">English</option>
+                    <option value="Science">Science</option>
+                    <option value="Math">Math</option>
+                    <option value="Social Studies">Social Studies</option>
+                    <option value="Art">Art</option>
+                    <option value="IT">IT</option>
+                    <option value="PE">PE</option>
+                </select>
+            </div>
+            <input type="hidden" id="34" value="Science">
+            <div class="viewed cell" id="v34"></div>
+            <div class="modified cell">
+                <select id="m34" class="selection">
+                    <option value="English">English</option>
+                    <option value="Science">Science</option>
+                    <option value="Math">Math</option>
+                    <option value="Social Studies">Social Studies</option>
+                    <option value="Art">Art</option>
+                    <option value="IT">IT</option>
+                    <option value="PE">PE</option>
+                </select>
+            </div>
+            <input type="hidden" id="35" value="Art">
+            <div class="viewed cell" id="v35"></div>
+            <div class="modified cell">
+                <select id="m35" class="selection">
+                    <option value="English">English</option>
+                    <option value="Science">Science</option>
+                    <option value="Math">Math</option>
+                    <option value="Social Studies">Social Studies</option>
+                    <option value="Art">Art</option>
+                    <option value="IT">IT</option>
+                    <option value="PE">PE</option>
+                </select>
+            </div>
+
+            <!-- Fifth row: 10:55am -->
+            <div class="cell">10:55am</div>
+            <input type="hidden" id="41" value="Social Studies">
+            <div class="viewed cell" id="v41"></div>
+            <div class="modified cell">
+                <select id="m41" class="selection">
+                    <option value="English">English</option>
+                    <option value="Science">Science</option>
+                    <option value="Math">Math</option>
+                    <option value="Social Studies">Social Studies</option>
+                    <option value="Art">Art</option>
+                    <option value="IT">IT</option>
+                    <option value="PE">PE</option>
+                </select>
+            </div>
+            <input type="hidden" id="42" value="IT">
+            <div class="viewed cell" id="v42"></div>
+            <div class="modified cell">
+                <select id="m42" class="selection">
+                    <option value="English">English</option>
+                    <option value="Science">Science</option>
+                    <option value="Math">Math</option>
+                    <option value="Social Studies">Social Studies</option>
+                    <option value="Art">Art</option>
+                    <option value="IT">IT</option>
+                    <option value="PE">PE</option>
+                </select>
+            </div>
+            <input type="hidden" id="43" value="English">
+            <div class="viewed cell" id="v43"></div>
+            <div class="modified cell">
+                <select id="m43" class="selection">
+                    <option value="English">English</option>
+                    <option value="Science">Science</option>
+                    <option value="Math">Math</option>
+                    <option value="Social Studies">Social Studies</option>
+                    <option value="Art">Art</option>
+                    <option value="IT">IT</option>
+                    <option value="PE">PE</option>
+                </select>
+            </div>
+            <input type="hidden" id="44" value="Math">
+            <div class="viewed cell" id="v44"></div>
+            <div class="modified cell">
+                <select id="m44" class="selection">
+                    <option value="English">English</option>
+                    <option value="Science">Science</option>
+                    <option value="Math">Math</option>
+                    <option value="Social Studies">Social Studies</option>
+                    <option value="Art">Art</option>
+                    <option value="IT">IT</option>
+                    <option value="PE">PE</option>
+                </select>
+            </div>
+            <input type="hidden" id="45" value="Science">
+            <div class="viewed cell" id="v45"></div>
+            <div class="modified cell">
+                <select id="m45" class="selection">
+                    <option value="English">English</option>
+                    <option value="Science">Science</option>
+                    <option value="Math">Math</option>
+                    <option value="Social Studies">Social Studies</option>
+                    <option value="Art">Art</option>
+                    <option value="IT">IT</option>
+                    <option value="PE">PE</option>
+                </select>
+            </div>
+
+            <!-- Sixth row: 11:20am -->
+            <div class="cell">11:20am</div>
+            <input type="hidden" id="51" value="Art">
+            <div class="viewed cell" id="v51"></div>
+            <div class="modified cell">
+                <select id="m51" class="selection">
+                    <option value="English">English</option>
+                    <option value="Science">Science</option>
+                    <option value="Math">Math</option>
+                    <option value="Social Studies">Social Studies</option>
+                    <option value="Art">Art</option>
+                    <option value="IT">IT</option>
+                    <option value="PE">PE</option>
+                </select>
+            </div>
+            <input type="hidden" id="52" value="English">
+            <div class="viewed cell" id="v52"></div>
+            <div class="modified cell">
+                <select id="m52" class="selection">
+                    <option value="English">English</option>
+                    <option value="Science">Science</option>
+                    <option value="Math">Math</option>
+                    <option value="Social Studies">Social Studies</option>
+                    <option value="Art">Art</option>
+                    <option value="IT">IT</option>
+                    <option value="PE">PE</option>
+                </select>
+            </div>
+            <input type="hidden" id="53" value="IT">
+            <div class="viewed cell" id="v53"></div>
+            <div class="modified cell">
+                <select id="m53" class="selection">
+                    <option value="English">English</option>
+                    <option value="Science">Science</option>
+                    <option value="Math">Math</option>
+                    <option value="Social Studies">Social Studies</option>
+                    <option value="Art">Art</option>
+                    <option value="IT">IT</option>
+                    <option value="PE">PE</option>
+                </select>
+            </div>
+            <input type="hidden" id="54" value="Science">
+            <div class="viewed cell" id="v54"></div>
+            <div class="modified cell">
+                <select id="m54" class="selection">
+                    <option value="English">English</option>
+                    <option value="Science">Science</option>
+                    <option value="Math">Math</option>
+                    <option value="Social Studies">Social Studies</option>
+                    <option value="Art">Art</option>
+                    <option value="IT">IT</option>
+                    <option value="PE">PE</option>
+                </select>
+            </div>
+            <input type="hidden" id="55" value="PE">
+            <div class="viewed cell" id="v55"></div>
+            <div class="modified cell">
+                <select id="m55" class="selection">
+                    <option value="English">English</option>
+                    <option value="Science">Science</option>
+                    <option value="Math">Math</option>
+                    <option value="Social Studies">Social Studies</option>
+                    <option value="Art">Art</option>
+                    <option value="IT">IT</option>
+                    <option value="PE">PE</option>
+                </select>
+            </div>
 
         </div>
     </div>
-</div>

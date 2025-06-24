@@ -2,8 +2,12 @@
 {
     width: 100%;
     height: 100%;
-    justify-content: center;
-    display: flex;   
+    justify-content: center; 
+    display: none;
+}
+.timetable.active
+{
+    display: flex;
 }
 .timetable_view
 {
@@ -35,13 +39,39 @@
     background-color: #988EB1;
     color: white;
 }
+.modify.active
+{
+    background-color: #988EB1;
+    color: white;
+}
 .viewtable
 {
     display: grid;
     background-color: white;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0;
+    width: max-content;
+    height: max-content;
 }
-.modifytable
+.cell
+{
+    border: solid 2px black;
+    width: 125px;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+.viewed,.modified
 {
     display: none;
-    background-color: #988EB1;
+}
+.viewed.active,.modified.active
+{
+    display: flex;
+}
+.selection
+{
+    text-align: center;
 }
