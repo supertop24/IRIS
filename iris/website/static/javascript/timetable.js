@@ -1,14 +1,3 @@
-window.onload = function() {
-    const view = document.querySelectorAll('.viewed');
-    const modify = document.querySelectorAll('.modified');
-    view.forEach(target => {
-        target.classList.add('active');
-    });
-    modify.forEach(target => {
-        target.classList.remove('active');
-    });
-    viewed();
-}
 function viewed()
 {
     for (let start = 11; start <= 51; start += 10) {
