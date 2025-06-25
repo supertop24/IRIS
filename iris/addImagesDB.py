@@ -28,6 +28,7 @@ def addProfileImage(user_id, image_path):
 
 # Adding images here
 if __name__ == "__main__":
-    addProfileImage(2, 'website/static/images/teachers/janeSmith.png')
-    addProfileImage(1, 'website/static/images/teachers/johnDoe.jpg') 
-    addProfileImage(3, 'website/static/images/students/BrianSmith.png')
+    # addProfileImage(2, 'website/static/images/teachers/janeSmith.png')
+    # addProfileImage(1, 'website/static/images/teachers/johnDoe.jpg') 
+    # addProfileImage(3, 'website/static/images/students/BrianSmith.png')
+    addProfileImage(2, 'website/static/images/students/ellaThompson.png')

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<head>
+
+    <!--Linking style sheet-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/takeAttendance.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Acme&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+<!--Inherits from navBase and overrides blocks-->
+{% extends "navBase.html" %}
+
+<!--Page titles-->
+{% block title %}Attendance - 12 English Class 1{% endblock %}
+
+{% block pageName %}Attendance - 12 English Class 1{% endblock %}
+
+<!--Page's content-->
+{% block content %}
+
+    <div class="date">{{ currentDate.strftime('%A, %d %B, %Y') }}</div>
+
+
+    <img class="take" src="{{ url_for('static', filename='images/takeAttendance.png') }}" alt="IRIS logo">
+
+
+
+{% endblock %}
+
+</body>

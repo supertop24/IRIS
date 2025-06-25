@@ -199,6 +199,12 @@ def attendanceLanding():
     otherClasses = getOtherClasses()
     return render_template("attendanceLanding.html", user=current_user, currentDate=currentDate, myClasses = myClasses, otherClasses = otherClasses)
 
+@views.route('/takeAttendance')
+def takeAttendance():
+    currentDate = datetime.now().date()
+    return render_template("takeAttendance.html", user=current_user, currentDate=currentDate)
+
+
 @views.route('/studentsLanding')
 def studentsLanding():
     currentDate = datetime.now().date()
@@ -469,58 +475,56 @@ def getProfileImage(user_id):
         as_attachment=False
     )
 
-@views.route('/morePopulating')
-def morePopulating():
-    try:
-        teacher = Teacher(
-            name = "Jane Smith",
-            email = "janesmith@school.com",
-            password="janesmith",
-            gender = "Female",
-            phone_number = "09 123 456",
-            address = "12 NoOnion Street"
-        )
-        db.session.add(teacher)
-        db.session.flush()
+# @views.route('/morePopulating')
+# def morePopulating():
+#     try:
+#         teacher = Teacher(
+#             name = "Jane Smith",
+#             email = "janesmith@school.com",
+#             password="janesmith",
+#             gender = "Female",
+#             phone_number = "09 123 456",
+#             address = "12 NoOnion Street"
+#         )
+#         db.session.add(teacher)
+#         db.session.flush()
 
-        period = Period.query.order_by(Period.id).limit(5).all()
-        if len(period) < 5:
-            raise Exception("Not enough periods in the database to assign sessions.")
+#         period = Period.query.order_by(Period.id).limit(5).all()
+#         if len(period) < 5:
+#             raise Exception("Not enough periods in the database to assign sessions.")
 
-        subjects = ["Year 10 Mathematics", "Year 10 Science", "Year 11 Biology", "Year 11 Chemistry", "Year 11 Physics"]
-        classes=[]
-        for i, subject in enumerate(subjects):
+#         subjects = ["Year 10 Mathematics", "Year 10 Science", "Year 11 Biology", "Year 11 Chemistry", "Year 11 Physics"]
+#         classes=[]
+#         for i, subject in enumerate(subjects):
 
-            parts = subject.split()
-            year = parts[1]
-            abr = parts[2][:3].upper()
-            clsCode = f"{year}{abr}1"
-            cls = Class(year=2025, subject=subject, code=clsCode)
-            db.session.add(cls)
-            db.session.flush()
-            classes.append(cls)
+#             parts = subject.split()
+#             year = parts[1]
+#             abr = parts[2][:3].upper()
+#             clsCode = f"{year}{abr}1"
+#             cls = Class(year=2025, subject=subject, code=clsCode)
+#             db.session.add(cls)
+#             db.session.flush()
+#             classes.append(cls)
 
-            assoc = TeacherClassAssociation(teacher_id=teacher.id, class_id=cls.id, role=TeacherRole.MAIN)
-            db.session.add(assoc)
+#             assoc = TeacherClassAssociation(teacher_id=teacher.id, class_id=cls.id, role=TeacherRole.MAIN)
+#             db.session.add(assoc)
 
-        today = date.today()
-        for i in range(4):  
-            session = ClassSession(
-                class_id=classes[i].id,
-                date=today,
-                period_id=period[i].id
-            )
-            db.session.add(session)
+#         today = date.today()
+#         for i in range(4):  
+#             session = ClassSession(
+#                 class_id=classes[i].id,
+#                 date=today,
+#                 period_id=period[i].id
+#             )
+#             db.session.add(session)
 
-        db.session.commit()
-        return jsonify({"message": "Test data populated successfully."})
+#         db.session.commit()
+#         return jsonify({"message": "Test data populated successfully."})
     
 
-    except Exception as e:
-        db.session.rollback()
-        return jsonify({"error": str(e)}), 500
-
-# Finish adding population route!! 
+#     except Exception as e:
+#         db.session.rollback()
+#         return jsonify({"error": str(e)}), 500
 
 
 # @views.route('/populate-test-data') 
@@ -628,136 +632,136 @@ def test_seed():
 '''        
 
 
-# @views.route('/populate_class_sessions', methods=['GET','POST']) # Re-using route to populate db with class sessions to fill teacher timetables
-# def populate_class_sessions():
-#     """
-#     Populate class sessions for the next month based on timetable
-#     """
-#     try:
-#         # Get the start date (today) and end date (30 days from now)
-#         start_date = date.today()
-#         end_date = start_date + timedelta(days=30)
+@views.route('/populate_class_sessions', methods=['GET','POST']) # Re-using route to populate db with class sessions to fill teacher timetables
+def populate_class_sessions():
+    """
+    Populate class sessions for the next month based on timetable
+    """
+    try:
+        # Get the start date (today) and end date (30 days from now)
+        start_date = date.today()
+        end_date = start_date + timedelta(days=30)
         
-#         # Get class IDs by their codes - to populate this mapping
-#         class_code_to_id = {}
+        # Get class IDs by their codes - to populate this mapping
+        class_code_to_id = {}
         
-#         # Query all classes and create a mapping from code to ID
-#         classes = Class.query.all()
-#         for cls in classes:
-#             class_code_to_id[cls.code] = cls.id
+        # Query all classes and create a mapping from code to ID
+        classes = Class.query.all()
+        for cls in classes:
+            class_code_to_id[cls.code] = cls.id
         
-#         # Define the timetable based on class codes
-#         timetable = {
-#             'monday': {
-#                 'P1': ['9ENG1'],
-#                 'P2': ['10ENG1'],
-#                 'P3': [],  # No class
-#                 'P4': ['11ENG1'],
-#                 'P5': ['12ENG1']
-#             },
-#             'tuesday': {
-#                 'P1': ['9ENG2'],
-#                 'P2': [],  # No class
-#                 'P3': ['10ENG2'],
-#                 'P4': ['11ENG2'],
-#                 'P5': ['12ENG2']
-#             },
-#             'wednesday': {
-#                 'P1': ['9ART1'],
-#                 'P2': [],  # No class
-#                 'P3': ['9ENG1'],
-#                 'P4': ['10ENG1'],
-#                 'P5': []  # No class
-#             },
-#             'thursday': {
-#                 'P1': ['12ENG1'],
-#                 'P2': ['9ENG2'],
-#                 'P3': [],  # No class
-#                 'P4': ['11ENG2'],
-#                 'P5': ['12ENG2']
-#             },
-#             'friday': {
-#                 'P1': ['9ART1'],
-#                 'P2': [],  # No class
-#                 'P3': ['10ENG1'],
-#                 'P4': [],  # No class
-#                 'P5': ['13ENG']
-#             }
-#         }
+        # Define the timetable based on class codes
+        timetable = {
+            'monday': {
+                'P1': ['9SOS1'],
+                'P2': ['10HIS'],
+                'P3': [],  # No class
+                'P4': ['11GEO1'],
+                'P5': ['9SOS2']
+            },
+            'tuesday': {
+                'P1': ['12GEO'],
+                'P2': [],  # No class
+                'P3': ['11HIS'],
+                'P4': ['10SOS'],
+                'P5': ['13GEO']
+            },
+            'wednesday': {
+                'P1': ['10HIS'],
+                'P2': ['11GEO1'],
+                'P3': ['9SOS1'],
+                'P4': ['11GEO2'],
+                'P5': []  # No class
+            },
+            'thursday': {
+                'P1': ['9SOS2'],
+                'P2': ['12GEO'],
+                'P3': [],  # No class
+                'P4': ['11HIS'],
+                'P5': ['10SOS']
+            },
+            'friday': {
+                'P1': ['10HIS'],
+                'P2': [],  # No class
+                'P3': ['9SOS1'],
+                'P4': [],  # No class
+                'P5': ['11GEO2']
+            }
+        }
         
-#         # Weekday mapping (Monday = 0, Sunday = 6)
-#         weekday_names = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
+        # Weekday mapping (Monday = 0, Sunday = 6)
+        weekday_names = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
         
-#         sessions_created = 0
-#         current_date = start_date
+        sessions_created = 0
+        current_date = start_date
         
-#         while current_date <= end_date:
-#             # Get the day of the week
-#             weekday = current_date.weekday()  # 0 = Monday, 6 = Sunday
-#             day_name = weekday_names[weekday]
+        while current_date <= end_date:
+            # Get the day of the week
+            weekday = current_date.weekday()  # 0 = Monday, 6 = Sunday
+            day_name = weekday_names[weekday]
             
-#             # Skip weekends if your school doesn't have classes then
-#             if day_name in ['saturday', 'sunday']:
-#                 current_date += timedelta(days=1)
-#                 continue
+            # Skip weekends if your school doesn't have classes then
+            if day_name in ['saturday', 'sunday']:
+                current_date += timedelta(days=1)
+                continue
             
-#             # Check if this day has classes scheduled
-#             if day_name in timetable:
-#                 daily_schedule = timetable[day_name]
+            # Check if this day has classes scheduled
+            if day_name in timetable:
+                daily_schedule = timetable[day_name]
                 
-#                 # Iterate through each period for this day
-#                 for period_code, class_codes in daily_schedule.items():
-#                     # Skip empty periods
-#                     if not class_codes:
-#                         continue
+                # Iterate through each period for this day
+                for period_code, class_codes in daily_schedule.items():
+                    # Skip empty periods
+                    if not class_codes:
+                        continue
                         
-#                     # Get the period object
-#                     period = Period.query.filter_by(code=period_code).first()
-#                     if not period:
-#                         continue
+                    # Get the period object
+                    period = Period.query.filter_by(code=period_code).first()
+                    if not period:
+                        continue
                     
-#                     # Create sessions for each class in this period
-#                     for class_code in class_codes:
-#                         # Get the class ID from the mapping
-#                         class_id = class_code_to_id.get(class_code)
-#                         if not class_id:
-#                             print(f"Warning: Class code '{class_code}' not found in database")
-#                             continue
+                    # Create sessions for each class in this period
+                    for class_code in class_codes:
+                        # Get the class ID from the mapping
+                        class_id = class_code_to_id.get(class_code)
+                        if not class_id:
+                            print(f"Warning: Class code '{class_code}' not found in database")
+                            continue
                         
-#                         # Check if session already exists
-#                         existing_session = ClassSession.query.filter_by(
-#                             class_id=class_id,
-#                             date=current_date,
-#                             period_id=period.id
-#                         ).first()
+                        # Check if session already exists
+                        existing_session = ClassSession.query.filter_by(
+                            class_id=class_id,
+                            date=current_date,
+                            period_id=period.id
+                        ).first()
                         
-#                         if not existing_session:
-#                             new_session = ClassSession(
-#                                 class_id=class_id,
-#                                 date=current_date,
-#                                 period_id=period.id
-#                             )
-#                             db.session.add(new_session)
-#                             sessions_created += 1
+                        if not existing_session:
+                            new_session = ClassSession(
+                                class_id=class_id,
+                                date=current_date,
+                                period_id=period.id
+                            )
+                            db.session.add(new_session)
+                            sessions_created += 1
             
-#             current_date += timedelta(days=1)
+            current_date += timedelta(days=1)
         
-#         # Commit all changes
-#         db.session.commit()
+        # Commit all changes
+        db.session.commit()
         
-#         return jsonify({
-#             'success': True,
-#             'message': f'Successfully created {sessions_created} class sessions',
-#             'sessions_created': sessions_created,
-#             'date_range': f'{start_date} to {end_date}'
-#         }), 200
+        return jsonify({
+            'success': True,
+            'message': f'Successfully created {sessions_created} class sessions',
+            'sessions_created': sessions_created,
+            'date_range': f'{start_date} to {end_date}'
+        }), 200
         
-#     except Exception as e:
-#         db.session.rollback()
-#         return jsonify({
-#             'success': False,
-#             'error': str(e)
-#         }), 500
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({
+            'success': False,
+            'error': str(e)
+        }), 500
 
 @views.route('/api/schedule/<string:user_type>/<int:user_id>')
 def schedule_api(user_type, user_id):
