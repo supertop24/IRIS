@@ -113,7 +113,7 @@ def studentProfile(student_id):
     #Getting pastoral reports for this specific student only
     all_reports = Pastoral.query.filter_by(student_id=student_id).order_by(Pastoral.date.desc()).all()
     
-    #Separating merit and incident reports (same as pastoral_reports route)
+    #Separating merit and incident reports
     merit_reports = [report for report in all_reports if report.reportType == 'Merit']
     incident_reports = [report for report in all_reports if report.reportType == 'Incident']
     
@@ -239,7 +239,7 @@ def createNotice():
        db.session.commit() #Committing new notice to the database
 
        #Flash message to show that the notice has been created
-       flash("Notice Created!", category="success")
+       #flash("Notice Created!", category="success")
        return redirect(url_for('views.viewNotice')) #Takes user back to the notice page
    return render_template("createNotice.html", user=current_user)
 
@@ -256,7 +256,7 @@ def editNotice(id):
         noticeToEdit.title = request.form.get("title")
         noticeToEdit.note = request.form.get("note")
         db.session.commit() #Committing the changes to the database
-        flash("Notice Updated!", category="success") #Flashing success mesasage
+        #flash("Notice Updated!", category="success") #Flashing success mesasage
         return redirect(url_for("views.viewNotice")) #Takes user back to the notice page
     
     return render_template("editNotice.html", notices=noticeToEdit, user=current_user) 
@@ -270,7 +270,7 @@ def deleteNotice():
     if noticeToDelete and noticeToDelete.author == current_user.id:
         db.session.delete(noticeToDelete) #Deleting the notice from the database
         db.session.commit() #Committing the changes to the database
-        flash("Notice deleted!", category="success") #Flashing success message
+        #flash("Notice deleted!", category="success") #Flashing success message
     else:
         flash("You are not authorized to delete this notice.", category="error") #User can only delete their own notices
     return redirect("/notice")
@@ -357,7 +357,7 @@ def get_report(report_id):
         'resolutionStatus': report.resolutionStatus
     })
 
-@views.route('/filter_reports/<int:student_id>')#Filter reports by type, title, and sort options
+@views.route('/filter_reports/<int:student_id>')#Filter reports by type or title
 def filter_reports(student_id):
 
     filter_type = request.args.get('filterType')  #Merit or Incident
