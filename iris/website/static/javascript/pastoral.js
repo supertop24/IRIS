@@ -359,17 +359,16 @@ function createReportItem(report, reportType) {
     function getTypeImage(titleType) {
         const lowerTitleType = titleType.toLowerCase();
 
-        if (titleType === 'teamwork') {
+        if (lowerTitleType === 'teamwork') {
             return '<img src="/static/images/icons/teamwork.png" alt="Teamwork" class="reportTypeIcon">';
-        } else if (titleType === 'respect') {
+        } else if (lowerTitleType === 'respect') {
             return '<img src="/static/images/icons/respect.jpg" alt="Respect" class="reportTypeIcon">';
-        } else if (titleType === 'behavioural') {
-            return '<img src="/static/images/icons/behavioural.png" alt="Behavioural" class="reportType">';
-        } else if (titleType === 'property') {
+        } else if (lowerTitleType === 'behavioural') {
+            return '<img src="/static/images/icons/behavioural.png" alt="Behavioural" class="reportTypeIcon">'; // ← ADDED class="reportTypeIcon" here
+        } else if (lowerTitleType === 'property') {
             return '<img src="/static/images/icons/property.png" alt="Property" class="reportTypeIcon">';
         }
         return '';
-
     }
 
     //Setting content
