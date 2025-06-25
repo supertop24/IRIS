@@ -1,0 +1,23 @@
+.date {
+    width: 80%;
+    padding: 10px;
+    background-color: #ffffff;
+    text-align: center;
+    border-style: solid;
+    border-color: #988EB1;
+    border-width: 5px;
+    box-sizing: border-box;
+    font-size: 20px;
+    margin-top: 0.5%;
+    margin-left: 10%;
+    
+}
+
+.take{
+
+    display: block;
+    width: 80%;
+    height: 104%;
+    margin-top: 1.5%;
+    margin-left: 10%;
+}
