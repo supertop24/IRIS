@@ -47,9 +47,14 @@ function handleCustomDropdown() {
                 const imgSrc = option.getAttribute("data-img");
                 const text = option.getAttribute("data-text");
                 const value = option.getAttribute("data-value");
+                
+                if (imgSrc) {
+                    meritSelectedOption.innerHTML = `<img src="${imgSrc}" alt="${text}" style="width: 16px; height: 16px; margin-right: 8px;"><span>${text}</span>`;
+                } else {
+                    meritSelectedOption.innerHTML = `<span>${text}</span>`;
+                }
 
-                meritSelectedOption.innerHTML = `<img src="${imgSrc}" alt="${text}"><span>${text}</span>`;
-                meritSelectedValue.value = text;
+                meritSelectedValue.value = value || text; //Using value if available otherwise using text
                 meritDropdownList.style.display = "none";
             });
         });
@@ -71,8 +76,13 @@ function handleCustomDropdown() {
                 const text = option.getAttribute("data-text");
                 const value = option.getAttribute("data-value");
 
-                incidentSelectedOption.innerHTML = `<img src="${imgSrc}" alt="${text}"><span>${text}</span>`;
-                incidentSelectedValue.value = text;
+                if (imgSrc) {
+                    incidentSelectedOption.innerHTML = `<img src="${imgSrc}" alt="${text}" style="width: 16px; height: 16px; margin-right: 8px;"><span>${text}</span>`;
+                } else {
+                    incidentSelectedOption.innerHTML = `<span>${text}</span>`;
+                }
+                
+                incidentSelectedValue.value = value || text; //Using value if available otherwise using text
                 incidentDropdownList.style.display = "none";
             });
         });
@@ -143,7 +153,11 @@ function populateViewMeritReport(data) {
     document.getElementById("reportDate").textContent = data.date || 'N/A';
     document.getElementById("reportTime").textContent = data.time || 'N/A';
     document.getElementById("reportLocation").textContent = data.location || 'N/A';
-    document.getElementById("reportTitleType").textContent = data.title || 'N/A';
+    
+    //Includes the image with the title
+    const reportTitleElement = document.getElementById("reportTitleType");
+    reportTitleElement.innerHTML = getTypeImageWithText(data.title || 'N/A');
+
     document.getElementById("reportStudents").textContent = data.students || 'N/A';
     document.getElementById("reportStaff").textContent = data.staff || 'N/A';
     document.getElementById("reportAuthor").textContent = data.author || 'N/A';
@@ -155,7 +169,11 @@ function populateViewIncidentReport(data) {
     document.getElementById("incidentReportDate").textContent = data.date || 'N/A';
     document.getElementById("incidentReportTime").textContent = data.time || 'N/A';
     document.getElementById("incidentReportLocation").textContent = data.location || 'N/A';
-    document.getElementById("incidentReportTitleType").textContent = data.title || 'N/A';
+    
+    //Includes the image with the title
+    const incidentReportTitleElement = document.getElementById("incidentReportTitleType");
+    incidentReportTitleElement.innerHTML = getTypeImageWithText(data.title || 'N/A');
+
     document.getElementById("incidentReportStudents").textContent = data.students || 'N/A';
     document.getElementById("incidentReportStaff").textContent = data.staff || 'N/A';
     document.getElementById("incidentReportAuthor").textContent = data.author || 'N/A';
@@ -163,6 +181,28 @@ function populateViewIncidentReport(data) {
     document.getElementById("incidentReportParentCommunication").textContent = data.parentCommunication || 'N/A';
     document.getElementById("incidentReportDisciplinaryActions").textContent = data.disciplinaryActions || 'N/A';
     document.getElementById("incidentReportResolutionStatus").textContent = data.resolutionStatus || 'N/A';
+}
+
+//Function to get the image with text for report types
+function getTypeImageWithText(titleType) {
+    if (!titleType || titleType === 'N/A') {
+        return 'N/A';
+    }
+    
+    const lowerTitleType = titleType.toLowerCase();
+    
+    if (lowerTitleType === 'teamwork') {
+        return '<img src="/static/images/icons/teamwork.png" alt="Teamwork" class="reportTypeIcon" style="width: 16px; height: 16px; margin-right: 8px; vertical-align: middle;"> Teamwork';
+    } else if (lowerTitleType === 'respect') {
+        return '<img src="/static/images/icons/respect.jpg" alt="Respect" class="reportTypeIcon" style="width: 16px; height: 16px; margin-right: 8px; vertical-align: middle;"> Respect';
+    } else if (lowerTitleType === 'behavioural') {
+        return '<img src="/static/images/icons/behavioural.png" alt="Behavioural" class="reportTypeIcon" style="width: 16px; height: 16px; margin-right: 8px; vertical-align: middle;"> Behavioural';
+    } else if (lowerTitleType === 'property') {
+        return '<img src="/static/images/icons/property.png" alt="Property" class="reportTypeIcon" style="width: 16px; height: 16px; margin-right: 8px; vertical-align: middle;"> Property';
+    }
+    
+    //Default for unknown types
+    return titleType;
 }
 
 //Handling form submission
@@ -315,9 +355,29 @@ function createReportItem(report, reportType) {
     div.dataset.disciplinaryActions = report.disciplinaryActions || '';
     div.dataset.resolutionStatus = report.resolutionStatus || '';
 
+    //Function getting the image for report based on report title
+    function getTypeImage(titleType) {
+        const lowerTitleType = titleType.toLowerCase();
+
+        if (titleType === 'teamwork') {
+            return '<img src="/static/images/icons/teamwork.png" alt="Teamwork" class="reportTypeIcon">';
+        } else if (titleType === 'respect') {
+            return '<img src="/static/images/icons/respect.jpg" alt="Respect" class="reportTypeIcon">';
+        } else if (titleType === 'behavioural') {
+            return '<img src="/static/images/icons/behavioural.png" alt="Behavioural" class="reportType">';
+        } else if (titleType === 'property') {
+            return '<img src="/static/images/icons/property.png" alt="Property" class="reportTypeIcon">';
+        }
+        return '';
+
+    }
+
     //Setting content
     div.innerHTML = `
-        <p>${report.titleType}</p>
+        <p class="titleWithImage">
+            ${getTypeImage(report.titleType)}
+            ${report.titleType}
+        </p>
         <p>${report.author}</p>
         <p>${report.date}</p>
     `;

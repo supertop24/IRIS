@@ -76,10 +76,21 @@
                     data-staff="{{ pastoral.staffInvolved }}"
                     data-note="{{ pastoral.note }}"
                     data-title="{{ pastoral.titleType }}">
-                        <p>{{pastoral.titleType}}</p>
-                        <p>{{pastoral.author}}</p>
-                        <p>{{pastoral.date}}</p>
+
+                    <!--Title and image of report-->
+                    <p class="titleImage">
+                        {% if pastoral.titleType == 'Teamwork' %}
+                            <img src="{{ url_for('static', filename='images/icons/teamwork.png') }}" alt="Teamwork icon" class="reportTypeIcon">
+                        {% elif pastoral.titleType == 'Respect' %}
+                            <img src="{{ url_for('static', filename='images/icons/respect.jpg') }}" alt="Respect icon" class="reportTypeIcon">
+                        {% endif %}
+                        {{ pastoral.titleType }}
+                    </p>
+                    <!--Author and date of report-->
+                    <p>{{pastoral.author}}</p>
+                    <p>{{pastoral.date}}</p>
                     </div>
+
                     {% endfor %} <!--End of for loop to display reports-->
                 </div>
             </div>
@@ -150,7 +161,16 @@
                     data-parent-communication="{{ pastoral.parentCommunication or '' }}"
                     data-disciplinary-actions="{{ pastoral.disciplinaryActions or '' }}"
                     data-resolution-status="{{ pastoral.resolutionStatus or '' }}">
-                        <p>{{pastoral.titleType}}</p>
+                        <!--Title and image of report-->
+                        <p class="titleImage">
+                            {% if pastoral.titleType == 'Behavioural' %}
+                                <img src="{{ url_for('static', filename='images/icons/behavioural.png') }}" alt="Teamwork icon" class="reportTypeIcon">
+                            {% elif pastoral.titleType == 'Property' %}
+                                <img src="{{ url_for('static', filename='images/icons/property.png') }}" alt="Respect icon" class="reportTypeIcon">
+                            {% endif %}
+                            {{ pastoral.titleType }}
+                        </p>
+                        <!--Author and date of report-->
                         <p>{{pastoral.author}}</p>
                         <p>{{pastoral.date}}</p>
                     </div>
@@ -393,18 +413,18 @@
                         <div class="typeDisplayed">
                             <div class="dropdownContainer" data-form-type="merit">
                                 <div class="selected-option" id="meritSelectedOption">
-                                    <img src="{{ url_for('static', filename='images/icons/closeNav.png') }}" alt="Teamwork icon">
+                                    <img src="{{ url_for('static', filename='images/icons/teamwork.png') }}" alt="Teamwork icon">
                                     <span>-- Select Type --</span>
                                 </div>
                                 
                                 <div class="dropdown-option-list" id="meritDropdownOptionList">
-                                    <div class="dropdown-option" data-value="teamwork" data-text="Teamwork" data-img="{{ url_for('static', filename='images/icons/whiteIrisLogo.png') }}">
-                                        <img src="{{ url_for('static', filename='images/icons/whiteIrisLogo.png') }}" alt="Teamwork icon">
+                                    <div class="dropdown-option" data-value="Teamwork" data-text="Teamwork" data-img="{{ url_for('static', filename='images/icons/teamwork.png') }}">
+                                        <img src="{{ url_for('static', filename='images/icons/teamwork.png') }}" alt="Teamwork icon">
                                         <span>Teamwork</span>
                                     </div>
                                     
-                                    <div class="dropdown-option" data-value="respect" data-text="Respect" data-img="{{ url_for('static', filename='images/icons/whiteIrisLogo.png') }}">
-                                        <img src="{{ url_for('static', filename='images/icons/whiteIrisLogo.png') }}" alt="Respect icon">
+                                    <div class="dropdown-option" data-value="Respect" data-text="Respect" data-img="{{ url_for('static', filename='images/icons/respect.jpg') }}">
+                                        <img src="{{ url_for('static', filename='images/icons/respect.jpg') }}" alt="Respect icon">
                                         <span>Respect</span>
                                     </div>
                                 </div>
@@ -782,18 +802,18 @@
                         <div class="typeDisplayed">
                             <div class="dropdownContainer" data-form-type="incident">
                                 <div class="selected-option" id="incidentSelectedOption">
-                                    <img src="{{ url_for('static', filename='images/icons/whiteIrisLogo.png') }}" alt="Teamwork icon">
+                                    <img src="{{ url_for('static', filename='images/icons/behavioural.png') }}" alt="Behavioural icon">
                                     <span>-- Select Type --</span>
                                 </div>
                                 
                                 <div class="dropdown-option-list" id="incidentDropdownOptionList">
-                                    <div class="dropdown-option" data-value="behavioural" data-text="Behavioural" data-img="{{ url_for('static', filename='images/icons/whiteIrisLogo.png') }}">
-                                        <img src="{{ url_for('static', filename='images/icons/whiteIrisLogo.png') }}" alt="Teamwork icon">
+                                    <div class="dropdown-option" data-value="Behavioural" data-text="Behavioural" data-img="{{ url_for('static', filename='images/icons/behavioural.png') }}">
+                                        <img src="{{ url_for('static', filename='images/icons/behavioural.png') }}" alt="Behavioural icon">
                                         <span>Behavioural </span>
                                     </div>
                                     
-                                    <div class="dropdown-option" data-value="property" data-text="Property" data-img="{{ url_for('static', filename='images/icons/whiteIrisLogo.png') }}">
-                                        <img src="{{ url_for('static', filename='images/icons/whiteIrisLogo.png') }}" alt="Respect icon">
+                                    <div class="dropdown-option" data-value="Property" data-text="Property" data-img="{{ url_for('static', filename='images/icons/property.png') }}">
+                                        <img src="{{ url_for('static', filename='images/icons/property.png') }}" alt="Property damage icon">
                                         <span>Property</span>
                                     </div>
                                 </div>
