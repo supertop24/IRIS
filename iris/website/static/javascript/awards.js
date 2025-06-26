@@ -16,22 +16,13 @@ window.addEventListener('awards', () => {
 
 //Upload function for awards - called when user clicks
 function upload() {
-  console.log('Upload function called');
+
   //Getting input fields - Check if elements exist first
   const termElement = document.getElementById('termMenu');
   const typeElement = document.querySelector('.awards.add .inputAwardType');
   const titleElement = document.querySelector('.awards.add .inputAwardTitle');
   const gradeElement = document.getElementById('gradeMenu');
   const subjectElement = document.querySelector('.awards.add .inputAwardSubject');
-  
-  // Debug: Check which elements are found
-  console.log('Elements found:', {
-    term: termElement,
-    type: typeElement,
-    title: titleElement,
-    grade: gradeElement,
-    subject: subjectElement
-  });
   
   if (!termElement || !typeElement || !titleElement || !gradeElement || !subjectElement) {
     alert('Error: Could not find all form elements. Check the console for details.');
@@ -43,15 +34,6 @@ function upload() {
   const title = titleElement.value;
   const grade = gradeElement.value;
   const subject = subjectElement.value;
-
-  // Debug: Check what values we're getting
-  console.log('Form values:', {
-    term: term,
-    type: type,
-    title: title,
-    grade: grade,
-    subject: subject
-  });
 
   //Getting the year that the award was uploaded - for filtering the display
   const currentYear = new Date().getFullYear();
@@ -120,7 +102,6 @@ function getCurrentStudentID() {
 const path = window.location.pathname;
 const match = path.match(/\/studentProfile\/(\d+)/);
 if (match) {
-  console.log('Found student ID: ', parseInt(match[1])); //Debug log
   return parseInt(match[1]);
 }
 
