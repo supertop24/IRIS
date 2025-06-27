@@ -44,3 +44,5 @@ def generate_class_sessions_from_class(class_, start_date, end_date):
         current_date += timedelta(days=1)
 
     return sessions
+
+''' First implementation of teacher schedule '''

@@ -2,25 +2,8 @@ function formatDateToISO(dateObj) {
     return dateObj.toISOString().split('T')[0];
 }
 
-// function loadSchedule(date = null) {
-//   const queryDate = date || formatDateToISO(new Date());
-
-//   fetch(`/api/daily-schedule?date=${queryDate}`)
-//     .then(response => response.json())
-//     .then(data => {
-//       renderCalendar(data); 
-//     })
-//     .catch(error => {
-//       console.error("Error loading schedule:", error);
-//     });
-// }
-
-function loadSchedule(date = null) { // alternative function to display "tomorrow" timetable instead of todays for easy weekend testing 
-  // Use tomorrow's date as default instead of today
-  const tomorrow = new Date();
-  tomorrow.setDate(tomorrow.getDate() + 1);
-  
-  const queryDate = date || formatDateToISO(tomorrow);
+function loadSchedule(date = null) {
+  const queryDate = date || formatDateToISO(new Date());
 
   fetch(`/api/daily-schedule?date=${queryDate}`)
     .then(response => response.json())
@@ -32,15 +15,31 @@ function loadSchedule(date = null) { // alternative function to display "tomorro
     });
 }
 
-// Maybe later add scheduleDatePicker method, or week-toggle method
+// function loadSchedule(date = null) { // alternative function to display "tomorrow" timetable instead of todays - for easy weekend testing of timetable 
+//   const tomorrow = new Date();
+//   tomorrow.setDate(tomorrow.getDate() + 1);
+  
+//   const queryDate = date || formatDateToISO(tomorrow);
+
+//   fetch(`/api/daily-schedule?date=${queryDate}`)
+//     .then(response => response.json())
+//     .then(data => {
+//       renderCalendar(data); 
+//     })
+//     .catch(error => {
+//       console.error("Error loading schedule:", error);
+//     });
+// }
+
+
 
 document.addEventListener('DOMContentLoaded', function () {
-  loadSchedule(); // This is loading today’s schedule
-//  setupDatePicker(); // Maybe add later to let user make calendar selection
+  loadSchedule(); 
+//  setupDatePicker(); // Add later to let user select date for calendar view
 });
 
 function renderCalendar(scheduleData) {
-    // Clearing all existing class information before rendering
+    // Clearing all existing class information before rendering, preventing overloading 
     const classInfoItems = document.querySelectorAll('.class-info');
     classInfoItems.forEach(item => {
         item.textContent = '';
@@ -76,6 +75,8 @@ function renderCalendar(scheduleData) {
         }
     });
 }
+
+// Later: add week-toggle method
 
 
 

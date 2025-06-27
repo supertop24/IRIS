@@ -164,7 +164,7 @@
                                         <div class="rightHeader">Residence B</div>
                                         {% for caregiver, relationship in caregivers %}
                                         {% if caregiver.alphanum == "B" %}
-                                            <div class="rightAddress">79 Different Street, Suburb, Auckland 1024</div> <!-- Hard-coded for now, will soon be queried from database -->
+                                            <div class="rightAddress">{{ caregiver.address }}</div> 
                                             <div class="rightHeader">Caregiver B</div>
                                             <br><br>
                                             <div class="rightDetailsGridRCDC">
@@ -193,7 +193,7 @@
                             </div>
                             <!-- Residence Caregiver Details End  -->
                             <br><br>
-                            <!-- Medical Details Start -->
+                            <!-- Medical Details Start. * Database currently not set up to handle this, so contains a placeholder grid for now -->
 
                             <div class="medicalDetailsContainer">
 

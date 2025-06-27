@@ -1,7 +1,6 @@
 from website import create_app
 
 from datetime import date
-# from utils.schedule_utils import generate_class_sessions_from_class
 from website.models import db, Class
 
 # Initialize the app with the desired configuration
