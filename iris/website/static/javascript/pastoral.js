@@ -212,7 +212,53 @@ function handleFormSubmission() {
     forms.forEach(form => {
         form.addEventListener('submit', function(e) {
             e.preventDefault();
+
+            //Validating form inputs
+            const date = this.querySelector('[name="date"]').value.trim();
+            const time = this.querySelector('[name="time"]').value.trim();
+            const location = this.querySelector('[name="location"]').value.trim();
+            const studentsInvolved = this.querySelector('[name="studentsInvolved"]').value.trim();
+            const staffInvolved = this.querySelector('[name="staffInvolved"]').value.trim();
+            const author = this.querySelector('[name="author"]').value.trim();
+            const description = this.querySelector('[name="description"]').value.trim();
             
+            //Checking if any required field is empty
+            if (!date) {
+                alert('Please enter a date.');
+                this.querySelector('[name="date"]').focus();
+                return;
+            }
+            if (!time) {
+                alert('Please enter a time.');
+                this.querySelector('[name="time"]').focus();
+                return;
+            }
+            if (!location) {
+                alert('Please enter a location.');
+                this.querySelector('[name="location"]').focus();
+                return;
+            }
+            if (!studentsInvolved) {
+                alert('Please enter students involved.');
+                this.querySelector('[name="studentsInvolved"]').focus();
+                return;
+            }
+            if (!staffInvolved) {
+                alert('Please enter staff involved.');
+                this.querySelector('[name="staffInvolved"]').focus();
+                return;
+            }
+            if (!author) {
+                alert('Please enter the author of the report.');
+                this.querySelector('[name="author"]').focus();
+                return;
+            }
+            if (!description) {
+                alert('Please enter a description.');
+                this.querySelector('[name="description"]').focus();
+                return;
+            }
+
             //Getting the student ID
             const studentId = getStudentId();
             
@@ -220,7 +266,7 @@ function handleFormSubmission() {
             const formData = new FormData(this);
             formData.append('student_id', studentId);
             
-            let reportType = 'Merit'; // default
+            let reportType = 'Merit'; //default
             
             //Checking if form is inside addIncident container
             const parentSection = this.closest('.pastoral');
@@ -243,6 +289,8 @@ function handleFormSubmission() {
             })
             .then(response => {
                 if (response.ok) {
+                    //Showing success message
+                    alert('Report submitted successfully!');
                     // Redirect back to the student profile page
                     window.location.href = `/studentProfile/${studentId}`;
                 } else {

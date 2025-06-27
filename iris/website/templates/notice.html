@@ -12,17 +12,6 @@
 <!--Page's content-->
 {% block content %}
 
-<!--Enabling flashed messages to be shown, for success message-->
-<!-- {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-        {% for category, message in messages %}
-            <div class="alert alert-{{ category }}">
-                {{ message }}
-            </div>
-        {% endfor %}
-    {% endif %}
-{% endwith %} -->
-
 <div class="noticeContainer">
 
     <div class="noticeButtonsContainer">
@@ -30,9 +19,8 @@
         <div class="buttonContainer">
             <a class="createButton" href="{{ url_for('views.createNotice') }}">Create Notice</a>
             <a class="yourNoticeButton" href="{{ url_for('views.yourNotices') }}">Your Notices</a>
-            {% if showOnlyYourNotices %}
-                <a class="allNoticesButton" href="{{ url_for('views.viewNotice') }}">All Notices</a>
-            {% endif %}
+            <a class="allNoticesButton" href="{{ url_for('views.viewNotice') }}">All Notices</a>
+ 
         </div>
     </div>
 
