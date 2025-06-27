@@ -19,9 +19,9 @@
             <!--Form for users to create a new notice-->
             <form method="POST" action="{{ url_for('views.createNotice') }}" id="formId">
                 <!--Notice title input-->
-                <input class="inputNoticeTitle" type="text" name="title" placeholder="Enter Title...">
+                <input class="inputNoticeTitle" id="titleInput" type="text" name="title" placeholder="Enter Title...">
                 <!--Notice content input-->
-                <textarea class="inputNoticeContent" type="text" name="note" placeholder="Enter your content here..."></textarea>
+                <textarea class="inputNoticeContent" id="contentInput" type="text" name="note" placeholder="Enter your content here..."></textarea>
             </form>
         </div>
     </div>
@@ -31,5 +31,32 @@
         <input type="submit" form="formId" class="uploadButton" value="Upload">
     </div>
 </div>
+
+<script>
+//Validation for the notice creation form
+document.getElementById('formId').addEventListener('submit', function(e) {
+    const title = document.getElementById('titleInput').value.trim();
+    const content = document.getElementById('contentInput').value.trim();
+    
+    if (!title) {
+        e.preventDefault();
+        alert('Please enter a title for your notice.');
+        document.getElementById('titleInput').focus();
+        return false;
+    }
+    
+    if (!content) {
+        e.preventDefault();
+        alert('Please enter content for your notice.');
+        document.getElementById('contentInput').focus();
+        return false;
+    }
+
+    //Shows success message
+    alert('Notice created successfully!');
+    
+    return true;
+});
+</script>
 
 {% endblock %}

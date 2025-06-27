@@ -30,8 +30,8 @@
         <div class="noticeForm">
             <!--Form to edit a notice-->
             <form method="POST" id="formID" action="{{ url_for('views.editNotice', id=notices.id) }}">
-                <input class="inputNoticeTitle" type="text" name="title" value="{{ notices.title }}">
-                <textarea class="inputNoticeContent" name="note">{{ notices.note }}</textarea>
+                <input class="inputNoticeTitle" id="titleInput" type="text" name="title" value="{{ notices.title }}">
+                <textarea class="inputNoticeContent" id="contentInput" name="note">{{ notices.note }}</textarea>
             </form>
         </div>
     </div>
@@ -41,5 +41,32 @@
         <input type="submit" form="formID" class="uploadButton" value="Update">
     </div>
 </div>
+
+<script>
+//Validation for the notice creation form
+document.getElementById('formID').addEventListener('submit', function(e) {
+    const title = document.getElementById('titleInput').value.trim();
+    const content = document.getElementById('contentInput').value.trim();
+    
+    if (!title) {
+        e.preventDefault();
+        alert('Please enter a title for your notice.');
+        document.getElementById('titleInput').focus();
+        return false;
+    }
+    
+    if (!content) {
+        e.preventDefault();
+        alert('Please enter content for your notice.');
+        document.getElementById('contentInput').focus();
+        return false;
+    }
+
+    //Shows success message
+    alert('Notice edited successfully!');
+    
+    return true;
+});
+</script>
 
 {% endblock %}
