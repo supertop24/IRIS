@@ -58,7 +58,6 @@ class Caregiver(db.Model):
     student_associations = db.relationship('StudentCaregiverAssociation', back_populates='caregiver')
 
 
-
 class User(db.Model, UserMixin):
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
@@ -108,9 +107,9 @@ class Student(User):
             .order_by(ClassSession.date)
             .all()
             
-        )
+        ) # Not in use yet. 
 
-    #need to add get_weekly_schedule method to here and Teacher classes to render into calendar 
+    # Need to add get_weekly_schedule method to here to render into calendar 
 
 class Flags(db.Model):
     __tablename__ = 'flags'
@@ -142,7 +141,7 @@ class Teacher(User):
             .filter(ClassSession.date == target_date)
             .order_by(Period.id)
             .all()
-        )
+        ) # In use
 
     def get_weekly_schedule(self, start_date=None, end_date=None):
         if not start_date:
@@ -161,7 +160,7 @@ class Teacher(User):
             )
             .order_by(ClassSession.date)
             .all()
-        )
+        ) # Not in use
 
 class Class(db.Model):
     __tablename__ = 'class'    
@@ -204,7 +203,7 @@ class AttendanceStatus(enum.Enum):
     AbsentJustified = "absent_justified"
     Late = "late"
  
-# class Attendance(db.Model):
+# class Attendance(db.Model):  
 #     __tablename__ = 'attendance'  
 #     student_id = db.Column(db.Integer, db.ForeignKey('student.id'), primary_key=True)
 #     # session_id = db.Column(db.Integer, db.ForeignKey('class_session.id'), primary_key=True)
@@ -213,6 +212,8 @@ class AttendanceStatus(enum.Enum):
 
 #     student = db.relationship("Student", backref="attendance_records")
 #     # session = db.relationship("ClassSession", backref="attendance_records")
+
+# Table disabled for now - causing foreign key errors and isn't required until attendnce tracking is finalised. Requires further debugging. 
 
 
 class Assessment(db.Model):

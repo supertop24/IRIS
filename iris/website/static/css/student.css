@@ -156,11 +156,11 @@
     flex-direction: column;
 }
 
-/* .flagIcon{
+/* .flagIcon{ - to be added later - requires better quality icon
     height: 20px;
     width: 20px;
     
-} */
+} */ 
 
 .importantFlagDescription{
     font-weight: bold;
