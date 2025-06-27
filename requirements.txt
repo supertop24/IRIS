@@ -1,0 +1,7 @@
+# requirements.txt
+# This file is used to install the necessary packages for the IRIS project.
+Flask
+Flask-SQLAlchemy
+Flask-Login
+Flask-Migrate
+Werkzeug
